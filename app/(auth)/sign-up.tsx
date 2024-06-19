@@ -4,9 +4,9 @@ import { ThemedView } from "@/components/ThemedView";
 import { Button, Input } from "@/components/atoms";
 import { User } from "@/schema/user.schema";
 import { api } from "@/utils/fetching";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
@@ -59,9 +59,9 @@ const SignUp = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="items-start px-4">
+        {/* <View className="items-start px-4">
           <Button type="icon" name="back" onPress={() => router.back()} />
-        </View>
+        </View> */}
         <ThemedView className="w-full px-4 items-start min-h-[85vh]">
           <RegisterImage width={140} height={100} className="mt-5" />
           <ThemedText type="title" className="text-primary dark:text-primary-dark mt-5 max-w-xs">

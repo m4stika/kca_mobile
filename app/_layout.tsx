@@ -45,6 +45,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           {/* <Stack.Screen name="/search/[query]" /> */}
           <Stack.Screen name="+not-found" />
+          <Stack.Screen name="(modal)" />
         </Stack>
       </SafeAreaView>
     </GlobalProvider>

@@ -25,6 +25,7 @@ type ContextProps = {
   isLogged: boolean;
   isLoading: boolean;
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
+  setUserActive: Dispatch<SetStateAction<User | null>>;
   error?: string;
 };
 const GlobalContext = createContext<ContextProps>({
@@ -32,6 +33,7 @@ const GlobalContext = createContext<ContextProps>({
   isLoading: true,
   isLogged: false,
   setLoggedIn: () => false,
+  setUserActive: () => null,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -74,6 +76,7 @@ export function GlobalProvider({ children }: ViewProps) {
         isLoading,
         error,
         setLoggedIn: setIsLogged,
+        setUserActive: setUser,
       }}
     >
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

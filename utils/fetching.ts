@@ -22,6 +22,8 @@ async function request<T>(url: string, config: RequestInit, params?: any): Promi
 
   const response = await fetch(requestHttp);
 
+  // if (response.status === 401) router.push("/sign-in");
+
   return response.json();
 }
 type ContentType = "multipart/form-data" | "application/json";

@@ -7,7 +7,7 @@ import { User } from "@/schema/user.schema";
 import { api } from "@/utils/fetching";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type UserLogin = Omit<User, "fullName" | "email" | "name">;
@@ -16,7 +16,7 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<UserLogin>>();
   const [errorResponse, setErrorResponse] = useState<string>();
-  const { setLoggedIn } = useGlobalContext();
+  const { setLoggedIn, setUserActive } = useGlobalContext();
 
   const onInputChange = (fieldName: keyof UserLogin, value: string) => {
     setFormLogin((oldValue) => ({ ...oldValue, [fieldName]: value }));
@@ -55,6 +55,7 @@ const SignIn = () => {
         // setErrors({});
         setLoggedIn(true);
         setIsSubmitting(false);
+        setUserActive(response.data);
         router.replace("/home");
       }
     }
@@ -63,9 +64,9 @@ const SignIn = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="items-start px-4">
+        {/* <View className="items-start px-4">
           <Button type="icon" name="back" onPress={() => router.back()} />
-        </View>
+        </View> */}
         <ThemedView className="w-full px-4 items-start min-h-[85vh]">
           <LoginImage width={140} height={100} className="mt-5" />
           <ThemedText type="title" className="text-primary dark:text-primary-dark mt-5 max-w-xs">
