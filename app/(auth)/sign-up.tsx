@@ -65,12 +65,12 @@ const SignUp = () => {
         <ThemedView className="w-full px-4 items-start min-h-[85vh]">
           <RegisterImage width={140} height={100} className="mt-5" />
           <ThemedText type="title" className="text-primary dark:text-primary-dark mt-5 max-w-xs">
-            Sign up to KCA
+            Anggota Baru
           </ThemedText>
           <Input
-            title="Full Name"
+            title="Nama Lengkap"
             value={formRegister.fullName}
-            placeholder="Enter your full name"
+            placeholder="Masukkan nama lengkap"
             className="mt-5"
             onChangeText={(value) => onInputChange("fullName", value)}
           />
@@ -80,7 +80,7 @@ const SignUp = () => {
           <Input
             title="Email"
             value={formRegister.email}
-            placeholder="Enter your email address"
+            placeholder="Masukkan alamat email"
             className="mt-5"
             onChangeText={(value) => onInputChange("email", value)}
           />
@@ -90,7 +90,7 @@ const SignUp = () => {
           <Input
             title="Password"
             value={formRegister.password}
-            placeholder="Enter your password"
+            placeholder="Masukkan password"
             className="mt-5"
             onChangeText={(value) => onInputChange("password", value)}
           />
@@ -98,18 +98,18 @@ const SignUp = () => {
             <ThemedText className="text-error dark:text-error-dark">{errors.password}</ThemedText>
           ) : null}
           <Button
-            title="Sign Up"
+            title="Daftar"
             containerClassName="w-full mt-7"
             onPress={handleSubmit}
             isLoading={isSubmitting}
           />
           <ThemedView className="w-full pt-5 flex-row gap-2">
-            <ThemedText>Have an account already?</ThemedText>
+            <ThemedText>Sudah punya akun?</ThemedText>
             <Link
               href={"/sign-in"}
               className="text-base font-psemibold text-primary dark:text-primary-dark"
             >
-              Sign In
+              Masuk
             </Link>
           </ThemedView>
         </ThemedView>

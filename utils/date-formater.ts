@@ -14,6 +14,6 @@ function isValidDate(d: Date): boolean {
 
 export function formatDate(date: any): string {
   var datetime = new Date(date);
-  return isValidDate(datetime) ? _formatDatetime(datetime, "dd-mm-yyyy") : "";
+  return isValidDate(datetime) ? _formatDatetime(datetime, "dd-mm-yyyy hh:mm") : "";
   // return isValidDate(datetime) ? _formatDatetime(datetime, "yyyy-mm-dd hh:ii:ss") : "";
 }

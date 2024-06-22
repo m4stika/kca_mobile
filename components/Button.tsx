@@ -28,7 +28,7 @@ const Button = ({
   const textColor = useThemeColor({}, "text"); */
 
   // const combineStyles = StyleSheet.flatten([styles.wrapper, style]);
-  const defaultStyles = "bg-rose-200 rounded-xl justify-center items-center p-3";
+  const defaultStyles = "bg-primary rounded-md justify-center items-center p-3";
   return type === "icon" ? (
     <ButtonIcon name={name} onPress={onPress} />
   ) : (
@@ -40,7 +40,7 @@ const Button = ({
       activeOpacity={0.7}
       {...props}
     >
-      <Text className={`text-2xl font-psemibold ${textClassName}`}>{title}</Text>
+      <Text className={`font-psemibold ${textClassName}`}>{title}</Text>
     </TouchableOpacity>
   );
 };

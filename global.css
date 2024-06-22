@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 98%, /* #fafafa zinc-50,*/
+  --background: 0 0% 98%; /* #fafafa zinc-50,*/
   --foreground: 222.2 47.4% 11.2%; /* #0F172A */
 
-  --paper: 220 14% 96%; /* #f3f4f6 gray-100 */
+  --paper: 220 14% 85%; /* #f3f4f6 gray-100 */
   --paper-foreground: 222.2 47.4% 11.2%; /* ##0F172A */
 
   --muted: 210 40% 96.1%; /* #f1f5f9 */
@@ -44,7 +44,7 @@
   --error-hover: 345.3 82.7% 40.8%; /* #be123c rose-700 */
 
   --disabled: 216 12.2% 83.9%; /* #D1D5DB gray-300 */
-  --disabled-foreground: 217.9 10.6% 64.9%; /* #9CA3AF gray-400 */
+  --disabled-foreground: #9ca3af; /* 218 11 65%; /* #9CA3AF gray-400 */
 
   --accent: 240 4.9% 83.9%; /* #D4D4D8 zinc-300*/
   /* --accent-foreground: 222.2 47.4% 11.2%; */
@@ -78,7 +78,7 @@
     --card: 222.2 47.4% 11.2%; /* #0F172A */
     --card-foreground: 213 31% 91%; /* #E1E7EF */
 
-    --border: 240 5.2% 33.9%;  /*zinc-600 */
+    --border: 240 5.2% 33.9%; /*zinc-600 */
     --input: 216 34% 17%; /* #1D283A */
 
     --default: 0 0% 89.8%; /* #E5E5E5 Neutral-200*/
@@ -100,7 +100,7 @@
     --error-hover: 349.7 89.2% 60.2%; /* #f43f5e rose-500 */
 
     --disabled: 240 5.2% 33.9%; /* #52525B zinc-600 */
-    --disabled-foreground: 217.9 10.6% 64.9%; /* #4b5563 gray-600 */
+    --disabled-foreground: #4b5563; /*215 13.8% 34.1%; /* 217.9 10.6% 64.9%; /* #4b5563 gray-600 */
 
     --accent: 240 10% 4%; /* #09090B */
     --accent-foreground: 198 93% 60%;

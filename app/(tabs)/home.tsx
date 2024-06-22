@@ -5,8 +5,9 @@ import useDataApi from "@/hooks/useDataApi";
 import { Member } from "@/schema/member.schema";
 import { formatDate } from "@/utils/date-formater";
 import { formatCurrency2 } from "@/utils/format-currency";
+import { router } from "expo-router";
 import React, { useState } from "react";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
@@ -159,11 +160,19 @@ const Home = () => {
   type Transaction = { id: number; transactionDate: Date; remark: string; amount: number };
   const TransactionHistory = ({ data }: { data: Transaction }) => {
     return (
-      <View className="w-full flex flex-row gap-1 px-5">
-        <Text className="basis-1/4">{formatDate(data.transactionDate)}</Text>
-        <Text className="basis-2/4 text-left">{data.remark}</Text>
-        <Text className="basis-1/4 text-right">{formatCurrency2(data.amount)}</Text>
-      </View>
+      <Pressable onPress={() => router.replace("/transaction-info")}>
+        <View className="w-full flex flex-col px-5 pb-3">
+          <View className="flex flex-row justify-between">
+            <Text className="">{formatDate(data.transactionDate)}</Text>
+            <Text className=" text-right text-primary font-pmedium">
+              {formatCurrency2(data.amount)}
+            </Text>
+          </View>
+          <View>
+            <Text className="text-left italic pl-3 text-foreground/40">{data.remark}</Text>
+          </View>
+        </View>
+      </Pressable>
     );
   };
 

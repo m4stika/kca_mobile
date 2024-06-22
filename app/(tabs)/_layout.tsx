@@ -15,6 +15,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
+      // initialRouteName="profile"
     >
       <Tabs.Screen
         name="home"

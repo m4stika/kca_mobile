@@ -70,13 +70,13 @@ const SignIn = () => {
         <ThemedView className="w-full px-4 items-start min-h-[85vh]">
           <LoginImage width={140} height={100} className="mt-5" />
           <ThemedText type="title" className="text-primary dark:text-primary-dark mt-5 max-w-xs">
-            Log in to KCA
+            Login Anggota
           </ThemedText>
           <Input
-            title="Email/member-id/phone"
+            title="Email / No. Anggota"
             // inputMode="email"
             value={formLogin.username}
-            placeholder="email/member-id/phone-number"
+            placeholder="email / No. anggota"
             className="mt-7"
             inputClassName="focus-visible:border-none focus:border-none focus:ring-2 focus:ring-error"
             onChangeText={(value) => onInputChange("username", value)}
@@ -87,7 +87,7 @@ const SignIn = () => {
           <Input
             title="Password"
             value={formLogin.password}
-            placeholder="Enter your password"
+            placeholder="Password anda"
             className="mt-7"
             onChangeText={(value) => onInputChange("password", value)}
           />
@@ -95,18 +95,18 @@ const SignIn = () => {
             <ThemedText className="text-error dark:text-error-dark">{errors.password}</ThemedText>
           ) : null}
           <Button
-            title="Sign In"
+            title="Masuk"
             containerClassName="w-full mt-7"
             onPress={handleSubmit}
             isLoading={isSubmitting}
           />
           <ThemedView className="w-full pt-5 flex-row gap-2">
-            <ThemedText className="cursor-pointer">Don't have acoount?</ThemedText>
+            <ThemedText className="cursor-pointer">Tidak memiliki akun?</ThemedText>
             <Link
               href={"/sign-up"}
               className="text-base font-psemibold text-primary dark:text-primary-dark active:text-xl"
             >
-              Sign Up
+              Daftar
             </Link>
           </ThemedView>
           {/* {errorResponse ? (
