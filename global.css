@@ -6,8 +6,8 @@
   --background: 0 0% 98%; /* #fafafa zinc-50,*/
   --foreground: 222.2 47.4% 11.2%; /* #0F172A */
 
-  --paper: 220 14% 85%; /* #f3f4f6 gray-100 */
-  --paper-foreground: 222.2 47.4% 11.2%; /* ##0F172A */
+  --paper: #f3f4f6; /* 220 14% 85%;  gray-100 */
+  --paper-foreground: #0F172A;  /* 222.2 47.4% 11.2%; */
 
   --muted: 210 40% 96.1%; /* #f1f5f9 */
   --muted-foreground: 215.4 16.3% 46.9%; /* #65758b */
@@ -66,8 +66,8 @@
     --background: 240 5.9% 10%; /*#18181b zinc-900 */
     --foreground: 220 14.3% 95.9%; /* #f3f4f6  gray-100 */
 
-    --paper: 240 10% 3.9%; /* #09090b  zinc-950 */
-    --paper-foreground: 215 20.2% 65.1%; /* #94a3b8  slate-400*/
+    --paper: #09090b;  /*  240 10% 3.9%; zinc-950 */
+    --paper-foreground:  #94a3b8 /* 215 20.2% 65.1%;   slate-400*/
 
     --muted: 222.2 47.4% 11.2%; /* #0F172A */
     --muted-foreground: 215 20.2% 65.1%; /* #94a3b8  slate-400*/

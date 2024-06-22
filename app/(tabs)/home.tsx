@@ -6,14 +6,19 @@ import { Member } from "@/schema/member.schema";
 import { formatDate } from "@/utils/date-formater";
 import { formatCurrency2 } from "@/utils/format-currency";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const { user } = useGlobalContext();
-  const { data, refetch, isLoading } = useDataApi<Member>({ url: "members/find" });
+  const { user, member, setMember } = useGlobalContext();
+  const { data, refetch, isLoading } = useDataApi<Member>({ url: "anggota/find" });
+
+  useEffect(() => {
+    if (!data && member) setMember(null);
+    if (data) setMember(data);
+  }, [data]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -30,9 +35,14 @@ const Home = () => {
           <ThemedText className="p-0 text-xs font-psemibold ">{user?.name}</ThemedText>
           <ThemedText className="text-xs tracking-tighter">{user?.email}</ThemedText>
         </View>
-        <View className="rounded-full bg-warning/80 px-2 h-5 flex flex-row items-center justify-between gap-1 text-white">
-          <TabBarIcon name="checkmark" size={12} className="mb-0" />
-          <ThemedText className="text-xs">Member</ThemedText>
+        <View className="rounded-full bg-success/80 px-2 h-6 flex flex-row items-center justify-between gap-1">
+          <TabBarIcon
+            name="checkmark"
+            size={12}
+            className="mb-0 text-background"
+            color={"#fafafa"}
+          />
+          <ThemedText className="text-xs text-disabled">Member</ThemedText>
         </View>
       </View>
       <View>
@@ -97,12 +107,12 @@ const Home = () => {
             </View>
           </View>
           {showDetail && (
-            <View className="flex flex-row gap-2 mt-2 h-8 justify-center  font-pmedium text-xs">
-              <ThemedText className="text-primary">{"Lihat detail"}</ThemedText>
+            <View className="flex flex-row gap-2 mt-2 h-8 items-center justify-center font-pmedium">
+              <ThemedText className="text-primary text-sm">{"Lihat detail"}</ThemedText>
               <TabBarIcon
                 name="chevron-forward"
                 size={16}
-                className="text-primary mt-1"
+                className="text-primary mt-0"
                 // color={"white"}
               />
             </View>
@@ -163,8 +173,8 @@ const Home = () => {
       <Pressable onPress={() => router.replace("/transaction-info")}>
         <View className="w-full flex flex-col px-5 pb-3">
           <View className="flex flex-row justify-between">
-            <Text className="">{formatDate(data.transactionDate)}</Text>
-            <Text className=" text-right text-primary font-pmedium">
+            <Text className="text-sm">{formatDate(data.transactionDate)}</Text>
+            <Text className=" text-right text-primary font-pmedium text-sm">
               {formatCurrency2(data.amount)}
             </Text>
           </View>
@@ -207,7 +217,7 @@ const Home = () => {
             <Card
               title="Saldo Voucher"
               captionPrefix="Rp"
-              caption={formatCurrency2(data?.voucherAmount || 0, { precision: 0 })}
+              caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
             />
 
             {/* <Card

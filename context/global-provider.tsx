@@ -1,4 +1,5 @@
 import { DarkTheme, DefaultTheme } from "@/constants/Colors";
+import { Member } from "@/schema/member.schema";
 import { User } from "@/schema/user.schema";
 import { api } from "@/utils/fetching";
 import { Theme, ThemeProvider } from "@react-navigation/native";
@@ -22,10 +23,12 @@ export default async function isAuthenticated() {
 type ContextProps = {
   theme: Theme;
   user?: User | null;
+  member?: Member | null;
   isLogged: boolean;
   isLoading: boolean;
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
   setUserActive: Dispatch<SetStateAction<User | null>>;
+  setMember: Dispatch<SetStateAction<Member | null>>;
   error?: string;
 };
 const GlobalContext = createContext<ContextProps>({
@@ -34,6 +37,7 @@ const GlobalContext = createContext<ContextProps>({
   isLogged: false,
   setLoggedIn: () => false,
   setUserActive: () => null,
+  setMember: () => null,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -46,6 +50,7 @@ export function GlobalProvider({ children }: ViewProps) {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
+  const [member, setMember] = useState<Member | null>(null);
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
   const [error, setError] = useState<string>();
   const { colorScheme } = useColorScheme();
@@ -72,11 +77,13 @@ export function GlobalProvider({ children }: ViewProps) {
       value={{
         theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
         user,
+        member,
         isLogged,
         isLoading,
         error,
         setLoggedIn: setIsLogged,
         setUserActive: setUser,
+        setMember: setMember,
       }}
     >
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

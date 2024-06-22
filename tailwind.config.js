@@ -125,8 +125,8 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         paper: {
-          DEFAULT: "hsl(var(--paper))",
-          foreground: "hsl(var(--paper-foreground))",
+          DEFAULT: "var(--paper)",
+          foreground: "var(--paper-foreground)",
         },
         default: "hsl(var(--default))",
         primary: {
@@ -175,6 +175,9 @@ module.exports = {
         pbold: ["Poppins-Bold", "sans-serif"],
         // pextrabold: ["Poppins-ExtraBold", "sans-serif"],
         // pblack: ["Poppins-Black", "sans-serif"],
+      },
+      fontSize: {
+        big: "7rem",
       },
     },
   },
