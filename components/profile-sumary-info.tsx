@@ -14,7 +14,7 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
   }
   return (
     <View className="flex flex-col">
-      <View className="bg-green-500 flex flex-col items-center justify-center py-8">
+      <View className="bg-primary/60 flex flex-col items-center justify-center py-8">
         <Text className="text-big text-gray-100" adjustsFontSizeToFit={true} numberOfLines={1}>
           {prefix?.substring(0, 2) || user?.username.substring(0, 2)}
         </Text>

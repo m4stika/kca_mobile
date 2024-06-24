@@ -20,7 +20,7 @@ const ProfileHeader = () => {
 
   const colorScheme = useThemeContextValues();
   return (
-    <View className="flex gap-4 px-4">
+    <View className="flex p-4">
       <View className=" flex flex-row items-center justify-between">
         <View className="flex flex-row items-center gap-2">
           <View className="size-16 rounded-full bg-stone-400 items-center justify-center p-2">
@@ -63,7 +63,7 @@ const ProfileHeader = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <View className="w-full border-b border-border" />
+      {/* <View className="w-full border-b border-border" /> */}
     </View>
   );
 };

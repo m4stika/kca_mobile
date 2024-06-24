@@ -13,6 +13,8 @@ export type Member = {
   norek: string;
   namarek: string;
   saldoVoucher: number;
+  saldoSimpanan: number;
+  saldoPinjaman: number;
   // noAnggota: string;
   // firstName: string;
   // lastName: string;

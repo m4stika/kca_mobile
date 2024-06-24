@@ -12,8 +12,17 @@ function isValidDate(d: Date): boolean {
   return !isNaN(d.getTime());
 }
 
-export function formatDate(date: any): string {
+export function formatDate(date: any, showTime: boolean = true): string {
   var datetime = new Date(date);
-  return isValidDate(datetime) ? _formatDatetime(datetime, "dd-mm-yyyy hh:mm") : "";
+  let result = "";
+  if (isValidDate(datetime) && showTime) {
+    result = _formatDatetime(datetime, "dd-mm-yyyy hh:mm");
+  }
+  if (isValidDate(datetime) && !showTime) {
+    result = _formatDatetime(datetime, "dd-mm-yyyy");
+  }
+  return result;
+
+  // return isValidDate(datetime) ? showTime ? _formatDatetime(datetime, "dd-mm-yyyy hh:mm") : "";
   // return isValidDate(datetime) ? _formatDatetime(datetime, "yyyy-mm-dd hh:ii:ss") : "";
 }

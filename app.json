@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "expo_kca_mobile",
-    "slug": "expo_kca_mobile",
+    "name": "KCA-Mobile",
+    "slug": "KCA-Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "KCA-Mobile",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/svgs/splash.png",
+      "image": "./assets/images/kca.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

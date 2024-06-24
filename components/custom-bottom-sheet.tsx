@@ -1,9 +1,4 @@
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetScrollView,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
 import { View, useColorScheme } from "react-native";
 
@@ -21,7 +16,7 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
     // const bottomSheetRef = useRef<BottomSheet>(null);
 
     // variables
-    const snapPoints = useMemo(() => snapPointItems ?? ["25%", "50%", "80%"], []);
+    const snapPoints = useMemo(() => snapPointItems ?? ["25%", "50%", "80%"], [snapPointItems]);
 
     // callbacks
     // const handleSheetChanges = useCallback((index: number) => {
@@ -47,9 +42,9 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
           handleIndicatorStyle={{ backgroundColor: "#D1D5DB" }}
           backgroundStyle={{ backgroundColor: theme === "light" ? "#fafafa" : "#18181b" }}
         >
-          <BottomSheetScrollView>
-            <BottomSheetView className="flex-1">{content ? content : title}</BottomSheetView>
-          </BottomSheetScrollView>
+          {/* <BottomSheetScrollView> */}
+          <BottomSheetView className="flex-1">{content ? content : title}</BottomSheetView>
+          {/* </BottomSheetScrollView> */}
         </BottomSheetModal>
       </View>
     );

@@ -1,14 +1,19 @@
 import CustomBottomSheet from "@/components/custom-bottom-sheet";
+import LoanDetail from "@/components/loan-detail";
 import ProfileDetail from "@/components/profile-detail";
 import ProfileHeader from "@/components/profile-header";
 import ProfileSummaryInfo from "@/components/profile-sumary-info";
+import SavingAccountDetail from "@/components/saving-account-detail";
+import SavingAccountSummary from "@/components/saving-account-summary";
 import { useGlobalContext } from "@/context/global-provider";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import React, { useCallback, useRef } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ScrollView, View } from "react-native";
 
 const Profile = () => {
   const { user, member } = useGlobalContext();
+  const [sheetActive, setSheetActive] = useState<"profile" | "simpanan" | "pinjaman">("profile");
+  const [snapPointItems, setSnapPointItems] = useState<string[]>(["80%"]);
   // const { dismiss } = useBottomSheetModal();
   // ref
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -23,20 +28,46 @@ const Profile = () => {
     bottomSheetRef.current?.present();
   }, []);
 
+  useEffect(() => {
+    setSnapPointItems(sheetActive === "simpanan" ? ["40%"] : ["80%"]);
+  }, [sheetActive]);
+
   return (
-    <SafeAreaView className="h-full">
-      {/* <View className="flex"> */}
+    <View className="h-full">
       <ProfileHeader />
-      <ProfileSummaryInfo onPress={handlePresentModalPress} />
-      <CustomBottomSheet
-        title="Informasi Profile"
-        ref={bottomSheetRef}
-        // activeIndex={2}
-        snapPointItems={["80%"]}
-        content={<ProfileDetail />}
-      />
-      {/* </View> */}
-    </SafeAreaView>
+      <ScrollView>
+        <View className="flex gap-3 h-full">
+          <ProfileSummaryInfo
+            onPress={() => {
+              setSheetActive("profile");
+              handlePresentModalPress();
+            }}
+          />
+          <SavingAccountSummary
+            setState={setSheetActive}
+            onPress={() => {
+              // setSheetActive("simpanan");
+              handlePresentModalPress();
+            }}
+          />
+          <CustomBottomSheet
+            title="Informasi Profile"
+            ref={bottomSheetRef}
+            // activeIndex={2}
+            snapPointItems={snapPointItems}
+            content={
+              sheetActive === "profile" ? (
+                <ProfileDetail />
+              ) : sheetActive === "simpanan" ? (
+                <SavingAccountDetail />
+              ) : (
+                <LoanDetail />
+              )
+            }
+          />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
