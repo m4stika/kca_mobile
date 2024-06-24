@@ -12,6 +12,7 @@ const ModalLayout = () => {
         // initialParams={{open, setOpen}}
       />
       <Stack.Screen name="transaction-info" options={{ headerShown: true }} />
+      <Stack.Screen name="shopping-chart" options={{ headerShown: true }} />
     </Stack>
   );
 };

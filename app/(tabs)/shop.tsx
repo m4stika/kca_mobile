@@ -3,7 +3,7 @@ import ShopHeader from "@/components/shop-header";
 import useDataApi from "@/hooks/useDataApi";
 import { Product } from "@/schema/product.schema";
 import React, { useState } from "react";
-import { FlatList, RefreshControl, SafeAreaView } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 
 const Shop = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -16,7 +16,7 @@ const Shop = () => {
   };
 
   return (
-    <SafeAreaView className="">
+    <View className="pb-4 flex-1">
       {/* <View className="flex-1 flex-row items-center justify-between p-2"> */}
       <ShopHeader />
       <FlatList
@@ -25,18 +25,18 @@ const Shop = () => {
         // className="justify-center items-center"
         contentContainerClassName="gap-3"
         columnWrapperClassName="gap-3 justify-center"
-        scrollEnabled
         keyExtractor={(item) => item.kodeBarang.toString()}
-        renderItem={({ item, index }) => (
-          // <View className="items-center justify-between rounded-xl">
-          <ProductCard product={item} key={index} />
-          // </View>
-        )}
+        renderItem={({ item, index }) => <ProductCard product={item} key={index} />}
+        // getItemLayout={(data, index) => ({
+        //   length: 50,
+        //   offset: 50 * index,
+        //   index,
+        // })}
         // ListHeaderComponent={() => <ShopHeader />}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
       {/* </View> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

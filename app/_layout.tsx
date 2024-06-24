@@ -1,12 +1,13 @@
 import { GlobalProvider } from "@/context/global-provider";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import clsx from "clsx";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Platform, StatusBar, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -42,7 +43,17 @@ export default function RootLayout() {
     <GlobalProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
-          <SafeAreaView style={{ flex: 1, margin: 0, padding: 0 }}>
+          {/* <SafeAreaView style={{ flex: 1, margin: 0, padding: 0 }}> */}
+          {/* <View className={clsx("flex-1 m-0 p-0", Platform.OS === "android" ? "pt-10" : "pt-0")}> */}
+          <View
+            style={{
+              flex: 1,
+              margin: 0,
+              padding: 0,
+              paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+            }}
+            className={clsx("flex-1 m-0 p-0", Platform.OS === "android" ? "pt-10" : "pt-0")}
+          >
             <Stack screenOptions={{ headerShown: false }} initialRouteName="/welcome">
               <Stack.Screen name="index" />
               <Stack.Screen name="(auth)" />
@@ -51,7 +62,7 @@ export default function RootLayout() {
               <Stack.Screen name="+not-found" />
               <Stack.Screen name="(screen)" />
             </Stack>
-          </SafeAreaView>
+          </View>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </GlobalProvider>

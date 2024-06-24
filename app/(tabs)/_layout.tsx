@@ -1,6 +1,7 @@
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import React from "react";
 
+import { Button } from "@/components/atoms";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -13,7 +14,8 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarShowLabel: false,
+        // tabBarStyle: { padding: 0 },
+        // tabBarShowLabel: false,
       }}
       // initialRouteName="profile"
     >
@@ -26,21 +28,25 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
-        name="loan"
+        name="shop"
         options={{
-          title: "Pinjaman",
+          title: "Store",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "newspaper" : "newspaper-outline"} color={color} />
+            <TabBarIcon name={focused ? "bag-handle" : "bag-handle-outline"} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="shop"
+        name="transaction"
         options={{
-          title: "shop",
+          // headerShown: true,
+          headerLeft: (props) => <Button type="icon" name="back" onPress={() => router.back()} />,
+          // headerLeftLabelVisible: true,
+          title: "Transaksi",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "bag-handle" : "bag-handle-outline"} color={color} />
+            <TabBarIcon name={focused ? "reader" : "reader-outline"} color={color} />
           ),
         }}
       />
