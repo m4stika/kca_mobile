@@ -9,6 +9,7 @@ import {
   unsplash8,
   unsplash9,
 } from "@/assets/images";
+import clsx from "clsx";
 import React from "react";
 import { ImageBackground, ImageSourcePropType } from "react-native";
 
@@ -25,14 +26,18 @@ const imgMap: Record<number, ImageSourcePropType> = {
   8: unsplash9,
 };
 
-const RandomImage = () => {
+const RandomImage = ({ className }: { className?: string }) => {
   function getRandomPic() {
     const random = Math.floor(Math.random() * Math.floor(noOfPic));
     // return require(`./images/${imgMap[random]}`);
     return imgMap[random];
   }
   return (
-    <ImageBackground source={getRandomPic()} className="h-52 w-44 rounded-lg" resizeMode="cover" />
+    <ImageBackground
+      source={getRandomPic()}
+      className={clsx(`h-52 w-44 rounded-lg`, className)}
+      resizeMode="cover"
+    />
   );
 };
 

@@ -27,13 +27,13 @@ type StatusBarThemeStyle = {
 
 export const StatusBarTheme: StatusBarThemeStyle = {
   light: {
-    style: "dark",
+    style: "light",
     // background: "#fafafa",
-    background: "#3399bb",
+    background: "#0284C7",
   },
   dark: {
-    style: "light",
+    style: "dark",
     // background: "#18181b",
-    background: "#2288dd",
+    background: "#38bdf8",
   },
 };

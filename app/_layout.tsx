@@ -54,7 +54,7 @@ export default function RootLayout() {
             }}
             className={clsx("flex-1 m-0 p-0", Platform.OS === "android" ? "pt-10" : "pt-0")}
           >
-            <Stack screenOptions={{ headerShown: false }} initialRouteName="/welcome">
+            <Stack screenOptions={{ headerShown: false }} initialRouteName="/index">
               <Stack.Screen name="index" />
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(tabs)" />

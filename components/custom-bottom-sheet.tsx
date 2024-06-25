@@ -31,7 +31,7 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
 
     // renders
     return (
-      <View className="flex-1 items-center">
+      <View className="items-center">
         <BottomSheetModal
           ref={ref}
           // onChange={handleSheetChanges}

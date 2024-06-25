@@ -32,9 +32,13 @@ type ContextProps = {
   setLoggedIn: Dispatch<SetStateAction<boolean>>;
   setUserActive: Dispatch<SetStateAction<User | null>>;
   setMember: Dispatch<SetStateAction<Member | null>>;
-  setOrderCount: Dispatch<SetStateAction<number>>;
+  // setOrderCount: Dispatch<SetStateAction<number>>;
+  setOrders: Dispatch<SetStateAction<Order[] | undefined>>;
   error?: string;
   orderCount: number;
+  orderAmount: number;
+  orderHasChanged: boolean;
+  setOrderHasChange: Dispatch<SetStateAction<boolean>>;
   orders?: Order[];
 };
 const GlobalContext = createContext<ContextProps>({
@@ -44,8 +48,13 @@ const GlobalContext = createContext<ContextProps>({
   setLoggedIn: () => false,
   setUserActive: () => null,
   setMember: () => null,
-  setOrderCount: () => 0,
+  // setOrderCount: () => 0,
+  setOrders: () => undefined,
   orderCount: 0,
+  orderAmount: 0,
+  orderHasChanged: false,
+  setOrderHasChange: () => false,
+  orders: [],
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -57,10 +66,12 @@ export const useGlobalContext = () => useContext(GlobalContext);
 export function GlobalProvider({ children }: ViewProps) {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [orderChange, setOrderChange] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [member, setMember] = useState<Member | null>(null);
-  const [orders, setOrders] = useState<Order[] | null>(null);
+  const [orders, setOrders] = useState<Order[] | undefined>();
   const [orderCount, setOrderCount] = useState<number>(0);
+  const [orderAmount, setOrderAmount] = useState<number>(0);
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
   const [error, setError] = useState<string>();
   const { colorScheme } = useColorScheme();
@@ -82,6 +93,23 @@ export function GlobalProvider({ children }: ViewProps) {
       .finally(() => setIsLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (!orderChange) return;
+    if (!orders) {
+      setOrderCount(0);
+      setOrderAmount(0);
+    } else {
+      // console.log("change effected");
+      setOrderCount(orders.length);
+      const amount = orders.reduce(
+        (accumulated, item) => (accumulated += item.price * item.qty),
+        0
+      );
+      setOrderAmount(amount);
+    }
+    setOrderChange(false);
+  }, [orderChange]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -92,10 +120,15 @@ export function GlobalProvider({ children }: ViewProps) {
         isLoading,
         error,
         orderCount,
+        orders,
+        orderAmount,
         setLoggedIn: setIsLogged,
         setUserActive: setUser,
         setMember: setMember,
-        setOrderCount: setOrderCount,
+        // setOrderCount: setOrderCount,
+        setOrders: setOrders,
+        orderHasChanged: orderChange,
+        setOrderHasChange: setOrderChange,
       }}
     >
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

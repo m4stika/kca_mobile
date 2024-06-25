@@ -4,13 +4,16 @@
     "slug": "KCA-Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/kca.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "KCA-Mobile",
     "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "backgroundColor": "#0284C7",
+      "translucent": false
+    },
     "splash": {
-      "image": "./assets/images/kca.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain"
     },
     "ios": {
       "supportsTablet": true

@@ -103,7 +103,7 @@
     --disabled-foreground: #4b5563; /*215 13.8% 34.1%; /* 217.9 10.6% 64.9%; /* #4b5563 gray-600 */
 
     --accent: 240 10% 4%; /* #09090B */
-    --accent-foreground: 198 93% 60%;
+    --accent-foreground: 198 93% 60%; /* #3ABFF8 */
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;

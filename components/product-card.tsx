@@ -29,7 +29,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Text className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>
             {product.namaBarang}
           </Text>
-          <ButtonAdd />
+          <ButtonAdd product={product} />
         </View>
       </View>
     </View>

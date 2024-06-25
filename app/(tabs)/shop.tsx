@@ -27,12 +27,6 @@ const Shop = () => {
         columnWrapperClassName="gap-3 justify-center"
         keyExtractor={(item) => item.kodeBarang.toString()}
         renderItem={({ item, index }) => <ProductCard product={item} key={index} />}
-        // getItemLayout={(data, index) => ({
-        //   length: 50,
-        //   offset: 50 * index,
-        //   index,
-        // })}
-        // ListHeaderComponent={() => <ShopHeader />}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
       {/* </View> */}
