@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme } from "@/constants/Colors";
 import { Member } from "@/schema/member.schema";
-import { Order } from "@/schema/order.schema";
+import { Order, orderInitialValue } from "@/schema/order.schema";
 import { User } from "@/schema/user.schema";
 import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
@@ -33,13 +33,13 @@ type ContextProps = {
   setUserActive: Dispatch<SetStateAction<User | null>>;
   setMember: Dispatch<SetStateAction<Member | null>>;
   // setOrderCount: Dispatch<SetStateAction<number>>;
-  setOrders: Dispatch<SetStateAction<Order[] | undefined>>;
   error?: string;
   orderCount: number;
   orderAmount: number;
-  orderHasChanged: boolean;
-  setOrderHasChange: Dispatch<SetStateAction<boolean>>;
-  orders?: Order[];
+  // orderHasChanged: boolean;
+  // setOrderHasChange: Dispatch<SetStateAction<boolean>>;
+  order: Order;
+  setOrder: Dispatch<SetStateAction<Order>>;
 };
 const GlobalContext = createContext<ContextProps>({
   theme: DefaultTheme,
@@ -49,12 +49,12 @@ const GlobalContext = createContext<ContextProps>({
   setUserActive: () => null,
   setMember: () => null,
   // setOrderCount: () => 0,
-  setOrders: () => undefined,
+  setOrder: () => undefined,
   orderCount: 0,
   orderAmount: 0,
-  orderHasChanged: false,
-  setOrderHasChange: () => false,
-  orders: [],
+  // orderHasChanged: false,
+  // setOrderHasChange: () => false,
+  order: orderInitialValue,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -66,12 +66,12 @@ export const useGlobalContext = () => useContext(GlobalContext);
 export function GlobalProvider({ children }: ViewProps) {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [orderChange, setOrderChange] = useState<boolean>(false);
+  // const [orderChange, setOrderChange] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [member, setMember] = useState<Member | null>(null);
-  const [orders, setOrders] = useState<Order[] | undefined>();
-  const [orderCount, setOrderCount] = useState<number>(0);
-  const [orderAmount, setOrderAmount] = useState<number>(0);
+  const [order, setOrder] = useState<Order>(orderInitialValue);
+  // const [orderCount, setOrderCount] = useState<number>(0);
+  // const [orderAmount, setOrderAmount] = useState<number>(0);
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
   const [error, setError] = useState<string>();
   const { colorScheme } = useColorScheme();
@@ -94,21 +94,18 @@ export function GlobalProvider({ children }: ViewProps) {
   }, []);
 
   useEffect(() => {
-    if (!orderChange) return;
-    if (!orders) {
-      setOrderCount(0);
-      setOrderAmount(0);
+    // if (!orderChange) return;
+    if (order.OrderDetail.length === 0) {
+      // setOrderCount(0);
+      // setOrderAmount(0);
+      order.orderAmount = 0;
     } else {
-      // console.log("change effected");
-      setOrderCount(orders.length);
-      const amount = orders.reduce(
-        (accumulated, item) => (accumulated += item.price * item.qty),
-        0
-      );
-      setOrderAmount(amount);
+      // setOrderCount(order.OrderDetail.length);
+      // setOrderAmount(order.orderAmount);
     }
-    setOrderChange(false);
-  }, [orderChange]);
+    // console.log(order);
+    // setOrderChange(false);
+  }, [order]);
 
   return (
     <GlobalContext.Provider
@@ -119,16 +116,16 @@ export function GlobalProvider({ children }: ViewProps) {
         isLogged,
         isLoading,
         error,
-        orderCount,
-        orders,
-        orderAmount,
+        orderCount: order.OrderDetail.length,
+        order,
+        orderAmount: order.orderAmount,
         setLoggedIn: setIsLogged,
         setUserActive: setUser,
         setMember: setMember,
         // setOrderCount: setOrderCount,
-        setOrders: setOrders,
-        orderHasChanged: orderChange,
-        setOrderHasChange: setOrderChange,
+        setOrder: setOrder,
+        // orderHasChanged: orderChange,
+        // setOrderHasChange: setOrderChange,
       }}
     >
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

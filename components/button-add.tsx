@@ -1,5 +1,5 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { Order } from "@/schema/order.schema";
+import { OrderDetail } from "@/schema/order.schema";
 import { Product } from "@/schema/product.schema";
 import React from "react";
 import { View } from "react-native";
@@ -7,32 +7,53 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ButtonAdd = ({ product }: { product: Product }) => {
-  const { setOrders, orders, setOrderHasChange } = useGlobalContext();
+  const { setOrder, order } = useGlobalContext();
   const handleAddOrder = () => {
-    const item: Order = {
+    const item: OrderDetail = {
       kodeBarang: product.kodeBarang,
       qty: 1,
       price: Number(product.hargaJual),
       Barang: product,
     };
-    if (!orders) {
-      setOrders([item]);
-      setOrderHasChange(true);
-      return;
-    }
 
-    // const orderContext = orders?.find((item) => item.kodeBarang === item.kodeBarang);
-    const itemIndex = orders.findIndex((item) => item.kodeBarang === product.kodeBarang);
+    /* if (order.OrderDetail) {
+      setOrder({
+        ...orderInitialValue,
+        orderAmount: Number(product.hargaJual),
+        OrderDetail: [item],
+      });
+      // setOrderHasChange(true);
+      return;
+    } */
+
+    // const itemSelected = order.OrderDetail.find((item) => item.kodeBarang === product.kodeBarang);
+    const itemIndex = order.OrderDetail.findIndex((item) => item.kodeBarang === product.kodeBarang);
     if (itemIndex >= 0) {
-      const finalOrders = orders;
-      finalOrders[itemIndex].qty += 1;
-      setOrders(finalOrders);
-      setOrderHasChange(true);
+      // const finalOrder = order;
+      const { OrderDetail } = order;
+      OrderDetail[itemIndex].qty += 1;
+      const orderAmount = order.orderAmount + Number(product.hargaJual);
+      setOrder((oldValue) => ({
+        ...oldValue,
+        orderAmount,
+        OrderDetail,
+      }));
+
+      // finalOrder.OrderDetail[itemIndex].qty += 1;
+      // finalOrder.orderAmount += finalOrder.OrderDetail[itemIndex].price;
+      // setOrder(finalOrder);
       return;
     }
 
-    setOrders((oldValue) => oldValue && [...oldValue, item]);
-    setOrderHasChange(true);
+    setOrder(
+      (oldValue) =>
+        oldValue && {
+          ...oldValue,
+          orderAmount: oldValue.orderAmount + item.price,
+          OrderDetail: [...oldValue.OrderDetail, item],
+        }
+    );
+    // setOrderHasChange(true);
   };
   return (
     <View className="absolute -top-6 right-2 h-8 w-8 rounded-full bg-success items-center justify-center">

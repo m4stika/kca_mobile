@@ -6,11 +6,14 @@ import ShippingMethod from "@/components/shipping-method";
 import ShoppingChartFooter from "@/components/shopping-cart-footer";
 import ShoppingCartHeader from "@/components/shopping-cart-header";
 import ShoppingCartList from "@/components/shopping-cart-list";
+import { useGlobalContext } from "@/context/global-provider";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { router } from "expo-router";
 import React, { useCallback, useRef, useState } from "react";
 import { View } from "react-native";
 
 const ShoppingCart = () => {
+  const { orderCount } = useGlobalContext();
   const [sheetTitle, setSheetTitle] = useState("Metoda Pengiriman");
   const [sheetActive, setSheetActive] = useState<"shipping" | "payment">("shipping");
   // const [snapPointItems, setSnapPointItems] = useState<string[]>(["70%"]);
@@ -21,9 +24,7 @@ const ShoppingCart = () => {
     bottomSheetRef.current?.present();
   }, []);
 
-  // useEffect(() => {
-  //   setSnapPointItems(sheetActive === "shi" ? ["40%"] : ["80%"]);
-  // }, [sheetActive]);
+  if (orderCount === 0) router.back();
 
   return (
     <View className="flex-1 gap-4 px-2">

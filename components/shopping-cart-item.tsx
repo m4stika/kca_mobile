@@ -1,12 +1,12 @@
 import { unsplash1 } from "@/assets/images";
-import { Order } from "@/schema/order.schema";
+import { OrderDetail } from "@/schema/order.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import React from "react";
 import { Image, Text, View } from "react-native";
 import NumberWithCurrency from "./number-with-currency";
 import ShoppingCartAddRemoveItem from "./shopping-cart-add-remove-item";
 
-const ShoppingCartItem = ({ order }: { order: Order }) => {
+const ShoppingCartItem = ({ orderItem }: { orderItem: OrderDetail }) => {
   return (
     <View className="flex flex-row gap-2 items-center px-2">
       <View className="border">
@@ -15,12 +15,12 @@ const ShoppingCartItem = ({ order }: { order: Order }) => {
       <View className="flex flex-col flex-auto">
         <View>
           <Text className="text-xs line-clamp-1" numberOfLines={1}>
-            {order.Barang.namaBarang}
+            {orderItem.Barang.namaBarang}
           </Text>
 
-          <NumberWithCurrency value={formatCurrency(order.price)} />
+          <NumberWithCurrency value={formatCurrency(orderItem.price)} />
         </View>
-        <ShoppingCartAddRemoveItem order={order} />
+        <ShoppingCartAddRemoveItem orderItem={orderItem} />
       </View>
     </View>
   );

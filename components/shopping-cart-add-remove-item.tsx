@@ -1,46 +1,65 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { Order } from "@/schema/order.schema";
+import { OrderDetail } from "@/schema/order.schema";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
-const ShoppingCartAddRemoveItem = ({ order }: { order: Order }) => {
-  const { setOrders, orders, setOrderHasChange } = useGlobalContext();
-  if (!orders) return;
-  const selectedOrder = orders.find((item) => item.kodeBarang === order.kodeBarang);
-  if (!selectedOrder) return;
+const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) => {
+  const { setOrder, order } = useGlobalContext();
+  if (order.OrderDetail.length === 0) return;
+  const selectedItem = order.OrderDetail.find((item) => item.kodeBarang === orderItem.kodeBarang);
+  if (!selectedItem) return;
 
-  const [qty, setQty] = useState<number>(selectedOrder.qty);
+  const [qty, setQty] = useState<number>(selectedItem.qty);
 
   const handleAddQty = (isAdder: boolean) => {
-    if (!orders) return;
-    isAdder ? setQty((old) => old + 1) : setQty((old) => old - 1);
-    const itemIndex = orders.findIndex((item) => item.kodeBarang === order.kodeBarang);
-    const tempOrders = orders;
+    const tempQty = isAdder ? qty + 1 : qty - 1;
+    setQty(tempQty);
+
+    const itemIndex = order.OrderDetail.findIndex(
+      (item) => item.kodeBarang === orderItem.kodeBarang
+    );
+
+    // const tempOrder = order;
     if (itemIndex >= 0) {
-      tempOrders[itemIndex].qty = qty;
-      setOrders(tempOrders);
-      setOrderHasChange(true);
+      const { OrderDetail } = order;
+      OrderDetail[itemIndex].qty = tempQty;
+      let orderAmount = order.orderAmount;
+      if (isAdder) {
+        orderAmount += Number(orderItem.price);
+      } else {
+        orderAmount -= Number(orderItem.price);
+      }
+
+      setOrder((oldValue) => ({
+        ...oldValue,
+        orderAmount,
+        OrderDetail,
+      }));
+      // setOrderHasChange(true);
     }
   };
 
   const handleDelete = () => {
-    const tempOrders = orders;
-    if (tempOrders) {
-      tempOrders?.filter((item) => item.kodeBarang !== order.kodeBarang);
-      setOrders(tempOrders?.filter((item) => item.kodeBarang !== order.kodeBarang));
-      setOrderHasChange(true);
+    if (order) {
+      const itemFilter = order.OrderDetail.filter(
+        (item) => item.kodeBarang !== orderItem.kodeBarang
+      );
+      order.orderAmount -= Number(orderItem.price);
+      setOrder({ ...order, OrderDetail: itemFilter });
+      // setOrder(tempOrders.OrderDetail.filter((item) => item.kodeBarang !== order.kodeBarang));
+      // setOrderHasChange(true);
     }
   };
 
   return (
     <View className="flex flex-row rounded-full border border-border w-28 self-end items-center justify-between px-1">
-      {selectedOrder.qty === 1 ? (
+      {selectedItem.qty === 1 ? (
         <TabBarIcon name="trash" size={20} onPress={handleDelete} />
       ) : (
         <TabBarIcon name="remove" size={20} onPress={() => handleAddQty(false)} />
       )}
-      <Text>{selectedOrder.qty}</Text>
+      <Text>{selectedItem.qty}</Text>
       <TabBarIcon name="add" size={20} onPress={() => handleAddQty(true)} />
     </View>
   );
