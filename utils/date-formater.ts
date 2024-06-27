@@ -1,4 +1,4 @@
-function _formatDatetime(date: Date, format: string) {
+export function _formatDatetime(date: Date, format: string) {
   const _padStart = (value: number): string => value.toString().padStart(2, "0");
   return format
     .replace(/yyyy/g, _padStart(date.getFullYear()))
@@ -8,6 +8,7 @@ function _formatDatetime(date: Date, format: string) {
     .replace(/ii/g, _padStart(date.getMinutes()))
     .replace(/ss/g, _padStart(date.getSeconds()));
 }
+
 function isValidDate(d: Date): boolean {
   return !isNaN(d.getTime());
 }

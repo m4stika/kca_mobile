@@ -1,4 +1,4 @@
-import HomeCard from "@/components/home-card";
+import { ThemedText } from "@/components/ThemedText";
 import HomeHeader from "@/components/home-header";
 import TransactionCard from "@/components/transaction-card";
 import { useGlobalContext } from "@/context/global-provider";
@@ -11,7 +11,7 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native";
 
-const Home = () => {
+export const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { user, member, setMember, setOrder } = useGlobalContext();
   const { data, refetch, isLoading } = useDataApi<Member>({
@@ -31,7 +31,6 @@ const Home = () => {
   //   if (response.data) setOrder(response.data);
   // }
   // };
-
   useEffect(() => {
     if (!data && member) setMember(null);
     if (data) {
@@ -81,54 +80,30 @@ const Home = () => {
   };
 
   return (
-    <View className="flex gap-3 px-2 py-3">
-      <HomeHeader user={user!} />
-      <HomeCard
-        color="success"
-        title="Saldo Voucher"
-        captionPrefix="Rp"
-        caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
-        captionClassName="-ml-2"
-        showDetail={false}
-      />
-      <View className="py-0 -mb-3 pt-2">
-        <Text className="font-psemibold">Transaksi Terakhir</Text>
-      </View>
+    <FlatList
+      data={orders}
+      horizontal={true}
+      scrollEnabled
+      showsHorizontalScrollIndicator={false}
+      initialScrollIndex={orders ? orders.length - 1 : 0}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <TransactionCard order={item} key={item.id} />}
+      ListHeaderComponent={() => (
+        <View className="flex gap-4 px-4">
+          <HomeHeader user={user!} />
+          {/* <HomeCard
+                            color="primary"
+                            title="Saldo Voucher"
+                            captionPrefix="Rp"
+                            caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
+                            showDetail={false}
+                          /> */}
 
-      <FlatList
-        data={orders}
-        horizontal={true}
-        // scrollEnabled
-        // showsHorizontalScrollIndicator={false}
-        initialScrollIndex={0}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View className="flex-1" key={item.id}>
-            <TransactionCard order={item} />
-          </View>
-        )}
-        // ListHeaderComponentClassName="flex flex-col w-fit"
-        contentContainerClassName="flex flex-row gap-4 justify-stretch items-stretch"
-        // getItemLayout={(_, index) => ({ length: innerWidth, offset: innerWidth * index, index })}
-        // ListHeaderComponent={() => (
-        //   <View>
-        //     <HomeHeader user={user!} />
-        //     <HomeCard
-        //       color="primary"
-        //       title="Saldo Voucher"
-        //       captionPrefix="Rp"
-        //       caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
-        //       showDetail={false}
-        //     />
-
-        //     {/* <MemberInfo /> */}
-        //     {/* <ThemedText type="subtitle">Transaksi Terakhir</ThemedText> */}
-        //   </View>
-        // )}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      />
-    </View>
+          {/* <MemberInfo /> */}
+          <ThemedText type="subtitle">Transaksi Terakhir</ThemedText>
+        </View>
+      )}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    />
   );
 };
-
-export default Home;

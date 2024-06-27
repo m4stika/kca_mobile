@@ -22,7 +22,7 @@ async function request<T>(url: string, config: RequestInit, params?: any): Promi
 
   const response = await fetch(requestHttp);
 
-  // if (response.status === 401) router.push("/sign-in");
+  // if (response.status === 401) router.push("/welcome");
 
   return response.json();
 }

@@ -1,11 +1,14 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { PaymentMethod } from "@/schema/order.schema";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import React from "react";
 import { View } from "react-native";
 import { RadioButton } from "./atoms";
 
 const PaymentDetail = () => {
-  const { setOrder, order } = useGlobalContext();
+  const { setOrder, order, orderAmount } = useGlobalContext();
+  if (orderAmount === 0) return;
+  const { dismiss } = useBottomSheetModal();
   const radioData = [
     {
       key: "VOUCHER",
@@ -30,6 +33,7 @@ const PaymentDetail = () => {
         options={radioData}
         onSelection={(index, value) => {
           setOrder((oldValue) => ({ ...oldValue, paymentMethod: value.key as PaymentMethod }));
+          dismiss();
         }}
       />
     </View>

@@ -1,10 +1,13 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { ShippingMethod } from "@/schema/order.schema";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "react-native";
 import { RadioButton } from "./atoms";
 
 const ShippingDetail = () => {
-  const { setOrder, order } = useGlobalContext();
+  const { setOrder, order, orderAmount } = useGlobalContext();
+  const { dismiss } = useBottomSheetModal();
+  if (orderAmount === 0) return;
   const radioData = [
     {
       key: "TAKE_AWAY",
@@ -26,6 +29,7 @@ const ShippingDetail = () => {
         options={radioData}
         onSelection={(key, value) => {
           setOrder((oldValue) => ({ ...oldValue, shippingMethod: value.key as ShippingMethod }));
+          dismiss();
         }}
       />
     </View>

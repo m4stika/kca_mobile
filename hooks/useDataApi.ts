@@ -1,27 +1,56 @@
+import { useGlobalContext } from "@/context/global-provider";
 import { api } from "@/utils/fetching";
-import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const useDataApi = <T>({ url, params }: { url: string; params?: unknown }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<T>();
+const useDataApi = <T>({
+  queryKey,
+  url,
+  params,
+}: {
+  queryKey: string[];
+  url: string;
+  params?: unknown;
+}) => {
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [data, setData] = useState<T>();
+  const { isLogged } = useGlobalContext();
 
   const fetchData = async () => {
-    setIsLoading(true);
-    const response = await api.get<T>({ url });
-    if (response.status === "error") Alert.alert("Error", response.message);
-    else setData(response.data);
+    // setIsLoading(true);
+    const response = await api.get<T>({ url, params });
+    if (response.status === "error") {
+      // alert(response.message);
+      throw new Error(response.message);
+    }
 
-    setIsLoading(false);
+    return response.data;
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // if (!isLogged) router.navigate("/sign-in");
 
-  const refetch = () => fetchData();
+  const { data, isLoading, isFetching, error } = useQuery({
+    queryKey,
+    queryFn: fetchData,
+    // initialData: customerList,
+    // initialData: () => queryClient.getQueryData([contractTypeQueryKey]),
+    staleTime: 60000,
+    gcTime: 1000 * 1800,
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
+  const queryClient = useQueryClient();
 
-  return { data, refetch, isLoading };
+  const refetch = () => queryClient.invalidateQueries({ queryKey });
+
+  if (!isLogged) {
+    return { data, refetch, isLoading };
+  }
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  return { data, refetch, isLoading, isFetching, error };
 };
 
 export default useDataApi;

@@ -40,9 +40,18 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
           enablePanDownToClose={true}
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={{ backgroundColor: "#D1D5DB" }}
-          backgroundStyle={{ backgroundColor: theme === "light" ? "#fafafa" : "#18181b" }}
+          backgroundStyle={{
+            // backgroundColor: theme === "light" ? "#fafafa" : "#18181b",
+            // backgroundColor: "#facc15",
+            opacity: 60,
+          }}
         >
           {/* <BottomSheetScrollView> */}
+          {/* <BottomSheetView className="px-4 pt-0 pb-4 border border-border flex flex-row items-center gap-2">
+            <TabBarIcon name="close" />
+            <Text className="font-psemibold">{title}</Text>
+          </BottomSheetView> */}
+
           <BottomSheetView className="flex-1">{content ? content : title}</BottomSheetView>
           {/* </BottomSheetScrollView> */}
         </BottomSheetModal>

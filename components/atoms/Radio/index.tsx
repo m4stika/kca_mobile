@@ -25,7 +25,7 @@ export default function RadioButton({ onSelection, options, defaultSelection }: 
     <View className="flex gap-4">
       {options.map((item, index) => {
         return (
-          <TouchableOpacity onPress={() => setSelectedKey(item.key)}>
+          <TouchableOpacity onPress={() => setSelectedKey(item.key)} key={`${item.key}${index}`}>
             <View className="flex flex-row gap-3">
               <View className="flex items-start justify-start w-8">
                 {item.key == selectedKey && (

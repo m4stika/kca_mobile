@@ -11,6 +11,7 @@ import LabelWithValue from "./label-with-value";
 const LoanDetail = () => {
   const { member } = useGlobalContext();
   const { data, refetch, isLoading } = useDataApi<Pinjaman[]>({
+    queryKey: ["loans"],
     url: `pinjaman/byAnggota/${member?.noAnggota}`,
   });
   if (!data) return null;

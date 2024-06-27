@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export type Product = {
   kodeBarang: string;
   linkSource?: string;
@@ -7,4 +9,5 @@ export type Product = {
   satuan?: string;
   stok: number;
   hargaJual: number;
+  imageSource?: ImageSourcePropType;
 };

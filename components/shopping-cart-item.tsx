@@ -1,4 +1,3 @@
-import { unsplash1 } from "@/assets/images";
 import { OrderDetail } from "@/schema/order.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import React from "react";
@@ -10,7 +9,7 @@ const ShoppingCartItem = ({ orderItem }: { orderItem: OrderDetail }) => {
   return (
     <View className="flex flex-row gap-2 items-center px-2">
       <View className="border">
-        <Image source={unsplash1} className="h-24 w-20" resizeMode="cover" />
+        <Image source={orderItem.Barang.imageSource} className="h-24 w-20" resizeMode="cover" />
       </View>
       <View className="flex flex-col flex-auto">
         <View>

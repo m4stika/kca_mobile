@@ -24,16 +24,16 @@ const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) =>
     if (itemIndex >= 0) {
       const { OrderDetail } = order;
       OrderDetail[itemIndex].qty = tempQty;
-      let orderAmount = order.orderAmount;
+      let amount = order.amount;
       if (isAdder) {
-        orderAmount += Number(orderItem.price);
+        amount += Number(orderItem.price);
       } else {
-        orderAmount -= Number(orderItem.price);
+        amount -= Number(orderItem.price);
       }
 
       setOrder((oldValue) => ({
         ...oldValue,
-        orderAmount,
+        amount,
         OrderDetail,
       }));
       // setOrderHasChange(true);
@@ -45,7 +45,7 @@ const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) =>
       const itemFilter = order.OrderDetail.filter(
         (item) => item.kodeBarang !== orderItem.kodeBarang
       );
-      order.orderAmount -= Number(orderItem.price);
+      order.amount -= Number(orderItem.price);
       setOrder({ ...order, OrderDetail: itemFilter });
       // setOrder(tempOrders.OrderDetail.filter((item) => item.kodeBarang !== order.kodeBarang));
       // setOrderHasChange(true);

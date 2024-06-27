@@ -42,6 +42,7 @@ const SavingAccountSummary = ({
             title="Pinjaman"
             captionPrefix="Rp"
             caption={formatCurrency(Number(member.saldoPinjaman) || 0)}
+            showDetail={Number(member.saldoPinjaman) > 0}
             detailCaption="Detail"
             onPress={() => {
               setState("pinjaman");

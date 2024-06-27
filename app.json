@@ -8,7 +8,7 @@
     "scheme": "KCA-Mobile",
     "userInterfaceStyle": "automatic",
     "androidStatusBar": {
-      "backgroundColor": "#0284C7",
+      "backgroundColor": "#ffffff",
       "translucent": false
     },
     "splash": {
@@ -16,7 +16,8 @@
       "resizeMode": "contain"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mastika.KCAMobile"
     },
     "android": {
       "adaptiveIcon": {

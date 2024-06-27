@@ -1,34 +1,65 @@
+import { useGlobalContext } from "@/context/global-provider";
 import { Product } from "@/schema/product.schema";
 import { formatCurrency } from "@/utils/format-currency";
+import clsx from "clsx";
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import ButtonAdd from "./button-add";
-import RandomImage from "./random-images";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product, onPress }: { product: Product; onPress: () => void }) => {
+  const { setProductSelected } = useGlobalContext();
   return (
-    <View className="flex flex-col gap-4 w-[48%] rounded-lg bg-orange-100 items-center justify-between">
+    <View className="flex flex-col gap-3 w-[49%] rounded-lg  items-center justify-between">
       <View className="w-full">
-        <View className="rounded-lg p-2">
-          {/* <Image
-            source={{ uri: "https://picsum.photos/200/300?random=5" }}
-            className="h-48 w-44 rounded-lg"
-            resizeMode="cover"
-          /> */}
-          <RandomImage />
-        </View>
-        <View className="relative flex flex-col p-2 justify-between">
-          <View className="flex flex-row gap-1">
-            <Text className="text-xs font-plight">Rp</Text>
-            <View className="bg-warning/60 rounded-full min-w-[50%] px-3 flex justify-center">
-              <Text className="font-medium text-background">
-                {formatCurrency(Number(product.hargaJual))}
+        <TouchableOpacity
+          onPress={() => {
+            setProductSelected(product);
+            onPress();
+          }}
+        >
+          <View className="rounded-lg p-2">
+            <Image
+              // source={{ uri: "https://picsum.photos/200/300?random=5" }}
+              source={product.imageSource}
+              className="h-52 w-44 rounded-lg"
+              resizeMode="cover"
+            />
+            {/* <RandomImage /> */}
+          </View>
+        </TouchableOpacity>
+        <View className="relative">
+          <TouchableOpacity
+            onPress={() => {
+              setProductSelected(product);
+              onPress();
+            }}
+          >
+            <View className="flex flex-col p-2 justify-between">
+              <View className="flex flex-row gap-1">
+                <Text className="text-xs font-plight">Rp</Text>
+                <View
+                  className={clsx(
+                    "rounded-full min-w-[50%] px-3 flex justify-center",
+                    product.stok === 0 ? "bg-disabled" : "bg-error"
+                  )}
+                >
+                  <Text
+                    className={clsx(
+                      "",
+                      product.stok === 0
+                        ? "text-disabled-foreground"
+                        : "text-background font-medium"
+                    )}
+                  >
+                    {formatCurrency(Number(product.hargaJual))}
+                  </Text>
+                </View>
+              </View>
+              <Text className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>
+                {product.namaBarang}
               </Text>
             </View>
-          </View>
-          <Text className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>
-            {product.namaBarang}
-          </Text>
+          </TouchableOpacity>
           <ButtonAdd product={product} />
         </View>
       </View>

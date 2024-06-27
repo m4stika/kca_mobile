@@ -30,7 +30,7 @@ const RandomImage = ({ className }: { className?: string }) => {
   function getRandomPic() {
     const random = Math.floor(Math.random() * Math.floor(noOfPic));
     // return require(`./images/${imgMap[random]}`);
-    return imgMap[random];
+    return imgMap[1];
   }
   return (
     <ImageBackground

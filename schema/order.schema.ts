@@ -1,7 +1,18 @@
 import { Product } from "./product.schema";
-export type OrderStatus = "PRE-ORDER" | "ORDER" | "ON-VERIFICATION" | "ON-PACKING";
+export type TransactionType = "Belanja" | "Voucher" | "Pinjaman" | "Simpanan";
+// export type OrderStatus = "PRE-ORDER" | "ON-VERIFICATION" | "ON-PROCESS" | "ON-DELIVERY" | "DELIVERED" | "FAIL";
 // export type ShippingMethod = "TAKE_AWAY" | "DELIVERED" | "COD";
 // export type PaymentMethod = "VOUCHER" | "TRANSFER" | "CASH";
+export const orderStatus = {
+  PRE_ORDER: "Keranjang Belanja",
+  ON_VERIFICATION: "Menunggu Konfirmasi",
+  ON_PROCESS: "Sedang diproses",
+  ON_DELIVERY: "Dalam perjalanan",
+  DELIVERED: "Sampai ditujuan",
+  FAIL: "Tidak berhasil",
+} as const;
+export type OrderStatus = keyof typeof orderStatus;
+
 export const paymentMethod = {
   VOUCHER: "Saldo Voucher",
   TRANSFER: "Transfer Bank",
@@ -18,9 +29,13 @@ export type ShippingMethod = keyof typeof shippingMethod;
 
 export type Order = {
   id: number;
-  orderDate: Date;
+  invoiceNo?: string;
+  transactionType: TransactionType;
+  transactionDate: Date;
   orderStatus: OrderStatus;
-  orderAmount: number;
+  amount: number;
+  remark: string;
+  notes: string;
   shippingMethod?: ShippingMethod;
   paymentMethod?: PaymentMethod;
   OrderDetail: OrderDetail[];
@@ -34,8 +49,11 @@ export type OrderDetail = {
 
 export const orderInitialValue: Order = {
   id: Math.floor(Math.random() * 999),
-  orderDate: new Date(),
-  orderStatus: "PRE-ORDER",
-  orderAmount: 0,
+  transactionDate: new Date(),
+  transactionType: "Belanja",
+  orderStatus: "PRE_ORDER",
+  remark: "Pembelian waserda",
+  notes: "",
+  amount: 0,
   OrderDetail: [],
 };

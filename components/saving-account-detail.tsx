@@ -9,6 +9,7 @@ import LabelWithValue from "./label-with-value";
 const SavingAccountDetail = () => {
   const { member } = useGlobalContext();
   const { data, refetch, isLoading } = useDataApi<Simpanan>({
+    queryKey: ["saving_accounts"],
     url: `simpanan/${member?.noAnggota}`,
   });
   if (!data) return null;

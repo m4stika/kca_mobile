@@ -44,7 +44,7 @@ const HomeCard = ({
     >
       {/* <Image source={card} className="w-full h-full rounded-xl" resizeMode="cover" /> */}
       <View className="flex flex-row justify-between size-full">
-        <View className="flex flex-col justify-between px-2">
+        <View className="flex-1 flex-col justify-between px-2">
           <ThemedText
             type="subtitle"
             className={clsx(

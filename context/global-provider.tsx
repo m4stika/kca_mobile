@@ -1,6 +1,7 @@
 import { DarkTheme, DefaultTheme } from "@/constants/Colors";
 import { Member } from "@/schema/member.schema";
 import { Order, orderInitialValue } from "@/schema/order.schema";
+import { Product } from "@/schema/product.schema";
 import { User } from "@/schema/user.schema";
 import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
@@ -39,7 +40,11 @@ type ContextProps = {
   // orderHasChanged: boolean;
   // setOrderHasChange: Dispatch<SetStateAction<boolean>>;
   order: Order;
+  productSelected?: Product | undefined;
   setOrder: Dispatch<SetStateAction<Order>>;
+  setProductSelected: Dispatch<SetStateAction<Product | undefined>>;
+  orderSelected?: Order | undefined;
+  setOrderSelected: Dispatch<SetStateAction<Order | undefined>>;
 };
 const GlobalContext = createContext<ContextProps>({
   theme: DefaultTheme,
@@ -55,6 +60,8 @@ const GlobalContext = createContext<ContextProps>({
   // orderHasChanged: false,
   // setOrderHasChange: () => false,
   order: orderInitialValue,
+  setProductSelected: () => undefined,
+  setOrderSelected: () => undefined,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -70,6 +77,8 @@ export function GlobalProvider({ children }: ViewProps) {
   const [user, setUser] = useState<User | null>(null);
   const [member, setMember] = useState<Member | null>(null);
   const [order, setOrder] = useState<Order>(orderInitialValue);
+  const [productSelected, setProductSelected] = useState<Product | undefined>();
+  const [orderSelected, setOrderSelected] = useState<Order | undefined>();
   // const [orderCount, setOrderCount] = useState<number>(0);
   // const [orderAmount, setOrderAmount] = useState<number>(0);
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
@@ -98,7 +107,7 @@ export function GlobalProvider({ children }: ViewProps) {
     if (order.OrderDetail.length === 0) {
       // setOrderCount(0);
       // setOrderAmount(0);
-      order.orderAmount = 0;
+      order.amount = 0;
     } else {
       // setOrderCount(order.OrderDetail.length);
       // setOrderAmount(order.orderAmount);
@@ -118,12 +127,16 @@ export function GlobalProvider({ children }: ViewProps) {
         error,
         orderCount: order.OrderDetail.length,
         order,
-        orderAmount: order.orderAmount,
+        orderAmount: order.amount,
         setLoggedIn: setIsLogged,
         setUserActive: setUser,
         setMember: setMember,
         // setOrderCount: setOrderCount,
         setOrder: setOrder,
+        productSelected,
+        setProductSelected,
+        orderSelected,
+        setOrderSelected,
         // orderHasChanged: orderChange,
         // setOrderHasChange: setOrderChange,
       }}

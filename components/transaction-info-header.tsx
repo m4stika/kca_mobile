@@ -2,18 +2,17 @@ import { router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
-const ShoppingCartHeader = () => {
+const TransactionInfoHeader = () => {
   return (
     <View className="p-4 border-b border-border">
-      <TouchableOpacity onPress={() => router.back()}>
+      <TouchableOpacity onPress={() => router.navigate("/transaction")}>
         <View className="flex flex-row gap-4 items-center">
           <TabBarIcon name="chevron-back" />
-          <Text className="font-pmedium text-lg">Keranjang</Text>
+          <Text className="font-pmedium text-lg">{"Detail Pesanan"}</Text>
         </View>
       </TouchableOpacity>
-      {/* <View className="border-b border-border" /> */}
     </View>
   );
 };
 
-export default ShoppingCartHeader;
+export default TransactionInfoHeader;
