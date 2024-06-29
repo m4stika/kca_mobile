@@ -12,7 +12,7 @@
       "translucent": false
     },
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/kca.png",
       "resizeMode": "contain"
     },
     "ios": {
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/kca.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mastika.KCAMobile"

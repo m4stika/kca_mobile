@@ -7,7 +7,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const Basket = () => {
-  const { orderCount } = useGlobalContext();
+  const { orderCount, theme } = useGlobalContext();
+  // const theme = useColorScheme() ?? "light";
   return (
     <TouchableOpacity onPress={() => (orderCount === 0 ? null : router.push("/shopping-cart"))}>
       <View className="relative w-12">
@@ -15,6 +16,7 @@ const Basket = () => {
           name="cart-outline"
           size={28}
           style={{ fontWeight: "semibold", width: 30, height: 30 }}
+          color={theme.dark ? "white" : "black"}
         />
         {orderCount > 0 && (
           <View

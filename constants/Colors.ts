@@ -47,13 +47,13 @@ export const DarkTheme = {
   colors: {
     // react-navigation defaults
     primary: "#38bdf8",
-    background: "#18181b",
+    background: "#1E293B",
     foreground: "#f3f4f6",
     icon: "#d4d4d8",
     text: "#f4f4f5",
     tabIconDefault: "#d4d4d8",
     tabIconSelected: "#38bdf8",
-    card: "#18181b",
+    card: "#1E293B",
     border: "#3f3f46",
     notification: "#fb7185",
   },

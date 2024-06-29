@@ -6,6 +6,7 @@ import { getRandomImageSource } from "@/utils/get-random-image-source";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import { Button } from "./atoms";
 import NumberWithCurrency from "./number-with-currency";
 
@@ -20,10 +21,10 @@ const TransactionCard = ({ order }: { order: Order }) => {
         {/* header */}
         <View className="flex flex-row justify-between items-center border-b border-border px-2 pb-4">
           <View className="flex gap-0 py-2">
-            <Text className="font-pmedium ">{order.transactionType}</Text>
-            <Text className="text-sm -my-2">
+            <ThemedText className="font-pmedium">{order.transactionType}</ThemedText>
+            <ThemedText className="text-sm -my-2">
               {_formatDatetime(new Date(order.transactionDate), "dd-mm-yyyy")}
-            </Text>
+            </ThemedText>
           </View>
           <View className="bg-green-200 rounded-full px-3 py-1">
             <Text className="text-xs">{orderStatus[order.orderStatus]}</Text>
@@ -35,18 +36,22 @@ const TransactionCard = ({ order }: { order: Order }) => {
           <View className="flex flex-row gap-2">
             <Image source={imageSource} className="h-16 w-16" resizeMode="contain" />
             <View className="flex">
-              <Text className="text-sm font-pmedium">{order.OrderDetail[0].Barang.namaBarang}</Text>
-              <Text className="text-xs">{`${order.OrderDetail[0].qty} barang`}</Text>
+              <ThemedText className="text-sm font-pmedium">
+                {order.OrderDetail[0].Barang.namaBarang}
+              </ThemedText>
+              <ThemedText className="text-xs">{`${order.OrderDetail[0].qty} barang`}</ThemedText>
             </View>
           </View>
-          {orderCount > 1 && <Text className="italic">{`+ ${orderCount} barang lainnya`}</Text>}
+          {orderCount > 1 && (
+            <ThemedText className="italic">{`+ ${orderCount} barang lainnya`}</ThemedText>
+          )}
           {/* <View></View> */}
         </View>
 
         {/* footer */}
         <View className="flex flex-row justify-between items-center px-2">
           <View className="flex gap-0 py-2">
-            <Text className="text-sm">Total Belanja</Text>
+            <ThemedText className="text-sm">Total Belanja</ThemedText>
             <NumberWithCurrency value={formatCurrency(order.amount)} />
             {/* <Text className="font-pmedium ">{formatCurrency(order.amount)}</Text> */}
           </View>

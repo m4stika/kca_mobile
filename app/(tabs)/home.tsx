@@ -1,3 +1,4 @@
+import { ThemedText } from "@/components/ThemedText";
 import HomeCard from "@/components/home-card";
 import HomeHeader from "@/components/home-header";
 import TransactionCard from "@/components/transaction-card";
@@ -7,6 +8,7 @@ import { Member } from "@/schema/member.schema";
 import { Order } from "@/schema/order.schema";
 import { formatDate } from "@/utils/date-formater";
 import { formatCurrency2 } from "@/utils/format-currency";
+import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native";
@@ -18,6 +20,7 @@ const Home = () => {
     queryKey: ["members"],
     url: "anggota/find",
   });
+  const queryClient = useQueryClient();
 
   // const getOrder = async (noAnggota: string) => {
   //   const { data: preOrder } = useDataApi<Order>({
@@ -41,12 +44,12 @@ const Home = () => {
   }, [data]);
 
   const { data: orders } = useDataApi<Order[]>({
-    queryKey: ["transaction"],
+    queryKey: ["transactions"],
     url: `orders/by_member/${member?.noAnggota || user?.username}`,
   });
 
   const { data: preOrder } = useDataApi<Order>({
-    queryKey: ["pre-order"],
+    queryKey: ["pre-orders"],
     url: `orders/pre_order/${member?.noAnggota || user?.username}`,
   });
 
@@ -54,6 +57,15 @@ const Home = () => {
     if (!preOrder) return;
     if (preOrder) setOrder(preOrder);
   }, [preOrder]);
+
+  useEffect(() => {
+    if (!user) return;
+    queryClient.invalidateQueries({ queryKey: ["members"] });
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    queryClient.invalidateQueries({ queryKey: ["pre-orders"] });
+    queryClient.removeQueries({ queryKey: ["loans"] });
+    queryClient.removeQueries({ queryKey: ["saving_accounts"] });
+  }, [user]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -80,6 +92,8 @@ const Home = () => {
     );
   };
 
+  const isHorizontal = orders && orders.length > 1 ? true : false;
+
   return (
     <View className="flex gap-3 px-2 py-3">
       <HomeHeader user={user!} />
@@ -92,12 +106,12 @@ const Home = () => {
         showDetail={false}
       />
       <View className="py-0 -mb-3 pt-2">
-        <Text className="font-psemibold">Transaksi Terakhir</Text>
+        <ThemedText className="font-psemibold">Transaksi Terakhir</ThemedText>
       </View>
 
       <FlatList
         data={orders}
-        horizontal={true}
+        horizontal={isHorizontal}
         // scrollEnabled
         // showsHorizontalScrollIndicator={false}
         initialScrollIndex={0}

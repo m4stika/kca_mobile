@@ -1,7 +1,8 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { paymentMethod, shippingMethod } from "@/schema/order.schema";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import LabelWithValue from "./label-with-value";
 
 const TransactionInfoPaymentShipping = () => {
@@ -11,7 +12,7 @@ const TransactionInfoPaymentShipping = () => {
   return (
     <View className="flex gap-2 px-2 py-2">
       <View className="flex flex-row justify-between items-center border-b border-border px-2 py-2">
-        <Text className="font-psemibold">Informasi Lainnya</Text>
+        <ThemedText className="font-psemibold">Informasi Lainnya</ThemedText>
       </View>
       <View className="flex gap-2 border-b border-border pb-3">
         {/* <Text>{orderSelected.invoiceNo}</Text> */}

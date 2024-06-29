@@ -14,7 +14,9 @@ const LabelWithValue = ({
   numberOfLine?: number;
 }) => (
   <View className="flex flex-row items-center justify-around">
-    <Text className={`text-sm text-[--disabled-foreground] basis-1/3 ${titleClassName}`}>
+    <Text
+      className={`text-sm text-[--disabled-foreground] dark:text-foreground basis-1/3 ${titleClassName}`}
+    >
       {title}
     </Text>
     <Text

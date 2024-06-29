@@ -8,7 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ButtonAdd = ({ product }: { product: Product }) => {
-  const { setOrder, order } = useGlobalContext();
+  const { setOrder, order, theme } = useGlobalContext();
   /*
   const handleAddOrder = () => {
     const item: OrderDetail = {
@@ -44,7 +44,7 @@ const ButtonAdd = ({ product }: { product: Product }) => {
   return (
     <View
       className={clsx(
-        "absolute -top-6 right-2 h-8 w-8 rounded-full items-center justify-center ",
+        "absolute -top-6 right-1 h-8 w-8 rounded-full items-center justify-center ",
         product.stok === 0 ? "bg-disabled" : "bg-success"
       )}
     >
@@ -55,7 +55,16 @@ const ButtonAdd = ({ product }: { product: Product }) => {
         <TabBarIcon
           name="add"
           size={22}
-          style={{ fontWeight: "semibold", color: product.stok === 0 ? "#4b5563" : "#E1E7EF" }}
+          style={{
+            fontWeight: "semibold",
+            color: theme.dark
+              ? product.stok === 0
+                ? "#94a3b8"
+                : "#4b5563"
+              : product.stok === 0
+              ? "#4b5563"
+              : "#E1E7EF",
+          }}
         />
       </TouchableOpacity>
     </View>

@@ -158,6 +158,10 @@ module.exports = {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         disabled: "hsl(var(--disabled))",
         "disabled-foreground": "var(--disabled-foreground)",
         accent: {

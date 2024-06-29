@@ -3,16 +3,19 @@ import React from "react";
 
 import { Button } from "@/components/atoms";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
+import { DarkTheme, DefaultTheme } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const Colors = colorScheme === "dark" ? DarkTheme : DefaultTheme;
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].primary,
+        tabBarActiveTintColor: Colors.colors.primary,
+        // tabBarLabelStyle: { color: "white" },
         headerShown: false,
         // tabBarStyle: { padding: 0 },
         // tabBarShowLabel: false,
@@ -45,6 +48,7 @@ export default function TabLayout() {
           headerLeft: (props) => <Button type="icon" name="back" onPress={() => router.back()} />,
           // headerLeftLabelVisible: true,
           title: "Transaksi",
+
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "reader" : "reader-outline"} color={color} />
           ),
@@ -53,9 +57,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "profile",
+          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "person" : "person-outline"} color={color} />
+            <TabBarIcon
+              name={
+                focused ? (colorScheme === "dark" ? "person-outline" : "person") : "person-outline"
+              }
+              color={color}
+            />
           ),
         }}
       />

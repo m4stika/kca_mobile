@@ -7,9 +7,9 @@ import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "nativewind";
+// import { useColorScheme } from "nativewind";
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
-import { ViewProps } from "react-native";
+import { ViewProps, useColorScheme } from "react-native";
 
 export default async function isAuthenticated() {
   const responseApi = await api.get<User>({
@@ -45,6 +45,7 @@ type ContextProps = {
   setProductSelected: Dispatch<SetStateAction<Product | undefined>>;
   orderSelected?: Order | undefined;
   setOrderSelected: Dispatch<SetStateAction<Order | undefined>>;
+  reset: () => void;
 };
 const GlobalContext = createContext<ContextProps>({
   theme: DefaultTheme,
@@ -62,6 +63,7 @@ const GlobalContext = createContext<ContextProps>({
   order: orderInitialValue,
   setProductSelected: () => undefined,
   setOrderSelected: () => undefined,
+  reset: () => undefined,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -83,7 +85,8 @@ export function GlobalProvider({ children }: ViewProps) {
   // const [orderAmount, setOrderAmount] = useState<number>(0);
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
   const [error, setError] = useState<string>();
-  const { colorScheme } = useColorScheme();
+  // const { colorScheme } = useColorScheme();
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
@@ -103,18 +106,19 @@ export function GlobalProvider({ children }: ViewProps) {
   }, []);
 
   useEffect(() => {
-    // if (!orderChange) return;
     if (order.OrderDetail.length === 0) {
-      // setOrderCount(0);
-      // setOrderAmount(0);
       order.amount = 0;
-    } else {
-      // setOrderCount(order.OrderDetail.length);
-      // setOrderAmount(order.orderAmount);
     }
-    // console.log(order);
-    // setOrderChange(false);
   }, [order]);
+
+  const reset = () => {
+    setIsLogged(false);
+    setOrder(orderInitialValue);
+    setProductSelected(undefined);
+    setProductSelected(undefined);
+    setMember(null);
+    setUser(null);
+  };
 
   return (
     <GlobalContext.Provider
@@ -137,6 +141,7 @@ export function GlobalProvider({ children }: ViewProps) {
         setProductSelected,
         orderSelected,
         setOrderSelected,
+        reset,
         // orderHasChanged: orderChange,
         // setOrderHasChange: setOrderChange,
       }}

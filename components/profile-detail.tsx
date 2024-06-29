@@ -1,6 +1,9 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { version as app_version } from "@/package.json";
+import { logout } from "@/utils/logout";
+import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as Device from "expo-device";
+import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemedText } from "./ThemedText";
@@ -8,8 +11,23 @@ import LabelWithValue from "./label-with-value";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ProfileDetail = () => {
-  const { user, member } = useGlobalContext();
+  const { user, member, theme, reset } = useGlobalContext();
+  const { dismiss } = useBottomSheetModal();
   if (!member || !user) return null;
+
+  const handleLogout = async () => {
+    if (await logout()) {
+      reset();
+      dismiss();
+      router.replace("/welcome");
+    }
+    // const response = await api.post({ url: "logout", data: {} });
+    // if (response.status === "error") Alert.alert("Error", response.message);
+    // else {
+    //   reset();
+    //   router.replace("/welcome");
+    // }
+  };
 
   return (
     <ScrollView>
@@ -59,11 +77,9 @@ const ProfileDetail = () => {
               <TouchableOpacity
                 className="flex flex-row items-center justify-center gap-2 text-error"
                 activeOpacity={0.7}
+                onPress={handleLogout}
               >
-                <TabBarIcon
-                  name="log-out-outline"
-                  // color={colorScheme.theme === "dark" ? "#f3f4f6" : "#09090b"}
-                />
+                <TabBarIcon name="log-out-outline" color={theme.dark ? "#f3f4f6" : "#09090b"} />
                 <ThemedText>Log-out</ThemedText>
               </TouchableOpacity>
             </View>

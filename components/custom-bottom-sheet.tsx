@@ -41,7 +41,7 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={{ backgroundColor: "#D1D5DB" }}
           backgroundStyle={{
-            // backgroundColor: theme === "light" ? "#fafafa" : "#18181b",
+            backgroundColor: theme === "light" ? "#fafafa" : "#1E293B",
             // backgroundColor: "#facc15",
             opacity: 60,
           }}

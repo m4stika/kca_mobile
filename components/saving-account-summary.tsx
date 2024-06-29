@@ -1,6 +1,6 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { formatCurrency } from "@/utils/format-currency";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import HomeCard from "./home-card";
 
 const SavingAccountSummary = ({
@@ -37,18 +37,43 @@ const SavingAccountSummary = ({
               onPress();
             }}
           />
-          <HomeCard
-            color="secondary"
-            title="Pinjaman"
-            captionPrefix="Rp"
-            caption={formatCurrency(Number(member.saldoPinjaman) || 0)}
-            showDetail={Number(member.saldoPinjaman) > 0}
-            detailCaption="Detail"
-            onPress={() => {
-              setState("pinjaman");
-              onPress();
-            }}
-          />
+          {member.saldoPinjaman > 0 && (
+            <HomeCard
+              color="secondary"
+              title=""
+              // captionPrefix="Rp"
+              // caption={formatCurrency(Number(member.saldoPinjaman) || 0)}
+              containerClassName="h-40"
+              caption={
+                <View className="flex gap-2  pb-3 w-full">
+                  <View className="flex flex-row items-center justify-between">
+                    <Text className="text-disabled-foreground text-lg">Pinjaman</Text>
+                    <View className="flex flex-row gap-1">
+                      <Text className="text-background">Rp</Text>
+                      <Text className="text-background text-2xl font-psemibold">
+                        {formatCurrency(Number(member.saldoPinjaman) || 0)}
+                      </Text>
+                    </View>
+                  </View>
+                  <View className="flex flex-row items-center justify-between">
+                    <Text className="text-disabled-foreground text-lg">Angsuran</Text>
+                    <View className="flex flex-row gap-1">
+                      <Text className="text-background">Rp</Text>
+                      <Text className="text-background text-2xl font-psemibold">
+                        <Text>{formatCurrency(Number(member.nilaiAngsuran) || 0)}</Text>
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              }
+              showDetail={Number(member.saldoPinjaman) > 0}
+              detailCaption="Detail"
+              onPress={() => {
+                setState("pinjaman");
+                onPress();
+              }}
+            />
+          )}
         </View>
       </View>
     </View>

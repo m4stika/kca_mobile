@@ -6,6 +6,7 @@ import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
 import { Order } from "@/schema/order.schema";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 
@@ -14,9 +15,16 @@ const TransactionScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [orders, setOrders] = useState<Order[]>();
   const { data, refetch, isLoading } = useDataApi<Order[]>({
-    queryKey: ["transaction"],
+    queryKey: ["transactions"],
     url: `orders/by_member/${member?.noAnggota}`,
   });
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (!member) return;
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+  }, [member]);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {

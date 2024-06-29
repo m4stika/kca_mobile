@@ -25,7 +25,7 @@ const LoanDetail = () => {
     return (
       <View
         className={clsx(
-          "flex flex-col gap-1 p-2 ",
+          "flex flex-col gap-1 p-2 dark:bg-background",
           pinjaman.isPinjamanUang ? "bg-sky-100" : "bg-rose-100"
         )}
       >
@@ -36,7 +36,7 @@ const LoanDetail = () => {
               {formatCurrency(pinjaman.nilaiPinjaman)}
             </Text>
           </View>
-          <Text className="italic font-pmedium">
+          <Text className="italic font-pmedium text-foreground">
             {pinjaman.isPinjamanUang ? "Pinjaman Uang" : "Pinjaman Barang"}
           </Text>
         </View>
@@ -59,7 +59,9 @@ const LoanDetail = () => {
             titleClassName="italic"
             valueClassName="italic"
           />
-          <Text className="italic text-xs text-disabled-foreground pl-5">{item.keterangan}</Text>
+          <Text className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
+            {item.keterangan}
+          </Text>
         </View>
       )}
       // contentOffset={{ x: 10, y: 0 }}
@@ -68,7 +70,7 @@ const LoanDetail = () => {
       // ItemSeparatorComponent={() => <View className="border-b" />}
       ListHeaderComponent={() => (
         <View className="flex justify-center p-1">
-          <Text className="font-pbold text-lg">Detail Pinjaman</Text>
+          <Text className="font-pbold text-lg text-foreground">Detail Pinjaman</Text>
         </View>
       )}
       ListFooterComponent={() => <View className="border-b border-border" />}

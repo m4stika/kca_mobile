@@ -29,7 +29,7 @@ const Button = ({
   ) : (
     <TouchableOpacity
       className={clsx(
-        "bg-primary rounded-xl justify-center items-center p-3",
+        "bg-primary rounded-xl justify-center items-center px-3 py-4",
         containerClassName,
         isLoading ? "opacity-50" : ""
       )}

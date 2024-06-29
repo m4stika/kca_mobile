@@ -27,6 +27,7 @@ export function ThemedText({
           : inverseColor
           ? "text-paper"
           : "text-foreground",
+        className,
         type === "default"
           ? "text-base"
           : type === "defaultSemiBold"

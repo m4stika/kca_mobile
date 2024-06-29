@@ -1,24 +1,28 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { useThemeContextValues } from "@/themes";
-import { api } from "@/utils/fetching";
+import { logout } from "@/utils/logout";
 import { router } from "expo-router";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, useColorScheme } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ProfileHeader = () => {
-  const { user, member, setLoggedIn, setUserActive } = useGlobalContext();
+  const { reset, user, member, setLoggedIn, setUserActive } = useGlobalContext();
   const handleLogout = async () => {
-    const response = await api.post({ url: "logout", data: {} });
-    if (response.status === "error") Alert.alert("Error", response.message);
-    else {
-      setLoggedIn(false);
-      setUserActive(null);
+    if (await logout()) {
+      reset();
       router.replace("/welcome");
     }
+    // const response = await api.post({ url: "logout", data: {} });
+    // if (response.status === "error") Alert.alert("Error", response.message);
+    // else {
+    //   reset();
+    //   router.replace("/welcome");
+    // }
   };
 
-  const colorScheme = useThemeContextValues();
+  // const colorScheme = useThemeContextValues();
+  const theme = useColorScheme() ?? "light";
+  // const theme = useColorScheme() ?? "light";
   return (
     <View className="flex p-4">
       <View className=" flex flex-row items-center justify-between">
@@ -58,7 +62,8 @@ const ProfileHeader = () => {
             <TabBarIcon
               name="log-out-outline"
               // className="text-[--paper-foreground]"
-              color={colorScheme.theme === "dark" ? "#f3f4f6" : "#09090b"}
+              // color={colorScheme.theme === "dark" ? "#f3f4f6" : "#09090b"}
+              color={theme === "dark" ? "#f3f4f6" : "#09090b"}
             />
           </TouchableOpacity>
         </View>

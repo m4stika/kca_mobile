@@ -15,6 +15,7 @@ export type Member = {
   saldoVoucher: number;
   saldoSimpanan: number;
   saldoPinjaman: number;
+  nilaiAngsuran: number;
   // noAnggota: string;
   // firstName: string;
   // lastName: string;

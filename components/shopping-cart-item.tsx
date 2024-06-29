@@ -7,7 +7,7 @@ import ShoppingCartAddRemoveItem from "./shopping-cart-add-remove-item";
 
 const ShoppingCartItem = ({ orderItem }: { orderItem: OrderDetail }) => {
   return (
-    <View className="flex flex-row gap-2 items-center px-2">
+    <View className="flex flex-row gap-2 items-center px-2 ">
       <View className="border">
         <Image source={orderItem.Barang.imageSource} className="h-24 w-20" resizeMode="cover" />
       </View>

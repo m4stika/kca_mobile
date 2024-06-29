@@ -22,7 +22,7 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
       <View className="flex flex-col gap-3 px-4 -mt-4">
         <View className="flex flex-col gap-3 py-5 px-3 items-center justify-center rounded-lg shadow-xl border border-border bg-background">
           <View className="w-full">
-            <Text className="font-pmedium border-b border-border text-center px-3">
+            <Text className="font-pmedium border-b border-border text-center px-3 dark:text-foreground">
               {member.namaAnggota.toUpperCase()}
             </Text>
           </View>

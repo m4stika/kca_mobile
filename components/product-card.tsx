@@ -4,13 +4,14 @@ import { formatCurrency } from "@/utils/format-currency";
 import clsx from "clsx";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import ButtonAdd from "./button-add";
 
 const ProductCard = ({ product, onPress }: { product: Product; onPress: () => void }) => {
   const { setProductSelected } = useGlobalContext();
   return (
-    <View className="flex flex-col gap-3 w-[49%] rounded-lg  items-center justify-between">
-      <View className="w-full">
+    <View className="flex flex-col gap-3 w-[49%] rounded-lg  items-center justify-between ">
+      <View className="w-full flex">
         <TouchableOpacity
           onPress={() => {
             setProductSelected(product);
@@ -21,7 +22,7 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
             <Image
               // source={{ uri: "https://picsum.photos/200/300?random=5" }}
               source={product.imageSource}
-              className="h-52 w-44 rounded-lg"
+              className="h-52 w-full rounded-lg"
               resizeMode="cover"
             />
             {/* <RandomImage /> */}
@@ -36,28 +37,27 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
           >
             <View className="flex flex-col p-2 justify-between">
               <View className="flex flex-row gap-1">
-                <Text className="text-xs font-plight">Rp</Text>
+                <ThemedText className="text-xs font-plight">Rp</ThemedText>
                 <View
                   className={clsx(
-                    "rounded-full min-w-[50%] px-3 flex justify-center",
+                    "rounded-full min-w-[50%] px-3 pb-1 flex justify-center",
                     product.stok === 0 ? "bg-disabled" : "bg-error"
                   )}
                 >
                   <Text
-                    className={clsx(
-                      "",
+                    className={
                       product.stok === 0
-                        ? "text-disabled-foreground"
+                        ? "text-disabled-foreground dark:text-muted-foreground"
                         : "text-background font-medium"
-                    )}
+                    }
                   >
                     {formatCurrency(Number(product.hargaJual))}
                   </Text>
                 </View>
               </View>
-              <Text className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>
+              <ThemedText className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>
                 {product.namaBarang}
-              </Text>
+              </ThemedText>
             </View>
           </TouchableOpacity>
           <ButtonAdd product={product} />
