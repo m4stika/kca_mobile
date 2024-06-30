@@ -5,14 +5,16 @@ import { api } from "@/utils/fetching";
 import { formatCurrency } from "@/utils/format-currency";
 import { router } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import { Button } from "./atoms";
 import NumberWithCurrency from "./number-with-currency";
 
 const ShoppingCartFooter = () => {
-  const { orderAmount, order, setOrder, member } = useGlobalContext();
+  const { orderAmount, order, setOrder, member, isLoading } = useGlobalContext();
   if (orderAmount === 0) return;
-  const isValid = order.paymentMethod !== undefined && order.shippingMethod !== undefined;
+  const isValid =
+    !isLoading && order.paymentMethod !== undefined && order.shippingMethod !== undefined;
 
   // console.log({ orderAmount, orderHasChanged });
   // const orderAmount = orders
@@ -47,7 +49,7 @@ const ShoppingCartFooter = () => {
     <View className="flex justify-end h-20 bottom-0">
       <View className="flex flex-row justify-end px-4  py-2 border-t border-border mt-3 gap-2">
         <View className="flex items-end px-2">
-          <Text className="pr-2">Total</Text>
+          <ThemedText className="pr-2">Total</ThemedText>
           <NumberWithCurrency value={formatCurrency(orderAmount)} />
         </View>
         <Button

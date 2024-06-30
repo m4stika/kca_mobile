@@ -5,16 +5,18 @@ import ProfileHeader from "@/components/profile-header";
 import ProfileSummaryInfo from "@/components/profile-sumary-info";
 import SavingAccountDetail from "@/components/saving-account-detail";
 import SavingAccountSummary from "@/components/saving-account-summary";
-import { useGlobalContext } from "@/context/global-provider";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 const Profile = () => {
-  const { user, member } = useGlobalContext();
   const [sheetActive, setSheetActive] = useState<"profile" | "simpanan" | "pinjaman">("profile");
   const [snapPointItems, setSnapPointItems] = useState<string[]>(["80%"]);
-  // const { dismiss } = useBottomSheetModal();
+  // const navigation = useNavigation();
+  // navigation.addListener("beforeRemove", (e) => {
+  //   e.preventDefault();
+  // });
+
   // ref
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 

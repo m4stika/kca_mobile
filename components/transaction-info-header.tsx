@@ -10,7 +10,7 @@ const TransactionInfoHeader = () => {
     <View className="p-4 border-b border-border">
       <TouchableOpacity onPress={() => router.navigate("/transaction")}>
         <View className="flex flex-row gap-4 items-center">
-          <TabBarIcon name="chevron-back" color={theme.dark ? "#E2E8F0" : "#18181b"} />
+          <TabBarIcon name="chevron-back" />
           <ThemedText className="font-pmedium text-lg">{"Detail Pesanan"}</ThemedText>
         </View>
       </TouchableOpacity>

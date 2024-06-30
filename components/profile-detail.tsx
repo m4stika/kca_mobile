@@ -19,7 +19,7 @@ const ProfileDetail = () => {
     if (await logout()) {
       reset();
       dismiss();
-      router.replace("/welcome");
+      router.navigate("/welcome");
     }
     // const response = await api.post({ url: "logout", data: {} });
     // if (response.status === "error") Alert.alert("Error", response.message);
@@ -79,7 +79,7 @@ const ProfileDetail = () => {
                 activeOpacity={0.7}
                 onPress={handleLogout}
               >
-                <TabBarIcon name="log-out-outline" color={theme.dark ? "#f3f4f6" : "#09090b"} />
+                <TabBarIcon name="log-out-outline" />
                 <ThemedText>Log-out</ThemedText>
               </TouchableOpacity>
             </View>

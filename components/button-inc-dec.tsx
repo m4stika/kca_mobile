@@ -27,13 +27,11 @@ const ButtonIncDec = ({
           size={20}
           onPress={() => setValue((oldValue) => (oldValue <= 0 ? 1 : oldValue - 1))}
           className={`${value === 0 && "hidden"}`}
-          color={theme.dark ? "#E2E8F0" : "#18181b"}
         />
         <ThemedText className="flex-1 text-center">{value}</ThemedText>
         <TabBarIcon
           name="add"
           size={20}
-          color={theme.dark ? "#E2E8F0" : "#18181b"}
           onPress={() =>
             setValue((oldValue) => (maxValue && maxValue <= oldValue ? maxValue : oldValue + 1))
           }

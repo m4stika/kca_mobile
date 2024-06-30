@@ -98,7 +98,7 @@ const Home = () => {
     <View className="flex gap-3 px-2 py-3">
       <HomeHeader user={user!} />
       <HomeCard
-        color="success"
+        color="primary"
         title="Saldo Voucher"
         captionPrefix="Rp"
         caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}

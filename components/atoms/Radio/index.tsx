@@ -1,6 +1,8 @@
+import { ThemedText } from "@/components/ThemedText";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { useGlobalContext } from "@/context/global-provider";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export type Option = Record<"value" | "key", string> & Record<string, string>;
 type InputProps = {
@@ -10,6 +12,7 @@ type InputProps = {
 };
 
 export default function RadioButton({ onSelection, options, defaultSelection }: InputProps) {
+  const { theme } = useGlobalContext();
   // instead of giving each list item an isSelected prop just keep
   // track of the selected index
   // const [selectedIndex, setSelectedIndex] = useState<number>(defaultSelection || 0);
@@ -31,24 +34,18 @@ export default function RadioButton({ onSelection, options, defaultSelection }: 
                 {item.key == selectedKey && (
                   <TabBarIcon
                     name="checkmark-sharp"
-                    color={"#0284C7"}
+                    color={theme.colors.primary}
                     // size={32}
                     style={{ fontWeight: "semibold" }}
                   />
                 )}
               </View>
               <View className="flex flex-1 flex-col">
-                {/* {
-                index == selectedIndex ? (
-                  <TabBarIcon name="checkmark" selectionColor={"#0F172A"} color={"#0284C7"} />
-                )
-                : (
-                  <TabBarIcon name="radio-button-off" color={"#65758b"} />
-                )
-              } */}
-                <Text className="text-lg font-psemibold">{item.value}</Text>
+                <ThemedText className="text-lg font-psemibold">{item.value}</ThemedText>
                 {item["caption"] && (
-                  <Text className="text-sm font-pregular bg-disabled p-2">{item["caption"]}</Text>
+                  <ThemedText className="text-sm font-pregular bg-disabled p-2">
+                    {item["caption"]}
+                  </ThemedText>
                 )}
               </View>
             </View>

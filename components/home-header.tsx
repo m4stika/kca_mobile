@@ -1,10 +1,12 @@
+import { useGlobalContext } from "@/context/global-provider";
 import { User } from "@/schema/user.schema";
-import { Text, View, useColorScheme } from "react-native";
+import { Text, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const HomeHeader = ({ user }: { user: User }) => {
-  const theme = useColorScheme() ?? "light";
+  const { theme } = useGlobalContext();
+  // const theme = useColorScheme() ?? "light";
   return (
     <View className="w-full flex-row items-center justify-between px-2 pb-4 border-b border-border">
       <View className="flex flex-row gap-2 items-center">
@@ -18,12 +20,7 @@ const HomeHeader = ({ user }: { user: User }) => {
         </View>
       </View>
       <View>
-        <TabBarIcon
-          name="notifications-outline"
-          size={22}
-          color={theme === "dark" ? "#fafafa" : "#1E293B"}
-          // color={theme.dark ? "white" : "red"}
-        />
+        <TabBarIcon name="notifications-outline" size={22} />
       </View>
     </View>
   );

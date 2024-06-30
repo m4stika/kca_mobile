@@ -1,7 +1,8 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { OrderDetail } from "@/schema/order.schema";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) => {
@@ -59,7 +60,7 @@ const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) =>
       ) : (
         <TabBarIcon name="remove" size={20} onPress={() => handleAddQty(false)} />
       )}
-      <Text>{selectedItem.qty}</Text>
+      <ThemedText>{selectedItem.qty}</ThemedText>
       <TabBarIcon name="add" size={20} onPress={() => handleAddQty(true)} />
     </View>
   );

@@ -1,6 +1,7 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { formatCurrency } from "@/utils/format-currency";
 import { getRandomImageSource } from "@/utils/get-random-image-source";
+import clsx from "clsx";
 import React from "react";
 import { Image, View } from "react-native";
 import { ThemedText } from "./ThemedText";
@@ -8,7 +9,6 @@ import NumberWithCurrency from "./number-with-currency";
 
 const TransactionInfoCard = () => {
   const { orderSelected } = useGlobalContext();
-  // const orderDetail = order.OrderDetail
   if (!orderSelected) return;
 
   // const imageSource = getRandomImageSource();
@@ -21,7 +21,12 @@ const TransactionInfoCard = () => {
         </View>
 
         {/* body */}
-        <View className="flex-1 flex-col gap-2 p-2 border-b border-border">
+        <View
+          className={clsx(
+            orderSelected.OrderDetail.length > 1 ? "flex" : "flex-1",
+            "flex flex-col gap-2 p-2 border-b border-border"
+          )}
+        >
           {orderSelected.OrderDetail.map((item) => (
             <View className="flex" key={item.kodeBarang}>
               <View className="flex flex-row gap-2">
@@ -38,8 +43,11 @@ const TransactionInfoCard = () => {
         </View>
 
         {/* footer */}
-        <View className="flex flex-row justify-between items-center px-2">
-          <View className="flex gap-0 py-2">
+        <View
+          // className={`${orderSelected.OrderDetail.length > 1 ? "flex" : "flex-1"} justify-end px-2`}
+          className={`flex justify-end px-2`}
+        >
+          <View className="flex gap-0 py-2 justify-end">
             <ThemedText className="text-sm">Total Belanja</ThemedText>
             <NumberWithCurrency value={formatCurrency(orderSelected.amount)} />
             {/* <Text className="font-pmedium ">{formatCurrency(order.amount)}</Text> */}

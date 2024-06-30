@@ -57,7 +57,7 @@ const TransactionCard = ({ order }: { order: Order }) => {
           </View>
           <Button
             title="Detail Pesanan"
-            containerClassName="py-1 bg-success"
+            containerClassName="py-1 bg-primary"
             textClassName="text-xs font-light"
             onPress={() => {
               setOrderSelected(order);

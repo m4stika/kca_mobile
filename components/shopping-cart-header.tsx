@@ -1,5 +1,6 @@
 import { router } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ShoppingCartHeader = () => {
@@ -8,7 +9,7 @@ const ShoppingCartHeader = () => {
       <TouchableOpacity onPress={() => router.back()}>
         <View className="flex flex-row gap-4 items-center">
           <TabBarIcon name="chevron-back" />
-          <Text className="font-pmedium text-lg">Keranjang</Text>
+          <ThemedText className="font-pmedium text-lg">Keranjang</ThemedText>
         </View>
       </TouchableOpacity>
       {/* <View className="border-b border-border" /> */}

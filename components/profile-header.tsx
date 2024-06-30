@@ -1,16 +1,16 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { logout } from "@/utils/logout";
 import { router } from "expo-router";
-import { TouchableOpacity, View, useColorScheme } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ProfileHeader = () => {
-  const { reset, user, member, setLoggedIn, setUserActive } = useGlobalContext();
+  const { reset, user, member, theme } = useGlobalContext();
   const handleLogout = async () => {
     if (await logout()) {
       reset();
-      router.replace("/welcome");
+      router.navigate("/welcome");
     }
     // const response = await api.post({ url: "logout", data: {} });
     // if (response.status === "error") Alert.alert("Error", response.message);
@@ -21,7 +21,7 @@ const ProfileHeader = () => {
   };
 
   // const colorScheme = useThemeContextValues();
-  const theme = useColorScheme() ?? "light";
+  // const theme = useColorScheme() ?? "light";
   // const theme = useColorScheme() ?? "light";
   return (
     <View className="flex p-4">
@@ -38,7 +38,12 @@ const ProfileHeader = () => {
                 onPress={() => router.navigate("/profile-detail")}
                 activeOpacity={0.7}
               >
-                <TabBarIcon name="pencil-outline" size={14} style={{ fontWeight: "semibold" }} />
+                <TabBarIcon
+                  name="pencil-outline"
+                  size={14}
+                  style={{ fontWeight: "semibold" }}
+                  color={theme.colors.textMuted}
+                />
               </TouchableOpacity>
             </View>
             <View className="flex flex-row gap-1">
@@ -51,20 +56,16 @@ const ProfileHeader = () => {
               <ThemedText className="text-xs">{user?.email}</ThemedText>
               <TabBarIcon
                 name="checkmark-circle-outline"
-                size={14}
-                style={{ fontWeight: "semibold", color: "green" }}
+                size={16}
+                color={theme.colors.primary}
+                style={{ fontWeight: "semibold" }}
               />
             </View>
           </View>
         </View>
         <View>
           <TouchableOpacity className="text-error" onPress={handleLogout} activeOpacity={0.7}>
-            <TabBarIcon
-              name="log-out-outline"
-              // className="text-[--paper-foreground]"
-              // color={colorScheme.theme === "dark" ? "#f3f4f6" : "#09090b"}
-              color={theme === "dark" ? "#f3f4f6" : "#09090b"}
-            />
+            <TabBarIcon name="log-out-outline" />
           </TouchableOpacity>
         </View>
       </View>

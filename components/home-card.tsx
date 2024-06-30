@@ -1,3 +1,4 @@
+import { useGlobalContext } from "@/context/global-provider";
 import clsx from "clsx";
 import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
@@ -26,6 +27,7 @@ const HomeCard = ({
   captionClassName?: string;
   onPress?: () => void;
 }) => {
+  const { theme } = useGlobalContext();
   const classColor =
     color === "default"
       ? "border border-border"
@@ -69,12 +71,9 @@ const HomeCard = ({
                 </ThemedText>
                 <TabBarIcon
                   name="chevron-forward"
-                  size={16}
-                  className={clsx(
-                    `mt-0`,
-                    color === "default" ? "text-primary" : "text-slate-100 dark:text-background"
-                  )}
-                  color={color === "default" ? "black" : "white"}
+                  size={18}
+                  // className={`mt-1`}
+                  color={color === "default" ? theme.colors.text : theme.colors.background}
                 />
               </View>
             </TouchableOpacity>

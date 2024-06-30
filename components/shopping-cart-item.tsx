@@ -1,7 +1,8 @@
 import { OrderDetail } from "@/schema/order.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import NumberWithCurrency from "./number-with-currency";
 import ShoppingCartAddRemoveItem from "./shopping-cart-add-remove-item";
 
@@ -13,9 +14,9 @@ const ShoppingCartItem = ({ orderItem }: { orderItem: OrderDetail }) => {
       </View>
       <View className="flex flex-col flex-auto">
         <View>
-          <Text className="text-xs line-clamp-1" numberOfLines={1}>
+          <ThemedText className="text-xs line-clamp-1" numberOfLines={1}>
             {orderItem.Barang.namaBarang}
-          </Text>
+          </ThemedText>
 
           <NumberWithCurrency value={formatCurrency(orderItem.price)} />
         </View>

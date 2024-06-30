@@ -3,6 +3,23 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
+export interface ThemeProps {
+  dark: boolean;
+  colors: {
+    primary: string;
+    background: string;
+    card: string;
+    text: string;
+    textMuted: string;
+    border: string;
+    notification: string;
+    foreground: string;
+    icon: string;
+    tabIconDefault: string;
+    tabIconSelected: string;
+  };
+}
+
 const tintColorLight = "#0a7ea4";
 const tintColorDark = "#fff";
 
@@ -25,12 +42,12 @@ export const Colors = {
   },
 };
 
-export const DefaultTheme = {
+export const DefaultTheme: ThemeProps = {
   dark: false,
   colors: {
-    // react-navigation defaults
     primary: "#0284C7",
     text: "#0F172A",
+    textMuted: "#65758b",
     background: "#fafafa",
     foreground: "#0F172A",
     icon: "#52525b",
@@ -45,12 +62,12 @@ export const DefaultTheme = {
 export const DarkTheme = {
   dark: true,
   colors: {
-    // react-navigation defaults
     primary: "#38bdf8",
     background: "#1E293B",
     foreground: "#f3f4f6",
     icon: "#d4d4d8",
     text: "#f4f4f5",
+    textMuted: "#94a3b8",
     tabIconDefault: "#d4d4d8",
     tabIconSelected: "#38bdf8",
     card: "#1E293B",

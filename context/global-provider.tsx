@@ -1,11 +1,11 @@
-import { DarkTheme, DefaultTheme } from "@/constants/Colors";
+import { DarkTheme, DefaultTheme, ThemeProps } from "@/constants/Colors";
 import { Member } from "@/schema/member.schema";
 import { Order, orderInitialValue } from "@/schema/order.schema";
 import { Product } from "@/schema/product.schema";
 import { User } from "@/schema/user.schema";
 import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
-import { Theme, ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 // import { useColorScheme } from "nativewind";
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
@@ -24,8 +24,9 @@ export default async function isAuthenticated() {
 }
 
 // type ThemesVariant = "light" | "dark";
+
 type ContextProps = {
-  theme: Theme;
+  theme: ThemeProps;
   user?: User | null;
   member?: Member | null;
   isLogged: boolean;
@@ -45,6 +46,7 @@ type ContextProps = {
   setProductSelected: Dispatch<SetStateAction<Product | undefined>>;
   orderSelected?: Order | undefined;
   setOrderSelected: Dispatch<SetStateAction<Order | undefined>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
   reset: () => void;
 };
 const GlobalContext = createContext<ContextProps>({
@@ -64,6 +66,7 @@ const GlobalContext = createContext<ContextProps>({
   setProductSelected: () => undefined,
   setOrderSelected: () => undefined,
   reset: () => undefined,
+  setIsLoading: () => false,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
 
@@ -81,15 +84,12 @@ export function GlobalProvider({ children }: ViewProps) {
   const [order, setOrder] = useState<Order>(orderInitialValue);
   const [productSelected, setProductSelected] = useState<Product | undefined>();
   const [orderSelected, setOrderSelected] = useState<Order | undefined>();
-  // const [orderCount, setOrderCount] = useState<number>(0);
-  // const [orderAmount, setOrderAmount] = useState<number>(0);
-  const [theme, setTheme] = useState<Theme>(DefaultTheme);
+  const [theme, setTheme] = useState<ThemeProps>(DefaultTheme);
   const [error, setError] = useState<string>();
-  // const { colorScheme } = useColorScheme();
   const colorScheme = useColorScheme();
 
   useEffect(() => {
-    setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
+    // setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
     setIsLogged(false);
 
     //get user active
@@ -104,6 +104,10 @@ export function GlobalProvider({ children }: ViewProps) {
       })
       .finally(() => setIsLoading(false));
   }, []);
+
+  useEffect(() => {
+    setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
+  }, [colorScheme]);
 
   useEffect(() => {
     if (order.OrderDetail.length === 0) {
@@ -123,7 +127,8 @@ export function GlobalProvider({ children }: ViewProps) {
   return (
     <GlobalContext.Provider
       value={{
-        theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
+        // theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
+        theme,
         user,
         member,
         isLogged,
@@ -135,23 +140,19 @@ export function GlobalProvider({ children }: ViewProps) {
         setLoggedIn: setIsLogged,
         setUserActive: setUser,
         setMember: setMember,
-        // setOrderCount: setOrderCount,
         setOrder: setOrder,
         productSelected,
         setProductSelected,
         orderSelected,
         setOrderSelected,
         reset,
-        // orderHasChanged: orderChange,
-        // setOrderHasChange: setOrderChange,
+        setIsLoading,
       }}
     >
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        {/* <View className={"pb-2"}>				</View> */}
-        {children}
-      </ThemeProvider>
+      <ThemeProvider value={theme}>{children}</ThemeProvider>
       <StatusBar
-        style={StatusBarTheme[colorScheme ?? "light"].style}
+        style="light"
+        // style={StatusBarTheme[colorScheme ?? "light"].style}
         backgroundColor={StatusBarTheme[colorScheme ?? "light"].background}
       />
     </GlobalContext.Provider>

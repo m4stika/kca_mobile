@@ -55,15 +55,16 @@ const ButtonAdd = ({ product }: { product: Product }) => {
         <TabBarIcon
           name="add"
           size={22}
+          color={product.stok === 0 ? theme.colors.textMuted : theme.colors.background}
           style={{
             fontWeight: "semibold",
-            color: theme.dark
-              ? product.stok === 0
-                ? "#94a3b8"
-                : "#4b5563"
-              : product.stok === 0
-              ? "#4b5563"
-              : "#E1E7EF",
+            // color: theme.dark
+            //   ? product.stok === 0
+            //     ? "#94a3b8"
+            //     : "#4b5563"
+            //   : product.stok === 0
+            //   ? "#4b5563"
+            //   : "#E1E7EF",
           }}
         />
       </TouchableOpacity>

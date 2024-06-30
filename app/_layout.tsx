@@ -6,7 +6,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Platform, StatusBar, View } from "react-native";
+import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import "../global.css";
@@ -28,6 +28,7 @@ export default function RootLayout() {
     // "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
   });
   const queryClient = new QueryClient();
+  // const theme = useColorScheme();
 
   useEffect(() => {
     if (loaded) {
@@ -44,7 +45,13 @@ export default function RootLayout() {
     // <GlobalProvider>
     <QueryClientProvider client={queryClient}>
       <GlobalProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView
+          // className={theme === "dark" ? `flex-1 dark bg-yellow-300` : "flex-1 bg-sky-200"}
+          style={{
+            flex: 1,
+            // backgroundColor: theme === "dark" ? DarkTheme.colors.background : DefaultTheme.colors.background,
+          }}
+        >
           <BottomSheetModalProvider>
             {/* <SafeAreaView style={{ flex: 1, margin: 0, padding: 0 }}> */}
             {/* <View className={clsx("flex-1 m-0 p-0", Platform.OS === "android" ? "pt-10" : "pt-0")}> */}
@@ -72,3 +79,9 @@ export default function RootLayout() {
     </QueryClientProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

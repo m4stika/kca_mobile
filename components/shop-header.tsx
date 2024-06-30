@@ -1,10 +1,11 @@
+import { useGlobalContext } from "@/context/global-provider";
 import React from "react";
-import { TextInput, View, useColorScheme } from "react-native";
+import { TextInput, View } from "react-native";
 import Basket from "./basket";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ShopHeader = () => {
-  const theme = useColorScheme() ?? "light";
+  const { theme } = useGlobalContext();
   return (
     <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b border-border mb-2">
       <View
@@ -17,11 +18,11 @@ const ShopHeader = () => {
           name="search-outline"
           size={22}
           style={{ fontWeight: "semibold" }}
-          color={theme === "dark" ? "white" : "black"}
+          color={theme.colors.textMuted}
         />
         <TextInput
           placeholder="search..."
-          placeholderTextColor={theme === "dark" ? "#94a3b8" : ""}
+          placeholderTextColor={theme.colors.textMuted}
           accessibilityLabelledBy="searchInput"
           accessibilityLabel="search"
           className="w-[70%] dark:text-foreground"

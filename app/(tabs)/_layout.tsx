@@ -3,18 +3,20 @@ import React from "react";
 
 import { Button } from "@/components/atoms";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { DarkTheme, DefaultTheme } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useGlobalContext } from "@/context/global-provider";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const Colors = colorScheme === "dark" ? DarkTheme : DefaultTheme;
+  const { theme } = useGlobalContext();
+  // const colorScheme = useColorScheme();
+  // const Colors = colorScheme === "dark" ? DarkTheme : DefaultTheme;
 
   return (
     <Tabs
       screenOptions={{
         // tabBarActiveTintColor: Colors[colorScheme ?? "light"].primary,
-        tabBarActiveTintColor: Colors.colors.primary,
+        // tabBarActiveTintColor: Colors.colors.primary,
+        tabBarActiveTintColor: theme.colors.primary,
+
         // tabBarLabelStyle: { color: "white" },
         headerShown: false,
         // tabBarStyle: { padding: 0 },
@@ -58,11 +60,10 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
+
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={
-                focused ? (colorScheme === "dark" ? "person-outline" : "person") : "person-outline"
-              }
+              name={focused ? (theme.dark ? "person-outline" : "person") : "person-outline"}
               color={color}
             />
           ),
