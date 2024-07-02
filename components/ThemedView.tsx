@@ -1,10 +1,9 @@
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
 import { View, type ViewProps } from "react-native";
 
 export type ThemedViewProps = Omit<ViewProps, "style"> & {
   lightColor?: string;
   darkColor?: string;
-  containerClassName?: string;
 };
 
 export function ThemedView({
@@ -13,17 +12,10 @@ export function ThemedView({
   className,
   darkColor,
   children,
-  containerClassName,
   ...otherProps
 }: ThemedViewProps) {
-  // const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, "background");
-
   return (
-    // <View style={{ backgroundColor }} className={`justify-center items-center`} {...otherProps}>
-    <View
-      className={clsx(`justify-center items-center`, className, containerClassName)}
-      {...otherProps}
-    >
+    <View className={cn(`justify-center items-center`, className)} {...otherProps}>
       {children}
     </View>
   );

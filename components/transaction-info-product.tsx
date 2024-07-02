@@ -50,7 +50,6 @@ const TransactionInfoCard = () => {
           <View className="flex gap-0 py-2 justify-end">
             <ThemedText className="text-sm">Total Belanja</ThemedText>
             <NumberWithCurrency value={formatCurrency(orderSelected.amount)} />
-            {/* <Text className="font-pmedium ">{formatCurrency(order.amount)}</Text> */}
           </View>
         </View>
       </View>

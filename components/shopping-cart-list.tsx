@@ -2,7 +2,8 @@ import { useGlobalContext } from "@/context/global-provider";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import React, { useCallback, useRef, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import { Button } from "./atoms";
 import CustomBottomSheet from "./custom-bottom-sheet";
 import PaymentDetail from "./payment-detail";
@@ -27,7 +28,7 @@ const ShoppingCartList = () => {
 
   return orderAmount === 0 ? (
     <View className="flex-1 items-center justify-center gap-3">
-      <Text className="font-pmedium">Keranjang belanja masih kosong</Text>
+      <ThemedText className="font-pmedium">Keranjang belanja masih kosong</ThemedText>
       <Button title="Mulai belanja" onPress={() => router.navigate("/shop")} />
     </View>
   ) : (

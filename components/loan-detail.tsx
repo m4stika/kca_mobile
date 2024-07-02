@@ -5,7 +5,8 @@ import { formatDate } from "@/utils/date-formater";
 import { formatCurrency } from "@/utils/format-currency";
 import { BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import clsx from "clsx";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import LabelWithValue from "./label-with-value";
 
 const LoanDetail = () => {
@@ -31,14 +32,14 @@ const LoanDetail = () => {
       >
         <View className="flex justify-center items-center gap-0">
           <View className="bg-error rounded-full px-3 flex flex-row text-background pb-1 gap-1">
-            <Text className="text-background">Rp</Text>
-            <Text className="text-xl text-background">
+            <ThemedText className="text-background">Rp</ThemedText>
+            <ThemedText className="text-xl text-background">
               {formatCurrency(pinjaman.nilaiPinjaman)}
-            </Text>
+            </ThemedText>
           </View>
-          <Text className="italic font-pmedium text-foreground">
+          <ThemedText className="italic font-pmedium text-foreground">
             {pinjaman.isPinjamanUang ? "Pinjaman Uang" : "Pinjaman Barang"}
-          </Text>
+          </ThemedText>
         </View>
         <LabelWithValue title="Tanggal Pinjam" value={formatDate(pinjaman.tglPinjam, false)} />
         <LabelWithValue title="Jn. Bunga" value={pinjaman.jenisBunga} />
@@ -59,9 +60,9 @@ const LoanDetail = () => {
             titleClassName="italic"
             valueClassName="italic"
           />
-          <Text className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
+          <ThemedText className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
             {item.keterangan}
-          </Text>
+          </ThemedText>
         </View>
       )}
       // contentOffset={{ x: 10, y: 0 }}
@@ -70,34 +71,12 @@ const LoanDetail = () => {
       // ItemSeparatorComponent={() => <View className="border-b" />}
       ListHeaderComponent={() => (
         <View className="flex justify-center p-1">
-          <Text className="font-pbold text-lg text-foreground">Detail Pinjaman</Text>
+          <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
         </View>
       )}
       ListFooterComponent={() => <View className="border-b border-border" />}
       // SectionSeparatorComponent={() => <View className="border-b" />}
     />
-
-    /*
-    <View className="h-full flex flex-col py3 gap-2">
-      <View className="basis-12 shadow-md justify-center px-4">
-        <ThemedText className="font-psemibold">Detail Pinjaman</ThemedText>
-      </View>
-
-      <View className="bg-paper basis-auto flex-1 p-4 gap-4">
-        <View className="px-5 gap-4 py-4 bg-background justify-center rounded-lg">
-          <LabelWithValue title="Pokok" value={formatCurrency(data.totalPokok ?? 0)} />
-          <LabelWithValue title="Wajib" value={formatCurrency(data.totalWajib ?? 0)} />
-          <LabelWithValue title="Sukarela" value={formatCurrency(data.sisaSukarela ?? 0)} />
-          <View className="border-t border-border" />
-          <LabelWithValue
-            title="T O T A L"
-            value={formatCurrency(data.totalSaldo ?? 0)}
-            valueClassName="font-psemibold text-lg text-primary"
-          />
-        </View>
-      </View>
-    </View>
-		 */
   );
 };
 

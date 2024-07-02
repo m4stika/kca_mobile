@@ -1,5 +1,6 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { ThemedText } from "./ThemedText";
 import LabelWithValue from "./label-with-value";
 
 const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
@@ -15,22 +16,29 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
   return (
     <View className="flex flex-col">
       <View className="bg-primary/60 flex flex-col items-center justify-center py-8">
-        <Text className="text-big text-gray-100" adjustsFontSizeToFit={true} numberOfLines={1}>
+        <ThemedText
+          inverseColor={true}
+          className="text-[7rem]"
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+        >
           {prefix?.substring(0, 2) || user?.username.substring(0, 2)}
-        </Text>
+        </ThemedText>
       </View>
       <View className="flex flex-col gap-3 px-4 -mt-4">
         <View className="flex flex-col gap-3 py-5 px-3 items-center justify-center rounded-lg shadow-xl border border-border bg-background">
           <View className="w-full">
-            <Text className="font-pmedium border-b border-border text-center px-3 dark:text-foreground">
+            <ThemedText className="font-pmedium border-b border-border text-center px-3 dark:text-foreground">
               {member.namaAnggota.toUpperCase()}
-            </Text>
+            </ThemedText>
           </View>
           <LabelWithValue title="No. Anggota" value={member.noAnggota || user.username} />
           <LabelWithValue title="Anggota" value="Aktif" />
           <View className="border-t border-border w-full items-center align-bottom pt-2">
             <TouchableOpacity onPress={onPress}>
-              <Text className="text-primary font-psemibold text-sm mt-2">Lihat detail profile</Text>
+              <ThemedText className="text-primary font-psemibold text-sm mt-2">
+                Lihat detail profile
+              </ThemedText>
             </TouchableOpacity>
           </View>
         </View>

@@ -5,14 +5,13 @@ import { formatCurrency } from "@/utils/format-currency";
 import { getRandomImageSource } from "@/utils/get-random-image-source";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Button } from "./atoms";
 import NumberWithCurrency from "./number-with-currency";
 
 const TransactionCard = ({ order }: { order: Order }) => {
   const { setOrderSelected } = useGlobalContext();
-  // const orderDetail = order.OrderDetail
   const orderCount = order.OrderDetail.length;
   const imageSource = getRandomImageSource();
   return (
@@ -27,7 +26,7 @@ const TransactionCard = ({ order }: { order: Order }) => {
             </ThemedText>
           </View>
           <View className="bg-green-200 rounded-full px-3 py-1">
-            <Text className="text-xs">{orderStatus[order.orderStatus]}</Text>
+            <ThemedText className="text-xs">{orderStatus[order.orderStatus]}</ThemedText>
           </View>
         </View>
 
@@ -45,7 +44,6 @@ const TransactionCard = ({ order }: { order: Order }) => {
           {orderCount > 1 && (
             <ThemedText className="italic">{`+ ${orderCount} barang lainnya`}</ThemedText>
           )}
-          {/* <View></View> */}
         </View>
 
         {/* footer */}
@@ -53,11 +51,10 @@ const TransactionCard = ({ order }: { order: Order }) => {
           <View className="flex gap-0 py-2">
             <ThemedText className="text-sm">Total Belanja</ThemedText>
             <NumberWithCurrency value={formatCurrency(order.amount)} />
-            {/* <Text className="font-pmedium ">{formatCurrency(order.amount)}</Text> */}
           </View>
           <Button
             title="Detail Pesanan"
-            containerClassName="py-1 bg-primary"
+            containerClassName="py-1"
             textClassName="text-xs font-light"
             onPress={() => {
               setOrderSelected(order);

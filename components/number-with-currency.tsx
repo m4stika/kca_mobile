@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { ThemedText } from "./ThemedText";
 
 const NumberWithCurrency = ({
   value,
@@ -15,10 +16,12 @@ const NumberWithCurrency = ({
 }) => {
   return (
     <View className={clsx("flex flex-row items-start", containerClassName)}>
-      <Text className={`text-foreground mr-1 font-plight ${currencyClassName}`}>Rp</Text>
-      <Text className={`text-foreground text-base font-psemibold", ${valueClassName}`}>
+      <ThemedText className={`text-foreground mr-1 font-plight ${currencyClassName}`}>
+        Rp
+      </ThemedText>
+      <ThemedText className={`text-foreground text-base font-psemibold", ${valueClassName}`}>
         {value}
-      </Text>
+      </ThemedText>
     </View>
   );
 };

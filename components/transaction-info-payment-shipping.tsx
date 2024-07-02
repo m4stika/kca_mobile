@@ -14,10 +14,17 @@ const TransactionInfoPaymentShipping = () => {
       <View className="flex flex-row justify-between items-center border-b border-border px-2 py-2">
         <ThemedText className="font-psemibold">Informasi Lainnya</ThemedText>
       </View>
-      <View className="flex gap-2 border-b border-border pb-3">
-        {/* <Text>{orderSelected.invoiceNo}</Text> */}
+      <View className="flex gap-2 pb-3 pl-2">
         <LabelWithValue title="Pembayaran" value={paymentMethod[orderSelected.paymentMethod!]} />
         <LabelWithValue title="Pengiriman" value={shippingMethod[orderSelected.shippingMethod!]} />
+      </View>
+      <View className="flex flex-row justify-between items-center border-b border-border px-2 py-2">
+        <ThemedText className="">Catatan ke penjual</ThemedText>
+      </View>
+      <View className="pl-2">
+        <ThemedText className="text-xs font-plight line-clamp-3" numberOfLines={3}>
+          {orderSelected.notes}
+        </ThemedText>
       </View>
     </View>
   );

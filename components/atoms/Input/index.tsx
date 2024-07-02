@@ -2,17 +2,12 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { useGlobalContext } from "@/context/global-provider";
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
 import React, { useState } from "react";
-import { TextInput, TextInputProps, TouchableOpacity } from "react-native";
+import { TextInput, TextInputProps, TouchableOpacity, View } from "react-native";
 
 type InputProps = TextInputProps & {
-  // placeholder: string;
-  // secureTextEntry: boolean;
-  // autoCorrect: boolean;
-  // onChangeText?: (value: string) => void;
-  // value: string;
-  title: string;
+  title?: string;
   containerClassName?: string;
   inputClassName?: string;
 };
@@ -26,31 +21,38 @@ const Input = ({
   inputClassName,
   className,
   numberOfLines = 1,
+  onFocus,
+  onBlur,
   ...otherProps
 }: InputProps) => {
   const { theme } = useGlobalContext();
-  const [focus, setFocus] = useState("close");
+  const [focus, setFocus] = useState<"open" | "close">("close");
   const [showPassword, setShowPassword] = useState(false);
 
   // const colorScheme = useColorScheme();
   return (
     <ThemedView className={`gap-2 items-start w-full ${className}`}>
-      <ThemedText className="w-full">{title}</ThemedText>
-      <ThemedView
-        className={clsx(
+      {title && <ThemedText className="w-full">{title}</ThemedText>}
+      <View
+        className={cn(
           numberOfLines === 1 && "h-14",
-          "w-full px-4 rounded-xl flex-row justify-between",
-          focus === "close" ? "border border-border" : "border-2 border-primary",
+          "w-full px-4 rounded-xl flex-row justify-between border border-border",
+          focus === "close" ? "border" : "border-2 border-primary",
           containerClassName
         )}
       >
         <TextInput
-          onFocus={() => setFocus("open")}
-          onBlur={() => setFocus("close")}
-          className={clsx("flex-1 font-psemibold text-base text-foreground", inputClassName)}
+          onFocus={(e) => {
+            setFocus("open");
+            onFocus && onFocus(e);
+          }}
+          onBlur={(e) => {
+            setFocus("close");
+            onBlur && onBlur(e);
+          }}
+          className={cn("flex-1 font-psemibold text-base text-foreground", inputClassName)}
           value={value}
           placeholder={placeholder}
-          // placeholderTextColor={colorScheme === "dark" ? "#52525B" : "#d4d4d8"}
           placeholderTextColor={theme.colors.textMuted}
           onChangeText={onChangeText}
           secureTextEntry={title === "Password" && !showPassword}
@@ -61,7 +63,7 @@ const Input = ({
             <TabBarIcon name={showPassword ? "eye-outline" : "eye-off-outline"} />
           </TouchableOpacity>
         )}
-      </ThemedView>
+      </View>
     </ThemedView>
   );
 };

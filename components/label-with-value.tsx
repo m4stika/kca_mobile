@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { ThemedText } from "./ThemedText";
+import { ThemedView } from "./ThemedView";
 
 const LabelWithValue = ({
   title,
@@ -13,19 +14,17 @@ const LabelWithValue = ({
   titleClassName?: string;
   numberOfLine?: number;
 }) => (
-  <View className="flex flex-row items-center justify-around">
-    <Text
-      className={`text-sm text-[--disabled-foreground] dark:text-foreground basis-1/3 ${titleClassName}`}
-    >
+  <ThemedView className="flex flex-row justify-around">
+    <ThemedText className={`basis-1/3 text-sm text-disabled-foreground ${titleClassName}`}>
       {title}
-    </Text>
-    <Text
+    </ThemedText>
+    <ThemedText
       className={`text-sm font-pmedium basis-2/3 line-clamp-2 text-right text-foreground ${valueClassName}`}
       numberOfLines={numberOfLine}
     >
       {value}
-    </Text>
-  </View>
+    </ThemedText>
+  </ThemedView>
 );
 
 export default LabelWithValue;

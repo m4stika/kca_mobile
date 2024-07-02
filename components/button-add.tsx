@@ -45,7 +45,7 @@ const ButtonAdd = ({ product }: { product: Product }) => {
     <View
       className={clsx(
         "absolute -top-6 right-1 h-8 w-8 rounded-full items-center justify-center ",
-        product.stok === 0 ? "bg-disabled" : "bg-success"
+        product.stok === 0 ? "hidden bg-disabled" : "bg-success"
       )}
     >
       <TouchableOpacity
@@ -55,7 +55,7 @@ const ButtonAdd = ({ product }: { product: Product }) => {
         <TabBarIcon
           name="add"
           size={22}
-          color={product.stok === 0 ? theme.colors.textMuted : theme.colors.background}
+          color={product.stok === 0 ? theme.colors.icon : theme.colors.background}
           style={{
             fontWeight: "semibold",
             // color: theme.dark

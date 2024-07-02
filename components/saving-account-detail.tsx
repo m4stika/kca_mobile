@@ -2,7 +2,7 @@ import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
 import { Simpanan } from "@/schema/simpanan.schema";
 import { formatCurrency } from "@/utils/format-currency";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import LabelWithValue from "./label-with-value";
 
@@ -32,10 +32,10 @@ const SavingAccountDetail = () => {
             {"Informasi Simpanan"}
           </ThemedText> */}
           <View className="bg-primary/70 rounded-full flex flex-row text-background py-3 gap-1 justify-center">
-            <Text className="text-background">Rp</Text>
-            <Text className="text-2xl text-background font-pbold">
+            <ThemedText className="text-background">Rp</ThemedText>
+            <ThemedText className="text-2xl text-background font-pbold">
               {formatCurrency(data.totalSaldo)}
-            </Text>
+            </ThemedText>
           </View>
           <LabelWithValue title="Pokok" value={formatCurrency(data.totalPokok ?? 0)} />
           <LabelWithValue title="Wajib" value={formatCurrency(data.totalWajib ?? 0)} />

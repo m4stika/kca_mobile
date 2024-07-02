@@ -69,7 +69,7 @@ const SignIn = () => {
         </View> */}
         <ThemedView className="w-full px-4 items-start min-h-[85vh]">
           <LoginImage width={140} height={100} className="mt-5" />
-          <ThemedText type="title" className="text-primary dark:text-primary-dark mt-5 max-w-xs">
+          <ThemedText type="title" className="text-primary mt-5 max-w-xs">
             Login Anggota
           </ThemedText>
           <Input
@@ -78,7 +78,7 @@ const SignIn = () => {
             value={formLogin.username}
             placeholder="email / No. anggota"
             className="mt-7"
-            inputClassName="focus-visible:border-none focus:border-none focus:ring-2 focus:ring-error"
+            // inputClassName="focus-visible:border-none focus:border-none focus:ring-2 focus:ring-error"
             onChangeText={(value) => onInputChange("username", value)}
           />
           {errors && errors.username ? (

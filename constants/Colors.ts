@@ -45,11 +45,11 @@ export const Colors = {
 export const DefaultTheme: ThemeProps = {
   dark: false,
   colors: {
-    primary: "#0284C7",
-    text: "#0F172A",
-    textMuted: "#65758b",
     background: "#fafafa",
     foreground: "#0F172A",
+    primary: "#0284C7",
+    text: "#0F172A",
+    textMuted: "#cbd5e1", // "#65758b",
     icon: "#52525b",
     tabIconDefault: "#52525b",
     tabIconSelected: "#0284C7",

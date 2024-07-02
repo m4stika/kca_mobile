@@ -45,7 +45,7 @@
     --error-hover: 345.3 82.7% 40.8%; /* #be123c rose-700 */
 
     --disabled: 216 12.2% 83.9%; /* #D1D5DB gray-300 */
-    --disabled-foreground: #9ca3af; /* 218 11 65%; /* #9CA3AF gray-400 */
+    --disabled-foreground: 217.9 10.6% 64.9%; /* #9ca3af /* 218 11 65%; gray-400 */
 
     --accent: 240 4.9% 83.9%; /* #D4D4D8 zinc-300*/
     /* --accent-foreground: 222.2 47.4% 11.2%; */
@@ -90,7 +90,7 @@
 
     --default: 0 0% 89.8%; /* #E5E5E5 Neutral-200*/
 
-    --primary: 198.4 93.2% 59.6%; /* #38bdf8 sky-400 */
+    --primary: 199.4 95.5% 73.9%; /* #7DD3FC sky-300 */
     --primary-hover: 198.6 88.7% 48.4%; /* #0ea5e9 sky-500 */
     --primary-foreground: 222.2 47.4% 1.2%; /* #020205 */
 
@@ -103,11 +103,11 @@
     --warning: 47.9 95.8% 53.1%; /* #facc15 yellow-400 */
     --warning-hover: 45.4 93.4% 47.5%; /* #eab308 yellow-500 */
 
-    --error: 351.3 94.5% 71.4%; /* #fb7185 rose-400 */
+    --error: 0 93.5% 81.8%; /* #FCA5A5 rose-300 */
     --error-hover: 349.7 89.2% 60.2%; /* #f43f5e rose-500 */
 
     --disabled: 240 5.2% 33.9%; /* #52525B zinc-600 */
-    --disabled-foreground: #4b5563; /*215 13.8% 34.1%; /* 217.9 10.6% 64.9%; /* #4b5563 gray-600 */
+    --disabled-foreground: 240 5% 64.9%; /* #A1A1AA zinc-400 */
 
     --accent: 240 10% 4%; /* #09090B */
     --accent-foreground: 198 93% 60%; /* #3ABFF8 */

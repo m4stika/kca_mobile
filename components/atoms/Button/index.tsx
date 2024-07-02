@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/ThemedText";
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
 import React from "react";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import ButtonIcon from "./ButtonIcon";
@@ -24,15 +24,12 @@ const Button = ({
   isLoading = false,
   ...props
 }: ButtonProps) => {
+  const defaultClassName = "bg-primary rounded-xl justify-center items-center px-3 py-4";
   return type === "icon" ? (
     <ButtonIcon name={name} onPress={onPress} />
   ) : (
     <TouchableOpacity
-      className={clsx(
-        "bg-primary rounded-xl justify-center items-center px-3 py-4",
-        containerClassName,
-        isLoading ? "opacity-50" : ""
-      )}
+      className={cn(defaultClassName, containerClassName, isLoading ? "opacity-50" : "")}
       disabled={isLoading}
       onPress={onPress}
       activeOpacity={0.7}

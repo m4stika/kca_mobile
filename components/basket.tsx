@@ -2,8 +2,9 @@ import { useGlobalContext } from "@/context/global-provider";
 import clsx from "clsx";
 import { router } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const Basket = () => {
@@ -23,7 +24,9 @@ const Basket = () => {
               orderCount > 9 ? "px-1" : "px-2"
             )}
           >
-            <Text className="text-background text-xs">{orderCount > 99 ? "99+" : orderCount}</Text>
+            <ThemedText className="text-background text-xs">
+              {orderCount > 99 ? "99+" : orderCount}
+            </ThemedText>
           </View>
         )}
       </View>

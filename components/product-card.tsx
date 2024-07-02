@@ -3,7 +3,7 @@ import { Product } from "@/schema/product.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import clsx from "clsx";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import ButtonAdd from "./button-add";
 
@@ -44,15 +44,15 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
                     product.stok === 0 ? "bg-disabled" : "bg-error"
                   )}
                 >
-                  <Text
+                  <ThemedText
                     className={
                       product.stok === 0
-                        ? "text-disabled-foreground dark:text-muted-foreground"
+                        ? "text-disabled-foreground"
                         : "text-background font-medium"
                     }
                   >
                     {formatCurrency(Number(product.hargaJual))}
-                  </Text>
+                  </ThemedText>
                 </View>
               </View>
               <ThemedText className="text-xs tracking-wider line-clamp-2" numberOfLines={2}>

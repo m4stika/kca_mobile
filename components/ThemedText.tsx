@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
 import { Text, type TextProps } from "react-native";
 
 export type ThemedTextProps = Omit<TextProps, "style"> & {
@@ -21,7 +21,7 @@ export function ThemedText({
 }: ThemedTextProps) {
   return (
     <Text
-      className={clsx(
+      className={cn(
         type === "error"
           ? "text-error font-psemibold p-3"
           : inverseColor
