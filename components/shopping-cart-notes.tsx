@@ -30,6 +30,7 @@ const ShoppingCartNote = () => {
         numberOfLines={4}
         placeholder="Catatan untuk penjual (Optional)"
         className="mt-7"
+        // containerClassName="items-start"
         textAlignVertical="top"
         inputClassName="h-28"
         onChangeText={(strValue) => setValue(strValue)}

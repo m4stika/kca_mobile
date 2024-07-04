@@ -13,13 +13,10 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].primary,
-        // tabBarActiveTintColor: Colors.colors.primary,
         tabBarActiveTintColor: theme.colors.primary,
-
         // tabBarLabelStyle: { color: "white" },
         headerShown: false,
-        // tabBarStyle: { padding: 0 },
+        tabBarStyle: { paddingTop: 4, backgroundColor: theme.colors.card },
         // tabBarShowLabel: false,
       }}
       // initialRouteName="profile"

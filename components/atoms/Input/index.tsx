@@ -35,7 +35,7 @@ const Input = ({
       {title && <ThemedText className="w-full">{title}</ThemedText>}
       <View
         className={cn(
-          numberOfLines === 1 && "h-14",
+          numberOfLines === 1 && "h-16 items-center",
           "w-full px-4 rounded-xl flex-row justify-between border border-border",
           focus === "close" ? "border" : "border-2 border-primary",
           containerClassName
@@ -50,7 +50,7 @@ const Input = ({
             setFocus("close");
             onBlur && onBlur(e);
           }}
-          className={cn("flex-1 font-psemibold text-base text-foreground", inputClassName)}
+          className={cn("flex-1 text-foreground text-xl", inputClassName)}
           value={value}
           placeholder={placeholder}
           placeholderTextColor={theme.colors.textMuted}
@@ -60,7 +60,10 @@ const Input = ({
         />
         {title === "Password" && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <TabBarIcon name={showPassword ? "eye-outline" : "eye-off-outline"} />
+            <TabBarIcon
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              className="justify-center items-center self-centerm"
+            />
           </TouchableOpacity>
         )}
       </View>

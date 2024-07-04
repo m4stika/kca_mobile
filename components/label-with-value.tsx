@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 
@@ -15,11 +16,11 @@ const LabelWithValue = ({
   numberOfLine?: number;
 }) => (
   <ThemedView className="flex flex-row justify-around">
-    <ThemedText className={`basis-1/3 text-sm text-disabled-foreground ${titleClassName}`}>
+    <ThemedText className={cn(`basis-1/3 text-sm text-muted-foreground`, titleClassName)}>
       {title}
     </ThemedText>
     <ThemedText
-      className={`text-sm font-pmedium basis-2/3 line-clamp-2 text-right text-foreground ${valueClassName}`}
+      className={cn(`text-sm font-pmedium basis-2/3 line-clamp-2 text-right`, valueClassName)}
       numberOfLines={numberOfLine}
     >
       {value}

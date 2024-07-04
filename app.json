@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/images/kca.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mastika.KCAMobile"
+      "package": "com.mastika.KCAMobile",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +43,12 @@
       "eas": {
         "projectId": "70b0a9aa-71b6-4ba2-ae20-77b4ca6b9af3"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/70b0a9aa-71b6-4ba2-ae20-77b4ca6b9af3"
     }
   }
 }

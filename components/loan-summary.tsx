@@ -3,22 +3,32 @@ import { formatCurrency } from "@/utils/format-currency";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
-import NumberWithCurrency from "./number-with-currency";
+import LabelWithValue from "./label-with-value";
 
-const SavingAccountSummary = ({ onPress }: { onPress: () => void }) => {
+const LoanSummary = ({ onPress }: { onPress: () => void }) => {
   const { user, member } = useGlobalContext();
   if (!user || !member) return null;
+
+  if (member.saldoPinjaman === 0) return null;
 
   return (
     <View className="px-4">
       <Card className="px-0">
         <CardHeader className="items-center border-b">
-          <CardTitle className="font-psemibold text-lg">Simpanan</CardTitle>
+          <CardTitle className="font-psemibold text-lg">Pinjaman dan Angsuran</CardTitle>
         </CardHeader>
-        <CardContent className="px-4 items-center justify-center">
-          <NumberWithCurrency
-            value={formatCurrency(Number(member.saldoSimpanan) || 0)}
-            valueClassName="text-3xl"
+        <CardContent className="p-4 gap-2">
+          <LabelWithValue
+            title="Pinjaman"
+            value={formatCurrency(Number(member.saldoPinjaman) || 0)}
+            valueClassName="text-xl font-psemibold"
+            titleClassName="text-lg"
+          />
+          <LabelWithValue
+            title="Angsuran"
+            value={formatCurrency(Number(member.nilaiAngsuran) || 0)}
+            valueClassName="text-xl font-psemibold"
+            titleClassName="text-lg"
           />
         </CardContent>
         <CardFooter className="flex-1 border-t pr-4">
@@ -31,4 +41,4 @@ const SavingAccountSummary = ({ onPress }: { onPress: () => void }) => {
   );
 };
 
-export default SavingAccountSummary;
+export default LoanSummary;

@@ -1,13 +1,15 @@
 import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
-import { Pinjaman } from "@/schema/pinjaman.schema";
+import { Pinjaman, RincianPinjaman } from "@/schema/pinjaman.schema";
+import { cn } from "@/utils/cn";
 import { formatDate } from "@/utils/date-formater";
 import { formatCurrency } from "@/utils/format-currency";
 import { BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import clsx from "clsx";
 import { View } from "react-native";
 import { ThemedText } from "./ThemedText";
+import { Card, CardContent, CardDescription, CardHeader } from "./card";
 import LabelWithValue from "./label-with-value";
+import NumberWithCurrency from "./number-with-currency";
 
 const LoanDetail = () => {
   const { member } = useGlobalContext();
@@ -22,11 +24,31 @@ const LoanDetail = () => {
     data: item.RincianPinjaman.map((rincian) => ({ ...rincian })),
   }));
 
+  const Headers = ({ pinjaman }: { pinjaman: Pinjaman }) => {
+    return (
+      <Card className="p-2 rounded-none border-0">
+        <CardHeader className="items-center space-y-0 p-1 bg-error rounded-full w-[70%] self-center">
+          <NumberWithCurrency
+            value={formatCurrency(pinjaman.nilaiPinjaman)}
+            valueClassName="text-2xl text-background"
+            currencyClassName="text-background"
+          />
+        </CardHeader>
+        <CardDescription className="mt-0 text-foreground text-center border-b pb-2">
+          {pinjaman.isPinjamanUang ? "Pinjaman Uang" : "Pinjaman Barang"}
+        </CardDescription>
+        <CardContent className="py-1">
+          <LabelWithValue title="Tanggal Pinjam" value={formatDate(pinjaman.tglPinjam, false)} />
+          <LabelWithValue title="Jn. Bunga" value={pinjaman.jenisBunga} />
+        </CardContent>
+      </Card>
+    );
+  };
   const Header = ({ pinjaman }: { pinjaman: Pinjaman }) => {
     return (
       <View
-        className={clsx(
-          "flex flex-col gap-1 p-2 dark:bg-background",
+        className={cn(
+          "flex flex-col gap-1 p-2",
           pinjaman.isPinjamanUang ? "bg-sky-100" : "bg-rose-100"
         )}
       >
@@ -47,36 +69,56 @@ const LoanDetail = () => {
     );
   };
 
+  const Content = ({ itemDetail }: { itemDetail: RincianPinjaman }) => (
+    <Card className="px-2 border-0 rounded-none pb-2">
+      <CardContent className="py-0">
+        <LabelWithValue
+          title={formatDate(itemDetail.tglLunas, false)}
+          value={formatCurrency(itemDetail.rpBayar)}
+          titleClassName="italic"
+          valueClassName="italic"
+        />
+        <ThemedText className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
+          {itemDetail.keterangan}
+        </ThemedText>
+      </CardContent>
+    </Card>
+  );
+
   return (
-    <BottomSheetSectionList
-      className={"px-2"}
-      sections={sections}
-      keyExtractor={(item, index) => item.refCode + index}
-      renderItem={({ item }) => (
-        <View className="w-full px-4">
-          <LabelWithValue
-            title={formatDate(item.tglLunas, false)}
-            value={formatCurrency(item.rpBayar)}
-            titleClassName="italic"
-            valueClassName="italic"
-          />
-          <ThemedText className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
-            {item.keterangan}
-          </ThemedText>
-        </View>
-      )}
-      // contentOffset={{ x: 10, y: 0 }}
-      renderSectionHeader={({ section }) => <Header pinjaman={section} />}
-      renderSectionFooter={() => <View className="pb-4" />}
-      // ItemSeparatorComponent={() => <View className="border-b" />}
-      ListHeaderComponent={() => (
-        <View className="flex justify-center p-1">
-          <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
-        </View>
-      )}
-      ListFooterComponent={() => <View className="border-b border-border" />}
-      // SectionSeparatorComponent={() => <View className="border-b" />}
-    />
+    <View className="min-h-[95%] gap-4">
+      <ThemedText className="font-pbold text-lg px-2">Detail Pinjaman</ThemedText>
+      <BottomSheetSectionList
+        className={"px-2 bg-background pt-3"}
+        sections={sections}
+        keyExtractor={(item, index) => item.refCode + index}
+        renderItem={({ item }) => (
+          <Content itemDetail={item} />
+          // <View className="w-full px-4">
+          //   <LabelWithValue
+          //     title={formatDate(item.tglLunas, false)}
+          //     value={formatCurrency(item.rpBayar)}
+          //     titleClassName="italic"
+          //     valueClassName="italic"
+          //   />
+          //   <ThemedText className="italic text-xs text-disabled-foreground dark:text-foreground pl-5">
+          //     {item.keterangan}
+          //   </ThemedText>
+          // </View>
+        )}
+        // contentOffset={{ x: 10, y: 0 }}
+        renderSectionHeader={({ section }) => <Headers pinjaman={section} />}
+        renderSectionFooter={() => <View className="pb-4" />}
+        // ItemSeparatorComponent={() => <View className="border-b" />}
+        // ListHeaderComponent={() => (
+        //   <View className="flex justify-center p-1">
+        //     <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
+        //   </View>
+        // )}
+        // ListFooterComponent={() => <View className="border-b border-border" />}
+        // SectionSeparatorComponent={() => <View className="pb-2" />}
+      />
+    </View>
   );
 };
 

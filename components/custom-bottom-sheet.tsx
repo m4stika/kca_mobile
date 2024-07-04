@@ -1,6 +1,7 @@
+import { useGlobalContext } from "@/context/global-provider";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
-import { View, useColorScheme } from "react-native";
+import { View } from "react-native";
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ interface Props {
 type Ref = BottomSheetModal;
 const CustomBottomSheet = forwardRef<Ref, Props>(
   ({ title, activeIndex = 0, snapPointItems, content }, ref) => {
-    const theme = useColorScheme() ?? "light";
+    const { theme } = useGlobalContext();
     // ref
     // const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -31,7 +32,7 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
 
     // renders
     return (
-      <View className="items-center">
+      <View className="items-center ">
         <BottomSheetModal
           ref={ref}
           // onChange={handleSheetChanges}
@@ -39,14 +40,12 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
           index={activeIndex}
           enablePanDownToClose={true}
           backdropComponent={renderBackdrop}
-          handleIndicatorStyle={{ backgroundColor: "#D1D5DB" }}
-          backgroundStyle={{
-            backgroundColor: theme === "light" ? "#fafafa" : "#1E293B",
-            // backgroundColor: "#facc15",
-            opacity: 60,
-          }}
+          handleIndicatorStyle={{ backgroundColor: theme.colors.textMuted }}
+          backgroundStyle={{ backgroundColor: theme.colors.card }}
         >
-          <BottomSheetView className="flex-1">{content ? content : title}</BottomSheetView>
+          <BottomSheetView className="flex-1 px-2 bg-paper">
+            {content ? content : title}
+          </BottomSheetView>
           {/* </BottomSheetScrollView> */}
         </BottomSheetModal>
       </View>

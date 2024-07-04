@@ -97,6 +97,7 @@ const SignIn = () => {
           <Button
             title="Masuk"
             containerClassName="w-full mt-7"
+            textClassName="text-xl"
             onPress={handleSubmit}
             isLoading={isSubmitting}
           />

@@ -7,7 +7,7 @@ import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
 import { ThemeProvider } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-// import { useColorScheme } from "nativewind";
+// import { useColorScheme as useColorSchemeWind } from "nativewind";
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 import { ViewProps, useColorScheme } from "react-native";
 
@@ -87,6 +87,7 @@ export function GlobalProvider({ children }: ViewProps) {
   const [theme, setTheme] = useState<ThemeProps>(DefaultTheme);
   const [error, setError] = useState<string>();
   const colorScheme = useColorScheme();
+  // const schemaWind = useColorSchemeWind();
 
   useEffect(() => {
     // setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
@@ -107,6 +108,7 @@ export function GlobalProvider({ children }: ViewProps) {
 
   useEffect(() => {
     setTheme(() => (colorScheme === "dark" ? DarkTheme : DefaultTheme));
+    // console.log(schemaWind.colorScheme);
   }, [colorScheme]);
 
   useEffect(() => {
@@ -125,36 +127,38 @@ export function GlobalProvider({ children }: ViewProps) {
   };
 
   return (
-    <GlobalContext.Provider
-      value={{
-        // theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
-        theme,
-        user,
-        member,
-        isLogged,
-        isLoading,
-        error,
-        orderCount: order.OrderDetail.length,
-        order,
-        orderAmount: order.amount,
-        setLoggedIn: setIsLogged,
-        setUserActive: setUser,
-        setMember: setMember,
-        setOrder: setOrder,
-        productSelected,
-        setProductSelected,
-        orderSelected,
-        setOrderSelected,
-        reset,
-        setIsLoading,
-      }}
-    >
-      <ThemeProvider value={theme}>{children}</ThemeProvider>
-      <StatusBar
-        style="light"
-        // style={StatusBarTheme[colorScheme ?? "light"].style}
-        backgroundColor={StatusBarTheme[colorScheme ?? "light"].background}
-      />
-    </GlobalContext.Provider>
+    <ThemeProvider value={theme}>
+      <GlobalContext.Provider
+        value={{
+          // theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
+          theme,
+          user,
+          member,
+          isLogged,
+          isLoading,
+          error,
+          orderCount: order.OrderDetail.length,
+          order,
+          orderAmount: order.amount,
+          setLoggedIn: setIsLogged,
+          setUserActive: setUser,
+          setMember: setMember,
+          setOrder: setOrder,
+          productSelected,
+          setProductSelected,
+          orderSelected,
+          setOrderSelected,
+          reset,
+          setIsLoading,
+        }}
+      >
+        {children}
+        <StatusBar
+          style="light"
+          // style={StatusBarTheme[colorScheme ?? "light"].style}
+          backgroundColor={StatusBarTheme[colorScheme ?? "light"].background}
+        />
+      </GlobalContext.Provider>
+    </ThemeProvider>
   );
 }

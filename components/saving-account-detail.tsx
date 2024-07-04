@@ -4,7 +4,9 @@ import { Simpanan } from "@/schema/simpanan.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import { View } from "react-native";
 import { ThemedText } from "./ThemedText";
+import { Card, CardContent, CardHeader } from "./card";
 import LabelWithValue from "./label-with-value";
+import NumberWithCurrency from "./number-with-currency";
 
 const SavingAccountDetail = () => {
   const { member } = useGlobalContext();
@@ -15,39 +17,24 @@ const SavingAccountDetail = () => {
   if (!data) return null;
 
   return (
-    <View className="h-full flex flex-col py3 gap-2">
-      <View className="basis-12 shadow-md justify-center px-4">
-        <ThemedText className="font-psemibold">Detail Simpanan</ThemedText>
+    <View
+      className="flex flex-col gap-2 pb-4 bg-background"
+      // style={vars({ "--container-disabled": "red" })}
+    >
+      <View className="shadow-md justify-center px-4 bg-paper pb-3">
+        <ThemedText type="subtitle">Detail Simpanan</ThemedText>
       </View>
-
-      <View className="bg-paper basis-auto flex-1 p-4 gap-4">
-        {/* Nama */}
-        {/* <View className="py-5 bg-background items-center justify-center rounded-lg">
-          <ThemedText className="font-pmedium text-primary">{"SIMPANAN"}</ThemedText>
-        </View> */}
-
-        {/* Informasi simpanan */}
-        <View className="px-5 gap-4 py-4 bg-background justify-center rounded-lg">
-          {/*  <ThemedText className="text-sm font-psemibold border-b border-border py-4">
-            {"Informasi Simpanan"}
-          </ThemedText> */}
-          <View className="bg-primary/70 rounded-full flex flex-row text-background py-3 gap-1 justify-center">
-            <ThemedText className="text-background">Rp</ThemedText>
-            <ThemedText className="text-2xl text-background font-pbold">
-              {formatCurrency(data.totalSaldo)}
-            </ThemedText>
-          </View>
+      {/* Informasi akun */}
+      <Card className="mx-2">
+        <CardHeader className="border-b py-4 items-center">
+          <NumberWithCurrency value={formatCurrency(data.totalSaldo)} valueClassName="text-3xl" />
+        </CardHeader>
+        <CardContent className="gap-4 px-4">
           <LabelWithValue title="Pokok" value={formatCurrency(data.totalPokok ?? 0)} />
           <LabelWithValue title="Wajib" value={formatCurrency(data.totalWajib ?? 0)} />
           <LabelWithValue title="Sukarela" value={formatCurrency(data.sisaSukarela ?? 0)} />
-          <View className="border-t border-border" />
-          {/* <LabelWithValue
-            title="T O T A L"
-            value={formatCurrency(data.totalSaldo ?? 0)}
-            valueClassName="font-psemibold text-lg text-primary"
-          /> */}
-        </View>
-      </View>
+        </CardContent>
+      </Card>
     </View>
   );
 };

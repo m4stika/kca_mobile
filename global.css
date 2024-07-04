@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .border,
+  .border-b,
+  .border-t {
+    @apply border-border;
+  }
+}
+
 @layer base {
   :root {
-    --background: 0 0% 98%; /* #fafafa zinc-50,*/
+    --background: #fafafa; /* #fafafa zinc-50,*/
     --foreground: 222.2 47.4% 11.2%; /* #0F172A */
 
     --paper: #f3f4f6; /* 220 14% 85%;  gray-100 */
@@ -21,10 +29,6 @@
 
     --border: 240 5.9% 90%; /* #e4e4e7 zinc-200 */
     --input: 214.3 31.8% 91.4%; /* #E2E8F0 */
-
-    /* --primary: 222.2 47.4% 11.2%; /* #0F172A */
-    /*--secondary: 210 40% 96.1%; /* #F1F5F9 */
-    /*--secondary-foreground: 222.2 47.4% 11.2%; /* #F1F5F9 */
 
     --default: 0 0% 3.9%; /* #0A0A0A Neutral-950*/
 
@@ -58,22 +62,21 @@
 
     --radius: 0.5rem;
 
-    --shadow-color: 216 12.2% 83.9%; /* #d1d5db gray-300 */
+    /*--shadow-color: 216 12.2% 83.9%;  #d1d5db gray-300 */
   }
-  body {
+  /* body {
     @apply bg-background text-foreground;
     @apply font-sans;
-  }
+  } */
 }
 
 /* including dark mode! */
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 217.2 32.6% 17.5%; /* 240 5.9% 10%; /*#18181b zinc-900 */
+    --background: #020617; /* 240 5.9% 10%; /*#1E293B slate-800 */
     --foreground: 214.3 31.8% 91.4%; /* #E2E8F0  slate-200 */
 
-    --paper: #09090b; /*  240 10% 3.9%; zinc-950 */
+    --paper: #1e293b; /* ##18181b   240 10% 3.9%; slate-900 */
     --paper-foreground: #94a3b8; /* 215 20.2% 65.1%;   slate-400*/
 
     --muted: 222.2 47.4% 11.2%; /* #0F172A */
@@ -122,10 +125,5 @@
     --shadow-color: 20 14.3% 4.1%; /* #0C0A09  stone-950 */
 
     --delay: 0.3s;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    @apply font-sans;
   }
 }

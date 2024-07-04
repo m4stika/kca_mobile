@@ -1,10 +1,12 @@
 import { useGlobalContext } from "@/context/global-provider";
+import clsx from "clsx";
 import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
 import LabelWithValue from "./label-with-value";
 
 const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
-  const { user, member } = useGlobalContext();
+  const { user, member, theme } = useGlobalContext();
   if (!user || !member) return null;
   let prefix: string | undefined = undefined;
   if (member.namaAnggota) {
@@ -13,35 +15,42 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
       .filter((str) => str.length > 2)
       .reduce((accumulator, str) => accumulator + str[0], "");
   }
+
   return (
-    <View className="flex flex-col">
-      <View className="bg-primary/60 flex flex-col items-center justify-center py-8">
+    <View>
+      <View
+        className={clsx(
+          theme.dark ? "bg-background border-y" : "bg-emerald-400",
+          "flex flex-col items-center justify-center py-8"
+        )}
+      >
         <ThemedText
           inverseColor={true}
-          className="text-[7rem]"
+          className="text-[7rem] text-slate-100"
           adjustsFontSizeToFit={true}
           numberOfLines={1}
         >
           {prefix?.substring(0, 2) || user?.username.substring(0, 2)}
         </ThemedText>
       </View>
-      <View className="flex flex-col gap-3 px-4 -mt-4">
-        <View className="flex flex-col gap-3 py-5 px-3 items-center justify-center rounded-lg shadow-xl border border-border bg-background">
-          <View className="w-full">
-            <ThemedText className="font-pmedium border-b border-border text-center px-3 dark:text-foreground">
-              {member.namaAnggota.toUpperCase()}
-            </ThemedText>
-          </View>
-          <LabelWithValue title="No. Anggota" value={member.noAnggota || user.username} />
-          <LabelWithValue title="Anggota" value="Aktif" />
-          <View className="border-t border-border w-full items-center align-bottom pt-2">
+
+      <View className="px-4">
+        <Card className="px-0 pt-4 -mt-4">
+          <CardHeader className="items-center border-b">
+            <CardTitle>{member.namaAnggota.toUpperCase()}</CardTitle>
+          </CardHeader>
+          <CardContent className="p-4 gap-2">
+            <LabelWithValue title="No. Anggota" value={member.noAnggota || user.username} />
+            <LabelWithValue title="Anggota" value="Aktif" />
+          </CardContent>
+          <CardFooter className="flex-1 border-t">
             <TouchableOpacity onPress={onPress}>
-              <ThemedText className="text-primary font-psemibold text-sm mt-2">
+              <CardDescription className="text-primary text-base">
                 Lihat detail profile
-              </ThemedText>
+              </CardDescription>
             </TouchableOpacity>
-          </View>
-        </View>
+          </CardFooter>
+        </Card>
       </View>
     </View>
   );

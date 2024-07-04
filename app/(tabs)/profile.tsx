@@ -1,5 +1,6 @@
 import CustomBottomSheet from "@/components/custom-bottom-sheet";
 import LoanDetail from "@/components/loan-detail";
+import LoanSummary from "@/components/loan-summary";
 import ProfileDetail from "@/components/profile-detail";
 import ProfileHeader from "@/components/profile-header";
 import ProfileSummaryInfo from "@/components/profile-sumary-info";
@@ -46,12 +47,18 @@ const Profile = () => {
             }}
           />
           <SavingAccountSummary
-            setState={setSheetActive}
             onPress={() => {
-              // setSheetActive("simpanan");
+              setSheetActive("simpanan");
               handlePresentModalPress();
             }}
           />
+          <LoanSummary
+            onPress={() => {
+              setSheetActive("pinjaman");
+              handlePresentModalPress();
+            }}
+          />
+
           <CustomBottomSheet
             title="Informasi Profile"
             ref={bottomSheetRef}

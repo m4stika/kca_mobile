@@ -100,6 +100,7 @@ const SignUp = () => {
           <Button
             title="Daftar"
             containerClassName="w-full mt-7"
+            textClassName="text-xl"
             onPress={handleSubmit}
             isLoading={isSubmitting}
           />

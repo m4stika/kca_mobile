@@ -9,7 +9,7 @@ const ShopHeader = () => {
   return (
     <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b border-border mb-2">
       <View
-        className="flex-1 flex-row items-center gap-2 px-2 py-1 border border-border rounded-lg bg-background"
+        className="flex-1 flex-row items-center gap-2 p-2 border border-border rounded-lg"
         nativeID="searchInput"
         aria-label="view for search"
         accessible={true}
@@ -25,7 +25,8 @@ const ShopHeader = () => {
           placeholderTextColor={theme.colors.textMuted}
           accessibilityLabelledBy="searchInput"
           accessibilityLabel="search"
-          className="w-[70%] dark:text-foreground"
+          className="w-[70%] text-foreground"
+
           // accessible={true}
         />
       </View>

@@ -122,7 +122,7 @@ module.exports = {
         print: "hsl(var(--default))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "var(--background)",
         foreground: "hsl(var(--foreground))",
         paper: {
           DEFAULT: "var(--paper)",
