@@ -22,6 +22,7 @@ export function ThemedText({
   return (
     <Text
       className={cn(
+        // "bg-background text-foreground",
         type === "error"
           ? "text-error font-psemibold p-3"
           : inverseColor

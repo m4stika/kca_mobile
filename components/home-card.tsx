@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { cn } from "@/utils/cn";
-import { TouchableOpacity, View, ViewProps } from "react-native";
+import { TouchableOpacity, View, type ViewProps } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
-type CardProps = ViewProps & {
+interface CardProps extends ViewProps {
   title: string;
   color?: "primary" | "secondary" | "success" | "warning" | "error" | "default";
   contentClassName?: string;
@@ -15,7 +15,7 @@ type CardProps = ViewProps & {
         showDetail: true;
         onPress: () => void;
       };
-};
+}
 const HomeCard = ({
   children,
   title,

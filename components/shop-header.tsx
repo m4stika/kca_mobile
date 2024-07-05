@@ -9,7 +9,7 @@ const ShopHeader = () => {
   return (
     <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b mb-2">
       <View
-        className="flex-1 flex-row items-center gap-2 p-2 border rounded-lg"
+        className="flex-1 flex-row items-center gap-2 px-2 h-12 border rounded-lg"
         nativeID="searchInput"
         aria-label="view for search"
         accessible={true}

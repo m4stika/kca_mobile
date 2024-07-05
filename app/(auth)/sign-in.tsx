@@ -12,7 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 type UserLogin = Omit<User, "fullName" | "email" | "name">;
 const SignIn = () => {
-  const [formLogin, setFormLogin] = useState<UserLogin>({} as UserLogin);
+  const [formLogin, setFormLogin] = useState<UserLogin>({
+    username: "1212",
+    password: "1212",
+  } as UserLogin);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<UserLogin>>();
   const [errorResponse, setErrorResponse] = useState<string>();
@@ -46,7 +49,7 @@ const SignIn = () => {
 
       if (response.status === "error") {
         // console.log("Error Login", response.message);
-        alert(response.message);
+        // alert(response.message);
         setErrorResponse(response.message);
         setIsSubmitting(false);
       } else {
@@ -80,29 +83,35 @@ const SignIn = () => {
             className="mt-7"
             // inputClassName="focus-visible:border-none focus:border-none focus:ring-2 focus:ring-error"
             onChangeText={(value) => onInputChange("username", value)}
+            onFocus={() => setErrorResponse(undefined)}
           />
           {errors && errors.username ? (
-            <ThemedText className="text-error dark:text-error-dark">{errors.username}</ThemedText>
+            <ThemedText type="error">{errors.username}</ThemedText>
           ) : null}
           <Input
             title="Password"
             value={formLogin.password}
             placeholder="Password anda"
             className="mt-7"
+            onFocus={() => setErrorResponse(undefined)}
             onChangeText={(value) => onInputChange("password", value)}
           />
           {errors && errors.password ? (
-            <ThemedText className="text-error dark:text-error-dark">{errors.password}</ThemedText>
+            <ThemedText type="error">{errors.password}</ThemedText>
           ) : null}
-          <Button
-            title="Masuk"
-            containerClassName="w-full mt-7"
-            textClassName="text-xl"
-            onPress={handleSubmit}
-            isLoading={isSubmitting}
-          />
+
+          <ThemedView className="w-full flex items-center pt-7">
+            {errorResponse ? <ThemedText type="error">{errorResponse}</ThemedText> : null}
+            <Button
+              title="Masuk"
+              containerClassName="w-full"
+              textClassName="text-xl"
+              onPress={handleSubmit}
+              isLoading={isSubmitting}
+            />
+          </ThemedView>
           <ThemedView className="w-full pt-5 flex-row gap-2">
-            <ThemedText className="cursor-pointer">Tidak memiliki akun?</ThemedText>
+            <ThemedText>Tidak memiliki akun?</ThemedText>
             <Link
               href={"/sign-up"}
               className="text-base font-psemibold text-primary dark:text-primary-dark active:text-xl"
@@ -110,9 +119,6 @@ const SignIn = () => {
               Daftar
             </Link>
           </ThemedView>
-          {/* {errorResponse ? (
-            <ThemedText className="text-error dark:text-error-dark">{errorResponse}</ThemedText>
-          ) : null} */}
         </ThemedView>
       </ScrollView>
     </SafeAreaView>
