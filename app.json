@@ -5,7 +5,7 @@
     "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "KCA-Mobile",
+    "scheme": "kca-mobile",
     "userInterfaceStyle": "automatic",
     "androidStatusBar": {
       "backgroundColor": "#ffffff",

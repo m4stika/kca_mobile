@@ -54,7 +54,7 @@ const ShoppingCartAddRemoveItem = ({ orderItem }: { orderItem: OrderDetail }) =>
   };
 
   return (
-    <View className="flex flex-row rounded-full border border-border w-28 self-end items-center justify-between px-1">
+    <View className="flex flex-row rounded-full border w-28 self-end items-center justify-between px-1">
       {selectedItem.qty === 1 ? (
         <TabBarIcon name="trash" size={20} onPress={handleDelete} />
       ) : (

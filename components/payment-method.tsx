@@ -10,7 +10,7 @@ const PaymentMethod = ({ onPress }: { onPress: () => void }) => {
   if (orderCount === 0) return;
   return (
     <TouchableOpacity onPress={onPress}>
-      <View className="flex-row items-center justify-between p-2 border border-border rounded-xl">
+      <View className="flex-row items-center justify-between p-2 border rounded-xl">
         <ThemedText>{paymentMethod[order.paymentMethod!] || "Pilih Cara Pembayaran"}</ThemedText>
         <TabBarIcon name="chevron-forward" size={20} />
       </View>

@@ -115,7 +115,7 @@ const LoanDetail = () => {
         //     <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
         //   </View>
         // )}
-        // ListFooterComponent={() => <View className="border-b border-border" />}
+        // ListFooterComponent={() => <View className="border-b" />}
         // SectionSeparatorComponent={() => <View className="pb-2" />}
       />
     </View>

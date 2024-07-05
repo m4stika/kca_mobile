@@ -5,14 +5,13 @@ import { TabBarIcon } from "./navigation/TabBarIcon";
 
 const ShoppingCartHeader = () => {
   return (
-    <View className="p-4 border-b border-border">
+    <View className="p-4 border-b">
       <TouchableOpacity onPress={() => router.back()}>
         <View className="flex flex-row gap-4 items-center">
           <TabBarIcon name="chevron-back" />
           <ThemedText className="font-pmedium text-lg">Keranjang</ThemedText>
         </View>
       </TouchableOpacity>
-      {/* <View className="border-b border-border" /> */}
     </View>
   );
 };

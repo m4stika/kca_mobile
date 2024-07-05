@@ -24,7 +24,7 @@ const ShoppingProductView = () => {
         resizeMode="cover"
       />
       <View className="flex-1 gap-3 px-3">
-        <View className="flex flex-row justify-between border-b border-border pb-2">
+        <View className="flex flex-row justify-between border-b pb-2">
           <NumberWithCurrency
             value={formatCurrency(productSelected.hargaJual)}
             valueClassName="text-3xl font-psemibold text-error"
@@ -42,7 +42,7 @@ const ShoppingProductView = () => {
 
       <View
         className={clsx(
-          "flex flex-row items-center justify-between px-4 py-2 border-t border-border",
+          "flex flex-row items-center justify-between px-4 py-2 border-t",
           productSelected.stok === 0 && "pointer-events-none"
         )}
       >

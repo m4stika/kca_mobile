@@ -1,7 +1,5 @@
+import TransactionInfoDetail from "@/components/transaction-info-detail";
 import TransactionInfoHeader from "@/components/transaction-info-header";
-import TransactionInvoiceInfo from "@/components/transaction-info-invoice";
-import TransactionInfoPaymentShipping from "@/components/transaction-info-payment-shipping";
-import TransactionInfoCard from "@/components/transaction-info-product";
 import { useGlobalContext } from "@/context/global-provider";
 import { useNavigation } from "expo-router";
 import React from "react";
@@ -37,12 +35,14 @@ const TransactionInfo = () => {
   //     },
   //   });
   // }, []);
+
   return (
     <View>
       <TransactionInfoHeader />
-      <TransactionInvoiceInfo />
-      <TransactionInfoCard />
-      <TransactionInfoPaymentShipping />
+      {/* <TransactionCard /> */}
+      {/* <TransactionInvoiceInfo /> */}
+      <TransactionInfoDetail />
+      {/* <TransactionInfoPaymentShipping /> */}
     </View>
   );
 };

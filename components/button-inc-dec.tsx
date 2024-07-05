@@ -21,7 +21,7 @@ const ButtonIncDec = ({
   return (
     <View className="flex-1 flex-row gap-3 items-center justify-end mr-2">
       {title && <ThemedText>{title}</ThemedText>}
-      <View className="flex flex-row rounded-full border border-border w-28 self-end items-center justify-between px-1 py-1">
+      <View className="flex flex-row rounded-full border w-28 self-end items-center justify-between px-1 py-1">
         <TabBarIcon
           name="remove"
           size={20}

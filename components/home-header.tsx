@@ -8,7 +8,7 @@ const HomeHeader = ({ user }: { user: User }) => {
   const { theme } = useGlobalContext();
   // const theme = useColorScheme() ?? "light";
   return (
-    <View className="w-full flex-row items-center justify-between px-2 pb-8 pt-2 border-b border-border">
+    <View className="w-full flex-row items-center justify-between px-2 pb-8 pt-2 border-b ">
       <View className="flex flex-row gap-2 items-center">
         <View className="items-start flex">
           <ThemedText className="p-0 font-psemibold capitalize">{user?.name}</ThemedText>

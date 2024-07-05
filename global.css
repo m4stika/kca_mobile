@@ -27,7 +27,7 @@
     --card: 0 0% 98%; /* #fafafa zinc-50 */
     --card-foreground: 222.2 47.4% 11.2%; /* #0F172A */
 
-    --border: 240 5.9% 90%; /* #e4e4e7 zinc-200 */
+    --border: #e4e4e7; /* #e4e4e7 zinc-200 */
     --input: 214.3 31.8% 91.4%; /* #E2E8F0 */
 
     --default: 0 0% 3.9%; /* #0A0A0A Neutral-950*/
@@ -88,7 +88,7 @@
     --card: 222.2 47.4% 11.2%; /* #0F172A */
     --card-foreground: 213 31% 91%; /* #E1E7EF */
 
-    --border: 240 5.2% 33.9%; /*zinc-600 */
+    --border: #52525b; /* #f3f4f6 zinc-600 */
     --input: 216 34% 17%; /* #1D283A */
 
     --default: 0 0% 89.8%; /* #E5E5E5 Neutral-200*/

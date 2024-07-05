@@ -7,9 +7,9 @@ import { TabBarIcon } from "./navigation/TabBarIcon";
 const ShopHeader = () => {
   const { theme } = useGlobalContext();
   return (
-    <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b border-border mb-2">
+    <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b mb-2">
       <View
-        className="flex-1 flex-row items-center gap-2 p-2 border border-border rounded-lg"
+        className="flex-1 flex-row items-center gap-2 p-2 border rounded-lg"
         nativeID="searchInput"
         aria-label="view for search"
         accessible={true}

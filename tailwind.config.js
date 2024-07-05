@@ -118,7 +118,7 @@ module.exports = {
           },
         },
  */
-        border: "hsl(var(--border))",
+        border: "var(--border)",
         print: "hsl(var(--default))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

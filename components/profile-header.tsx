@@ -69,7 +69,6 @@ const ProfileHeader = () => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* <View className="w-full border-b border-border" /> */}
     </View>
   );
 };

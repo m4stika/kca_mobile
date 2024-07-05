@@ -47,7 +47,7 @@ const ShoppingCartFooter = () => {
   return (
     // <View className="flex-1 justify-end">
     <View className="flex justify-end h-20 bottom-0">
-      <View className="flex flex-row justify-end px-4  py-2 border-t border-border mt-3 gap-2">
+      <View className="flex flex-row justify-end px-4  py-2 border-t mt-3 gap-2">
         <View className="flex items-end px-2">
           <ThemedText className="pr-2">Total</ThemedText>
           <NumberWithCurrency value={formatCurrency(orderAmount)} />

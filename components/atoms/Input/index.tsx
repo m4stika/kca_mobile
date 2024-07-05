@@ -36,7 +36,7 @@ const Input = ({
       <View
         className={cn(
           numberOfLines === 1 && "h-16 items-center",
-          "w-full px-4 rounded-xl flex-row justify-between border border-border",
+          "w-full px-4 rounded-xl flex-row justify-between border",
           focus === "close" ? "border" : "border-2 border-primary",
           containerClassName
         )}

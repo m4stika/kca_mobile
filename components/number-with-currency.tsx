@@ -15,9 +15,9 @@ const NumberWithCurrency = ({
   valueClassName?: string;
 }) => {
   return (
-    <View className={cn("flex flex-row", containerClassName)}>
+    <View className={cn("flex flex-row ", containerClassName)}>
       <ThemedText className={cn(`mr-1 font-plight`, currencyClassName)}>Rp</ThemedText>
-      <ThemedText className={cn(`font-psemibold`, valueClassName)}>{value}</ThemedText>
+      <ThemedText className={cn(`font-psemibold text-left`, valueClassName)}>{value}</ThemedText>
     </View>
   );
 };
