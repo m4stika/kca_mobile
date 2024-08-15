@@ -61,15 +61,15 @@ const Home = () => {
   const isHorizontal = orders && orders.length > 1 ? true : false;
 
   return (
-    <View className="flex gap-3 px-2 py-3">
+    <View className="flex gap-3 ">
       <HomeHeader user={user!} />
 
-      <HomeCard title="Saldo Voucher" color="primary">
-        <NumberWithCurrency
-          value={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
-          valueClassName="text-3xl text-left -ml-2 text-background"
-          currencyClassName="mr-0 text-background"
-        />
+      <HomeCard title="Saldo Voucher" color="default" className="px-2" data={data!}>
+        {/* <NumberWithCurrency */}
+        {/*   value={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })} */}
+        {/*   valueClassName="text-3xl text-left -ml-2 text-background" */}
+        {/*   currencyClassName="mr-0 text-background" */}
+        {/* /> */}
       </HomeCard>
       <View className="py-0 -mb-3 pt-2">
         <ThemedText className="font-psemibold">Transaksi Terakhir</ThemedText>

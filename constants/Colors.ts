@@ -7,6 +7,7 @@ export interface ThemeProps {
   dark: boolean;
   colors: {
     primary: string;
+    info: string;
     background: string;
     card: string;
     text: string;
@@ -48,6 +49,7 @@ export const DefaultTheme: ThemeProps = {
     background: "#fafafa",
     foreground: "#0F172A",
     primary: "#0284C7",
+    info: "#14b8a6",
     text: "#0F172A",
     textMuted: "#cbd5e1", // "#65758b",
     icon: "#52525b",
@@ -63,6 +65,7 @@ export const DarkTheme = {
   dark: true,
   colors: {
     primary: "#38bdf8",
+    info: "#0f766e",
     background: "#020617",
     foreground: "#f3f4f6",
     icon: "#d4d4d8",

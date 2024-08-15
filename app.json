@@ -2,6 +2,7 @@
   "expo": {
     "name": "KCA-Mobile",
     "slug": "KCA-Mobile",
+    "description": "Koperasi KCA",
     "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

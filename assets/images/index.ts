@@ -1,4 +1,5 @@
 import card from "./card.png";
+import logo from "./kca.png";
 import unsplash1 from "./unsplash1.jpg";
 import unsplash2 from "./unsplash2.jpg";
 import unsplash3 from "./unsplash3.jpg";
@@ -11,6 +12,7 @@ import unsplash9 from "./unsplash9.jpg";
 
 export {
   card,
+  logo,
   unsplash1,
   unsplash2,
   unsplash3,

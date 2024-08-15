@@ -63,9 +63,8 @@ export function formatCurrency2(initialValue: number = 0, options?: Options): st
 
   switch (locale) {
     case "id-ID":
-      return `${currencies[currency]} ${isNegative ? negativePrefix : " "}${chunks.join(".")}${
-        precision > 0 ? "," + cents : ""
-      }${isNegative ? negativeSuffix : "\xa0"}`;
+      return `${currencies[currency]} ${isNegative ? negativePrefix : " "}${chunks.join(".")}${precision > 0 ? "," + cents : ""
+        }${isNegative ? negativeSuffix : "\xa0"}`;
     default:
       return `${currencies[currency]} ${chunks.join(",")}${precision > 0 ? "." + cents : ""}`;
   }

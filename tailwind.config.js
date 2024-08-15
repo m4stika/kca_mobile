@@ -142,6 +142,10 @@ module.exports = {
           DEFAULT: "hsl(var(--success))",
           hover: "hsl(var(--success-hover))",
         },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          hover: "hsl(var(--info-hover))",
+        },
         warning: {
           DEFAULT: "hsl(var(--warning))",
           hover: "hsl(var(--warning-hover))",
