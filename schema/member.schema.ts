@@ -14,6 +14,7 @@ export type Member = {
   namarek: string;
   saldoVoucher: number;
   saldoSimpanan: number;
+  saldoSimpananSukarela: number;
   saldoPinjaman: number;
   nilaiAngsuran: number;
   // noAnggota: string;

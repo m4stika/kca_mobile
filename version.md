@@ -19,3 +19,9 @@
   modify ui and refer to card component
   modify dark color
   ```
+- 1.0.5
+  ```what changed
+  modify home-card
+  add info color
+  add loan simulation
+  ```

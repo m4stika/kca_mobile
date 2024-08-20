@@ -5,17 +5,19 @@ import { ThemedView } from "./ThemedView";
 const LabelWithValue = ({
   title,
   value,
+  className,
   valueClassName,
   titleClassName,
   numberOfLine = 2,
 }: {
   title: string;
   value: string;
+  className?: string;
   valueClassName?: string;
   titleClassName?: string;
   numberOfLine?: number;
 }) => (
-  <ThemedView className="flex flex-row justify-around">
+  <ThemedView className={cn("flex flex-row justify-around", className)}>
     <ThemedText className={cn(`basis-1/3 text-sm text-muted-foreground`, titleClassName)}>
       {title}
     </ThemedText>

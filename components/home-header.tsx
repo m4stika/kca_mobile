@@ -10,7 +10,7 @@ const HomeHeader = ({ user }: { user: User }) => {
   const { theme } = useGlobalContext();
   // const theme = useColorScheme() ?? "light";
   return (
-    <View className="w-full h-1/3 flex-row justify-between  px-2 border-b bg-primary ">
+    <View className="w-full h-1/3 flex-row justify-between  px-2 border-b bg-primary">
       <View className="w-full flex flex-row items-center justify-between h-32 ">
         <View className="flex flex-row gap-2 ">
           <View className="size-16 rounded-full bg-stone-100 items-center justify-center p-2">

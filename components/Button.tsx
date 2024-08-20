@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import ButtonIcon from "./atoms/Button/ButtonIcon";
+import { cn } from "@/utils/cn";
 
 type ButtonProps = TouchableOpacityProps & {
   containerClassName?: string;
@@ -34,7 +35,7 @@ const Button = ({
   ) : (
     <TouchableOpacity
       // style={{backgroundColor: bgColor}}
-      className={clsx(defaultStyles, containerClassName, isLoading ? "opacity-50" : "")}
+      className={cn(defaultStyles, containerClassName, isLoading ? "opacity-50" : "")}
       disabled={isLoading}
       onPress={onPress}
       activeOpacity={0.7}

@@ -58,13 +58,14 @@ const Input = ({
           secureTextEntry={title === "Password" && !showPassword}
           {...otherProps}
         />
+
         {title === "Password" && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <View className="h-[3.13rem] w-[3.13rem] items-end justify-center text-foreground">
               <TabBarIcon
                 name={showPassword ? "eye-outline" : "eye-off-outline"}
                 color={theme.colors.text}
-                // className="justify-center items-center self-center"
+              // className="justify-center items-center self-center"
               />
             </View>
           </TouchableOpacity>
