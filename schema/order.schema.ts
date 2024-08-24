@@ -57,3 +57,4 @@ export const orderInitialValue: Order = {
   amount: 0,
   OrderDetail: [],
 };
+

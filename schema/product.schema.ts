@@ -11,3 +11,9 @@ export type Product = {
   hargaJual: number;
   imageSource?: ImageSourcePropType;
 };
+
+export type Promotion = {
+  id: number,
+  source: string,
+  active: boolean
+}

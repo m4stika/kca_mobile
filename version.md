@@ -25,3 +25,8 @@
   add info color
   add loan simulation
   ```
+
+- 1.0.6
+  ```what changed
+  add promotion and information
+  ```

@@ -20,7 +20,7 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
     <View>
       <View
         className={clsx(
-          theme.dark ? "bg-background border-y" : "bg-emerald-400",
+          theme.dark ? "bg-background border-y" : "bg-info",
           "flex flex-col items-center justify-center py-8"
         )}
       >

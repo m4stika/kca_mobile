@@ -12,23 +12,14 @@ const ProfileHeader = () => {
       reset();
       router.navigate("/welcome");
     }
-    // const response = await api.post({ url: "logout", data: {} });
-    // if (response.status === "error") Alert.alert("Error", response.message);
-    // else {
-    //   reset();
-    //   router.replace("/welcome");
-    // }
-  };
+  }
 
-  // const colorScheme = useThemeContextValues();
-  // const theme = useColorScheme() ?? "light";
-  // const theme = useColorScheme() ?? "light";
   return (
     <View className="flex p-4">
       <View className=" flex flex-row items-center justify-between">
         <View className="flex flex-row items-center gap-2">
           <View className="size-16 rounded-full bg-stone-400 items-center justify-center p-2">
-            <TabBarIcon name="person" color={"#f1f5f9"} />
+            <TabBarIcon name="person" color={theme.colors.foreground} />
           </View>
           <View className="flex flex-col gap-1">
             <View className="flex flex-row gap-1">

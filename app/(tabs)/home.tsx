@@ -1,16 +1,16 @@
 import { ThemedText } from "@/components/ThemedText";
 import HomeCard from "@/components/home-card";
 import HomeHeader from "@/components/home-header";
-import NumberWithCurrency from "@/components/number-with-currency";
-import TransactionCard from "@/components/transaction-card";
+import PromoCard from "@/components/home-promo";
 import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
 import { Member } from "@/schema/member.schema";
 import { Order } from "@/schema/order.schema";
-import { formatCurrency2 } from "@/utils/format-currency";
+import { Promotion } from "@/schema/product.schema";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
+
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -39,6 +39,11 @@ const Home = () => {
     url: `orders/pre_order/${member?.noAnggota || user?.username}`,
   });
 
+  const { data: promotions } = useDataApi<Promotion[]>({
+    queryKey: ["promotion"],
+    url: `anggota/promotion`,
+  });
+
   useEffect(() => {
     if (!preOrder) return;
     if (preOrder) setOrder(preOrder);
@@ -51,6 +56,7 @@ const Home = () => {
     queryClient.invalidateQueries({ queryKey: ["pre-orders"] });
     queryClient.removeQueries({ queryKey: ["loans"] });
     queryClient.removeQueries({ queryKey: ["saving_accounts"] });
+    queryClient.removeQueries({ queryKey: ["promotion"] });
   }, [user]);
 
   const onRefresh = async () => {
@@ -58,29 +64,35 @@ const Home = () => {
     await refetch();
     setRefreshing(false);
   };
-  const isHorizontal = orders && orders.length > 1 ? true : false;
+  const isHorizontal = promotions && promotions.length > 1 ? true : false;
+  // let promoData: PromoProps[] = []
+  // promoData.push({ id: 1, source: promo05 })
+  // promoData.push({ id: 2, source: promo01 })
+  // promoData.push({ id: 3, source: promo02 })
+  // promoData.push({ id: 4, source: promo03 })
+  // promoData.push({ id: 5, source: promo04 })
+  // promoData.push({ id: 6, source: promo06 })
 
   return (
     <View className="flex gap-3 ">
       <HomeHeader user={user!} />
       <HomeCard data={data!} />
-      <View className="py-0 -mb-3 pt-2">
-        <ThemedText className="font-psemibold">Transaksi Terakhir</ThemedText>
+      <View className="py-0 -mb-3 pt-2 pl-2">
+        <ThemedText className="font-psemibold">Promo dan Informasi</ThemedText>
       </View>
 
       <FlatList
-        data={orders}
+        data={promotions}
         horizontal={isHorizontal}
-        // scrollEnabled
-        // showsHorizontalScrollIndicator={false}
         initialScrollIndex={0}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View className="flex-1" key={item.id}>
-            <TransactionCard order={item} />
+        renderItem={({ item, index }) => (
+          <View className="flex-1 pl-2" key={item.id}>
+            {/* <TransactionCard order={item} /> */}
+            {/* <ThemedText>{item.source}</ThemedText> */}
+            <PromoCard data={item} />
           </View>
         )}
-        // ListHeaderComponentClassName="flex flex-col w-fit"
         contentContainerClassName="flex flex-row gap-4 justify-stretch items-stretch"
         // getItemLayout={(_, index) => ({ length: innerWidth, offset: innerWidth * index, index })}
         // ListHeaderComponent={() => (
