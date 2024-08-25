@@ -21,7 +21,8 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
           <View className="rounded-lg p-2">
             <Image
               // source={{ uri: "https://picsum.photos/200/300?random=5" }}
-              source={product.imageSource}
+              source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${product.fileName}` }}
+              // source={product.imageSource}
               className="h-52 w-full rounded-lg"
               resizeMode="cover"
             />

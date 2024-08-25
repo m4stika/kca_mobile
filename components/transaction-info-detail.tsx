@@ -40,7 +40,11 @@ const TransactionInfoDetail = () => {
         <CardTitle className="pb-2 border-b">Detail Produk</CardTitle>
         {orderSelected.OrderDetail.map((item) => (
           <View className="flex flex-row gap-2" key={item.kodeBarang}>
-            <Image source={getRandomImageSource()} className="h-14 w-14" resizeMode="cover" />
+            <Image
+              source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${item.Barang.fileName}` }}
+              // source={getRandomImageSource()} 
+              className="h-14 w-14" resizeMode="cover"
+            />
             <View className="flex">
               <ThemedText className="text-sm font-pmedium">{item.Barang.namaBarang}</ThemedText>
               <ThemedText className="text-xs">{`${item.qty} X Rp ${formatCurrency(

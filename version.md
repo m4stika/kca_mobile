@@ -20,6 +20,7 @@
   modify dark color
   ```
 - 1.0.5
+
   ```what changed
   modify home-card
   add info color
@@ -29,4 +30,9 @@
 - 1.0.6
   ```what changed
   add promotion and information
+  ```
+
+- 1.1.0
+  ```what changed
+   modify all product item, get image from server
   ```

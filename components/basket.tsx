@@ -10,7 +10,7 @@ import { TabBarIcon } from "./navigation/TabBarIcon";
 const Basket = () => {
   const { orderCount, theme } = useGlobalContext();
   return (
-    <TouchableOpacity onPress={() => (orderCount === 0 ? null : router.push("/shopping-cart"))}>
+    <TouchableOpacity onPress={() => (orderCount === 0 ? null : router.navigate("/shopping-cart"))}>
       <View className="relative w-12">
         <TabBarIcon
           name="cart-outline"

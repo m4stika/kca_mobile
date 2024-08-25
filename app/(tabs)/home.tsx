@@ -25,14 +25,13 @@ const Home = () => {
     if (!data && member) setMember(null);
     if (data) {
       setMember(data);
-      // getOrder(data.noAnggota);
     }
   }, [data]);
 
-  const { data: orders } = useDataApi<Order[]>({
-    queryKey: ["transactions"],
-    url: `orders/by_member/${member?.noAnggota || user?.username}`,
-  });
+  // const { data: orders } = useDataApi<Order[]>({
+  //   queryKey: ["transactions"],
+  //   url: `orders/by_member/${member?.noAnggota || user?.username}`,
+  // });
 
   const { data: preOrder } = useDataApi<Order>({
     queryKey: ["pre-orders"],
@@ -52,7 +51,7 @@ const Home = () => {
   useEffect(() => {
     if (!user) return;
     queryClient.invalidateQueries({ queryKey: ["members"] });
-    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    // queryClient.invalidateQueries({ queryKey: ["transactions"] });
     queryClient.invalidateQueries({ queryKey: ["pre-orders"] });
     queryClient.removeQueries({ queryKey: ["loans"] });
     queryClient.removeQueries({ queryKey: ["saving_accounts"] });
@@ -65,13 +64,6 @@ const Home = () => {
     setRefreshing(false);
   };
   const isHorizontal = promotions && promotions.length > 1 ? true : false;
-  // let promoData: PromoProps[] = []
-  // promoData.push({ id: 1, source: promo05 })
-  // promoData.push({ id: 2, source: promo01 })
-  // promoData.push({ id: 3, source: promo02 })
-  // promoData.push({ id: 4, source: promo03 })
-  // promoData.push({ id: 5, source: promo04 })
-  // promoData.push({ id: 6, source: promo06 })
 
   return (
     <View className="flex gap-3 ">

@@ -10,6 +10,7 @@ export type Product = {
   stok: number;
   hargaJual: number;
   imageSource?: ImageSourcePropType;
+  fileName: string
 };
 
 export type Promotion = {

@@ -19,7 +19,8 @@ const ShoppingProductView = () => {
   return (
     <View className="flex-1 gap-3">
       <Image
-        source={productSelected?.imageSource}
+        source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${productSelected.fileName}` }}
+        // source={productSelected?.imageSource}
         className="w-[96%] h-2/5 ml-2"
         resizeMode="cover"
       />

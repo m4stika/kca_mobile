@@ -14,7 +14,7 @@ import NumberWithCurrency from "./number-with-currency";
 const TransactionCard = ({ order }: { order: Order }) => {
   const { setOrderSelected } = useGlobalContext();
   const orderCount = order.OrderDetail.length;
-  const imageSource = getRandomImageSource();
+  // const imageSource = getRandomImageSource();
   return (
     <Card className="px-4 pt-4 min-w-80 min-h-64">
       {/* Header */}
@@ -36,7 +36,8 @@ const TransactionCard = ({ order }: { order: Order }) => {
       <CardContent className="flex-1 py-2 border-b">
         <View className="flex flex-row gap-2">
           <Image
-            source={imageSource}
+            source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${order.OrderDetail[0].Barang.fileName}` }}
+            // source={imageSource}
             className="h-16 w-16 rounded-md"
             resizeMode="cover"
             width={64}
@@ -66,7 +67,7 @@ const TransactionCard = ({ order }: { order: Order }) => {
           textClassName="text-xs font-light"
           onPress={() => {
             setOrderSelected(order);
-            router.replace("/transaction-info");
+            router.navigate("/transaction-info");
           }}
         />
       </CardFooter>
