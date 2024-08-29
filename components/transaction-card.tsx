@@ -2,7 +2,6 @@ import { useGlobalContext } from "@/context/global-provider";
 import { Order, orderStatus } from "@/schema/order.schema";
 import { _formatDatetime } from "@/utils/date-formater";
 import { formatCurrency } from "@/utils/format-currency";
-import { getRandomImageSource } from "@/utils/get-random-image-source";
 import { router } from "expo-router";
 import React from "react";
 import { Image, View } from "react-native";

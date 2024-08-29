@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { Product } from "@/schema/product.schema";
 import { addToOrder } from "@/utils/add-order";
-import clsx from "clsx";
 import React from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TabBarIcon } from "./navigation/TabBarIcon";
+import { cn } from "@/utils/cn";
 
 const ButtonAdd = ({ product }: { product: Product }) => {
   const { setOrder, order, theme } = useGlobalContext();
@@ -40,10 +40,10 @@ const ButtonAdd = ({ product }: { product: Product }) => {
         }
     );
   };
-	 */
+   */
   return (
     <View
-      className={clsx(
+      className={cn(
         "absolute -top-6 right-1 h-8 w-8 rounded-full items-center justify-center ",
         product.stok === 0 ? "hidden bg-disabled" : "bg-success"
       )}

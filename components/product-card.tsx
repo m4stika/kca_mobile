@@ -1,14 +1,14 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { Product } from "@/schema/product.schema";
 import { formatCurrency } from "@/utils/format-currency";
-import clsx from "clsx";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import ButtonAdd from "./button-add";
+import { cn } from "@/utils/cn";
 
 const ProductCard = ({ product, onPress }: { product: Product; onPress: () => void }) => {
-  const { setProductSelected } = useGlobalContext();
+  const { setProductSelected, theme } = useGlobalContext();
   return (
     <View className="flex flex-col gap-3 w-[49%] rounded-lg  items-center justify-between ">
       <View className="w-full flex">
@@ -18,15 +18,16 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
             onPress();
           }}
         >
-          <View className="rounded-lg p-2">
+          <View className={cn("rounded-xl p-2", theme.dark ? "bg-disabled" : "bg-background", "overflow-hidden border")}>
             <Image
               // source={{ uri: "https://picsum.photos/200/300?random=5" }}
               source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${product.fileName}` }}
               // source={product.imageSource}
-              className="h-52 w-full rounded-lg"
-              resizeMode="cover"
+              className="h-44 w-44 rounded-lg"
+              resizeMode="contain"
+              width={176}
+              height={176}
             />
-            {/* <RandomImage /> */}
           </View>
         </TouchableOpacity>
         <View className="relative">
@@ -40,7 +41,7 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
               <View className="flex flex-row gap-1">
                 <ThemedText className="text-xs font-plight">Rp</ThemedText>
                 <View
-                  className={clsx(
+                  className={cn(
                     "rounded-full min-w-[50%] px-3 pb-1 flex justify-center",
                     product.stok === 0 ? "bg-disabled" : "bg-error"
                   )}

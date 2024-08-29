@@ -3,7 +3,7 @@ import { TextInput } from 'react-native';
 import { Input } from './atoms';
 
 type NumbericProps = NumericFormatProps & { title?: string, handleChange?: (value: string) => void }
-export function NumberFormat({ value, title, className, handleChange, ...props }: NumbericProps) {
+export function NumberFormat({ value, title, className, disabled, handleChange, ...props }: NumbericProps) {
   return (
     <NumericFormat
       value={value}
@@ -20,6 +20,7 @@ export function NumberFormat({ value, title, className, handleChange, ...props }
           value={formattedValue}
           keyboardType="numeric"
           className={className}
+          editable={disabled}
         />
       } // <--- Don't forget this!
     />

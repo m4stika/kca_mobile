@@ -15,8 +15,9 @@ export type OrderStatus = keyof typeof orderStatus;
 
 export const paymentMethod = {
   VOUCHER: "Saldo Voucher",
-  TRANSFER: "Transfer Bank",
   CASH: "Tunai",
+  CREDIT: "Kredit",
+  TRANSFER: "Transfer Bank",
 } as const;
 export type PaymentMethod = keyof typeof paymentMethod;
 

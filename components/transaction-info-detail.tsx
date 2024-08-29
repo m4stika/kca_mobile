@@ -10,7 +10,6 @@ import { useGlobalContext } from "@/context/global-provider";
 import { orderStatus, paymentMethod, shippingMethod } from "@/schema/order.schema";
 import { formatDate } from "@/utils/date-formater";
 import { formatCurrency } from "@/utils/format-currency";
-import { getRandomImageSource } from "@/utils/get-random-image-source";
 import React from "react";
 import { Image, View } from "react-native";
 import { ThemedText } from "./ThemedText";

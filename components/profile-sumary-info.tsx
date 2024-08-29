@@ -1,9 +1,9 @@
 import { useGlobalContext } from "@/context/global-provider";
-import clsx from "clsx";
 import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
 import LabelWithValue from "./label-with-value";
+import { cn } from "@/utils/cn";
 
 const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
   const { user, member, theme } = useGlobalContext();
@@ -19,7 +19,7 @@ const ProfileSummaryInfo = ({ onPress }: { onPress: () => void }) => {
   return (
     <View>
       <View
-        className={clsx(
+        className={cn(
           theme.dark ? "bg-background border-y" : "bg-info",
           "flex flex-col items-center justify-center py-8"
         )}

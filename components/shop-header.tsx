@@ -1,11 +1,22 @@
 import { useGlobalContext } from "@/context/global-provider";
 import React from "react";
-import { TextInput, View } from "react-native";
+import { TextInput, TouchableOpacity, View } from "react-native";
 import Basket from "./basket";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 
-const ShopHeader = () => {
+type ShopHeaderProps = {
+  searchValue: string | undefined
+  setValue: (value: string) => void
+  refetch: () => void
+}
+const ShopHeader = ({ searchValue, setValue, refetch }: ShopHeaderProps) => {
+  // const [searchValue, setValue] = useState<string>()
   const { theme } = useGlobalContext();
+
+  const onSearchHandle = () => {
+
+  }
+
   return (
     <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b mb-2">
       <View
@@ -14,20 +25,23 @@ const ShopHeader = () => {
         aria-label="view for search"
         accessible={true}
       >
-        <TabBarIcon
-          name="search-outline"
-          size={22}
-          style={{ fontWeight: "semibold" }}
-          color={theme.colors.textMuted}
-        />
+        <TouchableOpacity activeOpacity={0.7} onPress={refetch}>
+          <TabBarIcon
+            name="search-outline"
+            size={22}
+            style={{ fontWeight: "semibold" }}
+            color={theme.colors.textMuted}
+          />
+        </TouchableOpacity>
         <TextInput
+          value={searchValue}
+          onChangeText={setValue}
           placeholder="search..."
           placeholderTextColor={theme.colors.textMuted}
           accessibilityLabelledBy="searchInput"
           accessibilityLabel="search"
           className="w-[70%] text-foreground"
-
-          // accessible={true}
+        // accessible={true}
         />
       </View>
       <Basket />

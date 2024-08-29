@@ -16,14 +16,19 @@ const PaymentDetail = () => {
       caption: "Pembayaran otomatis dengan pemotongan saldo voucher",
     },
     {
-      key: "TRANSFER",
-      value: "Transfer Bank",
-      caption: "Pembayaran dengan transfer bank",
-    },
-    {
       key: "CASH",
       value: "Tunai",
       caption: "Pembayaran dengan tunai saat barang sampai di tujuan",
+    },
+    {
+      key: "CREDIT",
+      value: "Kredit",
+      caption: "Pembayaran kredit (akan ditambahkan saat pembuatan slip pemotongan gaji",
+    },
+    {
+      key: "TRANSFER",
+      value: "Transfer Bank",
+      caption: "Pembayaran dengan transfer bank",
     },
   ];
   return (

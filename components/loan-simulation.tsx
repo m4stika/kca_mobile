@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './card';
 import LabelWithValue from './label-with-value';
 import { formatCurrency2 } from '@/utils/format-currency';
 import CustomBottomSheet from './custom-bottom-sheet';
-import { BottomSheetFlatList, BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { Alert, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
@@ -150,7 +150,7 @@ function calculateInstallment(
 const LoanSimulation = () => {
   const [value, setValue] = React.useState<string>();
   const [numberValue, setNumberValue] = React.useState<number>(0);
-  const [bunga, setBunga] = React.useState<string>();
+  const [bunga, setBunga] = React.useState<number>(0.8);
   const [lama, setLama] = React.useState<string>();
   const [period, setPeriod] = React.useState<InterestPeriod>('monthly');
   const [typeAngsuran, setTypeAngsuran] = React.useState<InterestType>('fixed');
@@ -184,7 +184,7 @@ const LoanSimulation = () => {
   );
 
   const SimulationInfo = () => {
-    const calculateResult = calculateInstallment(numberValue, parseFloat(bunga || '0'), parseInt(lama || '0'), 500, typeAngsuran, period);
+    const calculateResult = calculateInstallment(numberValue, bunga, parseInt(lama || '0'), 500, typeAngsuran, period);
     const { installments, totalPrincipal, totalInterest, grandTotal } = calculateResult
 
     const Header = () => (
@@ -245,32 +245,55 @@ const LoanSimulation = () => {
         onValueChange={(format) => setNumberValue(format.floatValue || 0)}
         handleChange={setValue}
       />
-      <View className='flex flex-row gap-2 pr-2 '>
-        <View className='flex flex-row items-center gap-2 basis-1/3'>
-          <NumberFormat
-            title="Bunga Pinjaman"
-            value={bunga}
-            decimalScale={2}
-            // onValueChange={(format) => setNumberValue(format.floatValue || 0)}
-            handleChange={setBunga}
-          />
-          <ThemedText type='title' className='pt-6'>%</ThemedText>
-        </View>
-        <View className='flex-1 pt-8 ml-8 '>
-          <View className='border rounded-xl'>
-            <Picker
-              mode='dropdown'
-              selectedValue={period}
-              onValueChange={setPeriod}
-              style={{ color: theme.colors.text }}
-            // itemStyle={{ color: "white" }}
-            >
-              <Picker.Item label="per Bulan" value="monthly" />
-              <Picker.Item label="per Tahun" value="annual" />
-            </Picker>
-          </View>
+      <View className='gap-2'>
+        <ThemedText>Perhitungan bunga pinjaman</ThemedText>
+        <View className='border rounded-xl'>
+          <Picker
+            mode='dropdown'
+            selectedValue={typeAngsuran}
+            onValueChange={(value) => {
+              setTypeAngsuran(value)
+              setBunga(value === "fixed" ? 0.8 : 1.4)
+            }}
+            style={{ color: theme.colors.text }}
+          >
+            <Picker.Item label="Bunga Menetap" value="fixed" />
+            <Picker.Item label="Bunga Menurun" value="declining" />
+          </Picker>
         </View>
       </View>
+      <View className='gap-2'>
+        <ThemedText>Bunga</ThemedText>
+        <View className='flex flex-row gap-2 items-center'>
+          <ThemedText type='subtitle' className='p-4 border rounded-lg'>{`${bunga} %`}</ThemedText>
+          <ThemedText type='subtitle'>per bulan</ThemedText>
+        </View>
+      </View>
+      {/* <View className='flex flex-row gap-2 pr-2 ' aria-disabled={true}> */}
+      {/*   <View className='flex flex-row items-center gap-2 basis-1/3'> */}
+      {/*     <NumberFormat */}
+      {/*       title="Bunga Pinjaman" */}
+      {/*       value={bunga} */}
+      {/*       decimalScale={2} */}
+      {/*       handleChange={setBunga} */}
+      {/*       disabled={true} */}
+      {/*     /> */}
+      {/*     <ThemedText type='title' className='pt-6'>%</ThemedText> */}
+      {/*   </View> */}
+      {/*   <View className='flex-1 pt-8 ml-8 '> */}
+      {/*     <View className='border rounded-xl'> */}
+      {/*       <Picker */}
+      {/*         mode='dropdown' */}
+      {/*         selectedValue={period} */}
+      {/*         onValueChange={setPeriod} */}
+      {/*         style={{ color: theme.colors.text }} */}
+      {/*       > */}
+      {/*         <Picker.Item label="per Bulan" value="monthly" /> */}
+      {/*         <Picker.Item label="per Tahun" value="annual" /> */}
+      {/*       </Picker> */}
+      {/*     </View> */}
+      {/*   </View> */}
+      {/* </View> */}
       <View className='flex flex-row items-center gap-2 '>
         <NumberFormat
           title="Jangka Waktu (bulan)"
@@ -279,20 +302,6 @@ const LoanSimulation = () => {
           className='basis-2/3'
         />
         <ThemedText type='subtitle' className='pt-6 basis-1/3'>{"Bulan"}</ThemedText>
-      </View>
-      <View className='gap-2'>
-        <ThemedText>Perhitungan bunga pinjaman</ThemedText>
-        <View className='border rounded-xl'>
-          <Picker
-            mode='dropdown'
-            selectedValue={typeAngsuran}
-            onValueChange={setTypeAngsuran}
-            style={{ color: theme.colors.text }}
-          >
-            <Picker.Item label="Bunga Menetap" value="fixed" />
-            <Picker.Item label="Bunga Menurun" value="declining" />
-          </Picker>
-        </View>
       </View>
       <View className='flex flex-col gap-2 mt-4'>
         <Button

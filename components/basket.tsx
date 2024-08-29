@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/context/global-provider";
-import clsx from "clsx";
 import { router } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ThemedText } from "./ThemedText";
 import { TabBarIcon } from "./navigation/TabBarIcon";
+import { cn } from "@/utils/cn";
 
 const Basket = () => {
   const { orderCount, theme } = useGlobalContext();
@@ -19,7 +19,7 @@ const Basket = () => {
         />
         {orderCount > 0 && (
           <View
-            className={clsx(
+            className={cn(
               "absolute rounded-full bg-error -mt-2",
               orderCount > 9 ? "px-1" : "px-2"
             )}

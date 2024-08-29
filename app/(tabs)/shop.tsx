@@ -4,22 +4,25 @@ import ShopHeader from "@/components/shop-header";
 import ShoppingProductView from "@/components/shopping-product-view";
 import useDataApi from "@/hooks/useDataApi";
 import { Product } from "@/schema/product.schema";
-import { getRandomImageSource } from "@/utils/get-random-image-source";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 
 const Shop = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [product, setProduct] = useState<Product[]>();
+  const [searchValue, setValue] = useState<string>()
+
   const { data, refetch, isLoading } = useDataApi<Product[]>({
     queryKey: ["products"],
     url: "products/search",
+    params: (searchValue && searchValue !== "") ? { size: 30, page: 1, namaBarang: searchValue } : { size: 30, page: 1 }
   });
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
   }, []);
+
 
   useEffect(() => {
     if (!data) return;
@@ -27,7 +30,7 @@ const Shop = () => {
       ...item,
       hargaJual: Number(item.hargaJual),
       stok: Number(item.stok),
-      imageSource: item.imageSource ? item.imageSource : getRandomImageSource(),
+      // imageSource: item.imageSource ? item.imageSource : getRandomImageSource(),
     }));
     setProduct(products);
   }, [data]);
@@ -41,10 +44,11 @@ const Shop = () => {
   return (
     <View className="pb-4 flex-1">
       {/* <View className="flex-1 flex-row items-center justify-between p-2"> */}
-      <ShopHeader />
+      <ShopHeader searchValue={searchValue} setValue={setValue} refetch={refetch} />
       <FlatList
         data={product}
         numColumns={2}
+        initialNumToRender={8}
         contentContainerClassName="gap-2"
         columnWrapperClassName="gap-1 justify-center"
         keyExtractor={(item) => item.kodeBarang.toString()}

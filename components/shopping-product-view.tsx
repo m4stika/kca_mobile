@@ -2,13 +2,13 @@ import { useGlobalContext } from "@/context/global-provider";
 import { addToOrder } from "@/utils/add-order";
 import { formatCurrency } from "@/utils/format-currency";
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
-import clsx from "clsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import ButtonIncDec from "./button-inc-dec";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import NumberWithCurrency from "./number-with-currency";
+import { cn } from "@/utils/cn";
 
 const ShoppingProductView = () => {
   const { productSelected, setOrder, order, theme } = useGlobalContext();
@@ -18,12 +18,16 @@ const ShoppingProductView = () => {
   if (!productSelected) return;
   return (
     <View className="flex-1 gap-3">
-      <Image
-        source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${productSelected.fileName}` }}
-        // source={productSelected?.imageSource}
-        className="w-[96%] h-2/5 ml-2"
-        resizeMode="cover"
-      />
+      <View className="rounded-2xl w-full h-80 items-center bg-disabled overflow-hidden border">
+        <Image
+          source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${productSelected.fileName}` }}
+          // source={productSelected?.imageSource}
+          // className="w-[96%] h-2/5 ml-2"
+          className="w-80 h-80"
+          // style={{ backgroundColor: "transparent" }}
+          resizeMode="contain"
+        />
+      </View>
       <View className="flex-1 gap-3 px-3">
         <View className="flex flex-row justify-between border-b pb-2">
           <NumberWithCurrency
@@ -33,7 +37,7 @@ const ShoppingProductView = () => {
           />
           <View className="flex flex-row gap-2 pr-3 items-center">
             <ThemedText>Stock</ThemedText>
-            <ThemedText className={clsx("", productSelected.stok === 0 && "text-error")}>
+            <ThemedText className={cn("", productSelected.stok === 0 && "text-error")}>
               {productSelected.stok.toString()}
             </ThemedText>
           </View>
@@ -42,7 +46,7 @@ const ShoppingProductView = () => {
       </View>
 
       <View
-        className={clsx(
+        className={cn(
           "flex flex-row items-center justify-between px-4 py-2 border-t",
           productSelected.stok === 0 && "pointer-events-none"
         )}
