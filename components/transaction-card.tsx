@@ -66,7 +66,7 @@ const TransactionCard = ({ order }: { order: Order }) => {
           textClassName="text-xs font-light"
           onPress={() => {
             setOrderSelected(order);
-            router.navigate("/transaction-info");
+            router.push("/transaction-info");
           }}
         />
       </CardFooter>

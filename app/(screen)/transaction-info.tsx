@@ -1,7 +1,7 @@
 import TransactionInfoDetail from "@/components/transaction-info-detail";
 import TransactionInfoHeader from "@/components/transaction-info-header";
 import { useGlobalContext } from "@/context/global-provider";
-import { useNavigation } from "expo-router";
+// import { useNavigation } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 
@@ -9,10 +9,10 @@ const TransactionInfo = () => {
   const { orderSelected } = useGlobalContext();
   if (!orderSelected) return;
 
-  const navigation = useNavigation();
-  navigation.addListener("beforeRemove", (e) => {
-    e.preventDefault();
-  });
+  // const navigation = useNavigation();
+  // navigation.addListener("beforeRemove", (e) => {
+  //   e.preventDefault();
+  // });
   // useLayoutEffect(() => {
   //   setOptions({ gestureEnabled: false });
   // }, [setOptions]);

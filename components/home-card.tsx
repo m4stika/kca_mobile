@@ -22,27 +22,9 @@ interface CardProps extends ViewProps {
 const HomeCard = ({
   data,
   children,
-  // title,
-  // className,
-  // contentClassName,
-  // optionDetail,
-  // color = "default",
   ...props
 }: CardProps) => {
   const { theme } = useGlobalContext();
-  // const classColor =
-  //   color === "default"
-  //     ? "text-foreground"
-  //     : color === "primary"
-  //       ? `bg-primary`
-  //       : color === "secondary"
-  //         ? `bg-secondary`
-  //         : color === "success"
-  //           ? `bg-success`
-  //           : color === "error"
-  //             ? `bg-error`
-  //             : "bg-warning";
-  // const defaultColor = cn("text-background border-slate-400", classColor);
 
   return (
     <Card className="bg-info -mt-24 mx-2 border-0 rounded-xl">
