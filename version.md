@@ -36,3 +36,8 @@
   ```what changed
    modify all product item, get image from server
   ```
+
+- 1.1.1
+  ```what changed
+   fix minor bug, back button does not work on detail transactions 
+  ```

@@ -2,7 +2,6 @@ import { useGlobalContext } from "@/context/global-provider";
 import { version as app_version } from "@/package.json";
 import { logout } from "@/utils/logout";
 import { useBottomSheetModal } from "@gorhom/bottom-sheet";
-import * as Device from "expo-device";
 import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,9 +9,10 @@ import { ThemedText } from "./ThemedText";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
 import LabelWithValue from "./label-with-value";
 import { TabBarIcon } from "./navigation/TabBarIcon";
+import Constants from "expo-constants";
 
 const ProfileDetail = () => {
-  const { user, member, theme, reset } = useGlobalContext();
+  const { user, member, reset } = useGlobalContext();
   const { dismiss } = useBottomSheetModal();
   if (!member || !user) return null;
 
@@ -22,18 +22,12 @@ const ProfileDetail = () => {
       dismiss();
       router.navigate("/welcome");
     }
-    // const response = await api.post({ url: "logout", data: {} });
-    // if (response.status === "error") Alert.alert("Error", response.message);
-    // else {
-    //   reset();
-    //   router.replace("/welcome");
-    // }
   };
 
   return (
     <View
       className="h-full flex flex-col gap-2 pb-4 bg-background"
-      // style={vars({ "--container-disabled": "red" })}
+    // style={vars({ "--container-disabled": "red" })}
     >
       <View className="shadow-md justify-center px-4 bg-paper pb-3">
         <ThemedText type="subtitle">Detail Profil</ThemedText>
@@ -75,8 +69,8 @@ const ProfileDetail = () => {
               <CardTitle className="text-base">Informasi Perangkat</CardTitle>
             </CardHeader>
             <CardContent className="gap-4 px-4">
-              <LabelWithValue title="Perangkat Utama" value={Device.deviceName ?? "unknown"} />
-              <LabelWithValue title="Versi Aplikasi" value={app_version} />
+              <LabelWithValue title="Perangkat Utama" value={Constants.deviceName ?? "unknown"} />
+              <LabelWithValue title="Versi Aplikasi" value={Constants.expoConfig?.version ?? app_version} />
             </CardContent>
             <CardFooter className="items-center border-t">
               <TouchableOpacity
