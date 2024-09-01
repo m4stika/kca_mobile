@@ -1,15 +1,17 @@
 import { useGlobalContext } from "@/context/global-provider";
 import { api } from "@/utils/fetching";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryKey, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useDataApi = <T>({
   queryKey,
   url,
   params,
+  // pagination = false
 }: {
-  queryKey: string[];
+  queryKey: QueryKey;
   url: string;
   params?: unknown;
+  // pagination?: boolean
 }) => {
   // const [isLoading, setIsLoading] = useState(true);
   // const [data, setData] = useState<T>();
@@ -23,7 +25,8 @@ const useDataApi = <T>({
       throw new Error(response.message);
     }
 
-    return response.data;
+    // return (pagination && pagination === true) ? { data: response.data, paging: response.paging } : response.data;
+    return { data: response.data, paging: response.paging }
   };
 
   // if (!isLogged) router.navigate("/sign-in");
@@ -40,17 +43,17 @@ const useDataApi = <T>({
   });
   const queryClient = useQueryClient();
 
-  const refetch = () => queryClient.invalidateQueries({ queryKey });
+  const refetch = (key?: QueryKey) => queryClient.invalidateQueries({ queryKey: key ? key : queryKey });
 
   if (!isLogged) {
-    return { data, refetch, isLoading };
+    return { data: data?.data, paging: data?.paging, refetch, isLoading };
   }
 
   // useEffect(() => {
   //   fetchData();
   // }, []);
 
-  return { data, refetch, isLoading, isFetching, error };
+  return { data: data?.data, paging: data?.paging, refetch, isLoading, isFetching, error };
 };
 
 export default useDataApi;

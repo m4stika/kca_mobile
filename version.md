@@ -41,3 +41,10 @@
   ```what changed
    fix minor bug, back button does not work on detail transactions 
   ```
+
+- 1.1.2
+  ```what changed
+   change default loan interest rate, request from server
+   add product filter, orderBy and searching
+
+  ```

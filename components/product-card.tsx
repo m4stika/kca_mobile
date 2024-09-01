@@ -6,16 +6,22 @@ import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import ButtonAdd from "./button-add";
 import { cn } from "@/utils/cn";
+import { ThemeProps } from "@/constants/Colors";
 
-const ProductCard = ({ product, onPress }: { product: Product; onPress: () => void }) => {
-  const { setProductSelected, theme } = useGlobalContext();
+type DataProps = {
+  product: Product
+  onPress: (product: Product) => void
+  theme: ThemeProps
+}
+const ProductCard = ({ product, onPress, theme }: DataProps) => {
+  // const { setProductSelected, theme } = useGlobalContext();
   return (
     <View className="flex flex-col gap-3 w-[49%] rounded-lg  items-center justify-between ">
       <View className="w-full flex">
         <TouchableOpacity
           onPress={() => {
-            setProductSelected(product);
-            onPress();
+            // setProductSelected(product);
+            onPress(product);
           }}
         >
           <View className={cn("rounded-xl p-2", theme.dark ? "bg-disabled" : "bg-background", "overflow-hidden border")}>
@@ -33,8 +39,8 @@ const ProductCard = ({ product, onPress }: { product: Product; onPress: () => vo
         <View className="relative">
           <TouchableOpacity
             onPress={() => {
-              setProductSelected(product);
-              onPress();
+              // setProductSelected(product);
+              onPress(product);
             }}
           >
             <View className="flex flex-col p-2 justify-between">

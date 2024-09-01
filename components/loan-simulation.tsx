@@ -12,10 +12,12 @@ import { Alert, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/global-provider';
+import useDataApi from '@/hooks/useDataApi';
 
 
-type InterestType = 'fixed' | 'declining';
-type InterestPeriod = 'monthly' | 'annual';
+// type InterestType = keyof typeof InterestRate //'FIXED' | 'DECLINING';
+type InterestType = 'FIXED' | 'DECLINING';
+// type InterestPeriod = 'monthly' | 'annual';
 type Installment = { month: number, principalInstallment: number, interest: number, totalInstallment: number }
 type ResponseProps =
   {
@@ -25,67 +27,18 @@ type ResponseProps =
     grandTotal: number
   }
 
-function calculateInstallment1(
-  principal: number,
-  interestRate: number,
-  months: number,
-  rounding: number,
-  interestType: InterestType,
-  interestPeriod: InterestPeriod
-): Installment[] {
-
-  // Jika interestPeriod adalah tahunan, konversikan ke bulanan dengan membagi 12
-  const monthlyInterestRate = interestPeriod === 'annual'
-    ? (interestRate / 12) / 100
-    : interestRate / 100;
-
-  let balance = principal;
-  const installmentPlan = [];
-  let principalInstallment: number;
-  let interest: number = 0;
-
-  for (let i = 1; i <= months; i++) {
-    // Perhitungan pokok angsuran bulanan tetap untuk kedua jenis bunga
-    principalInstallment = Math.ceil((principal / months) / rounding) * rounding;
-
-    // Perhitungan bunga berdasarkan jenis bunga
-    if (interestType === 'fixed') {
-      // Bunga tetap: berdasarkan pokok awal
-      interest = Math.ceil((principal * monthlyInterestRate) / rounding) * rounding;
-    } else if (interestType === 'declining') {
-      // Bunga menurun: berdasarkan sisa saldo
-      interest = Math.ceil((balance * monthlyInterestRate) / rounding) * rounding;
-    }
-
-    const totalInstallment = principalInstallment + interest;
-
-    installmentPlan.push({
-      month: i,
-      principalInstallment,
-      interest,
-      totalInstallment,
-    });
-
-    // Kurangi saldo dengan angsuran pokok hanya jika bunga menurun
-    if (interestType === 'declining') {
-      balance -= principalInstallment;
-    }
-  }
-
-  return installmentPlan;
-}
-
 function calculateInstallment(
   principal: number,
   interestRate: number,
   months: number,
   rounding: number,
   interestType: InterestType,
-  interestPeriod: InterestPeriod
+  // interestPeriod: InterestPeriod
 ): ResponseProps {
-  const monthlyInterestRate = interestPeriod === 'annual'
-    ? (interestRate / 12) / 100
-    : interestRate / 100;
+  // const monthlyInterestRate = interestPeriod === 'annual'
+  //   ? (interestRate / 12) / 100
+  //   : interestRate / 100;
+  const monthlyInterestRate = interestRate / 100
 
   let balance = principal;
   const installmentPlan = [];
@@ -99,7 +52,7 @@ function calculateInstallment(
   for (let i = 1; i < months; i++) {
     totalPrincipalInstallment += basePrincipalInstallment;
 
-    if (interestType === 'fixed') {
+    if (interestType === 'FIXED') {
       interest = Math.ceil((principal * monthlyInterestRate) / rounding) * rounding;
     } else {
       interest = Math.ceil((balance * monthlyInterestRate) / rounding) * rounding;
@@ -115,13 +68,13 @@ function calculateInstallment(
     totalPrincipal += basePrincipalInstallment;
     totalInterest += interest;
 
-    if (interestType === 'declining') {
+    if (interestType === 'DECLINING') {
       balance -= basePrincipalInstallment;
     }
   }
 
   const lastPrincipalInstallment = principal - totalPrincipalInstallment;
-  if (interestType === 'fixed') {
+  if (interestType === 'FIXED') {
     interest = Math.ceil((principal * monthlyInterestRate) / rounding) * rounding;
   } else {
     interest = Math.ceil((balance * monthlyInterestRate) / rounding) * rounding;
@@ -149,15 +102,20 @@ function calculateInstallment(
 
 const LoanSimulation = () => {
   const [value, setValue] = React.useState<string>();
-  const [numberValue, setNumberValue] = React.useState<number>(0);
-  const [bunga, setBunga] = React.useState<number>(0.8);
-  const [lama, setLama] = React.useState<string>();
-  const [period, setPeriod] = React.useState<InterestPeriod>('monthly');
-  const [typeAngsuran, setTypeAngsuran] = React.useState<InterestType>('fixed');
+  const [principal, setPrincipal] = React.useState<number>(0);
+  // const [interestRate, setInterestRate] = React.useState<number>(InterestRate.FIXED);
+  const [installmentPeriod, setInstallmentPeriod] = React.useState<string>();
+  // const [period, setPeriod] = React.useState<InterestPeriod>('monthly');
+  const [interestType, setInterestType] = React.useState<InterestType>('FIXED');
   const { theme } = useGlobalContext()
 
+  const { data } = useDataApi<{ fixedRate: number, decliningRate: number }>({
+    queryKey: ["defaultRate"],
+    url: `pinjaman/defaultInterestRate`,
+  });
+
   const { dismiss } = useBottomSheetModal();
-  const isValid = value && bunga && lama
+  const isValid = value && data && installmentPeriod
 
   const bottomSheetRef = React.useRef<BottomSheetModal>(null);
   const handlePresentModalPress = React.useCallback(() => {
@@ -184,7 +142,7 @@ const LoanSimulation = () => {
   );
 
   const SimulationInfo = () => {
-    const calculateResult = calculateInstallment(numberValue, bunga, parseInt(lama || '0'), 500, typeAngsuran, period);
+    const calculateResult = calculateInstallment(principal, interestType === "FIXED" ? Number(data?.fixedRate) || 0 : Number(data?.decliningRate) || 0, parseInt(installmentPeriod || '0'), 500, interestType);
     const { installments, totalPrincipal, totalInterest, grandTotal } = calculateResult
 
     const Header = () => (
@@ -194,9 +152,9 @@ const LoanSimulation = () => {
             <CardTitle>Informasi Angsuran</CardTitle>
           </CardHeader>
           <CardContent className=''>
-            <LabelWithValue value={formatCurrency2(installments[0].principalInstallment, { precision: 0 })} title='Pokok' valueClassName='text-xl' titleClassName='text-xl' />
-            <LabelWithValue value={formatCurrency2(installments[0].interest, { precision: 0 })} title='Bunga' valueClassName='text-xl' titleClassName='text-xl' className='pb-2' />
-            <LabelWithValue value={formatCurrency2(installments[0].totalInstallment, { precision: 0 })} title='Total' valueClassName='text-xl' titleClassName='text-xl' className='pt-2 border-t' />
+            <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].principalInstallment, { precision: 0 })}`} title='Pokok' valueClassName='text-xl' titleClassName='text-xl' />
+            <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].interest, { precision: 0 })}`} title='Bunga' valueClassName='text-xl' titleClassName='text-xl' className='pb-2' />
+            <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].totalInstallment, { precision: 0 })}`} title='Total' valueClassName='text-xl' titleClassName='text-xl' className='pt-2 border-t' />
           </CardContent>
           <CardFooter className='pr-0 '>
             <Button
@@ -242,7 +200,8 @@ const LoanSimulation = () => {
       <NumberFormat
         title="Nilai Pinjaman"
         value={value}
-        onValueChange={(format) => setNumberValue(format.floatValue || 0)}
+        prefix='Rp. '
+        onValueChange={(format) => setPrincipal(format.floatValue || 0)}
         handleChange={setValue}
       />
       <View className='gap-2'>
@@ -250,23 +209,23 @@ const LoanSimulation = () => {
         <View className='border rounded-xl'>
           <Picker
             mode='dropdown'
-            selectedValue={typeAngsuran}
+            selectedValue={interestType}
             onValueChange={(value) => {
-              setTypeAngsuran(value)
-              setBunga(value === "fixed" ? 0.8 : 1.4)
+              setInterestType(value)
+              // setInterestRate(InterestRate[value])
             }}
             style={{ color: theme.colors.text }}
           >
-            <Picker.Item label="Bunga Menetap" value="fixed" />
-            <Picker.Item label="Bunga Menurun" value="declining" />
+            <Picker.Item label="Bunga Menetap" value="FIXED" />
+            <Picker.Item label="Bunga Menurun" value="DECLINING" />
           </Picker>
         </View>
       </View>
       <View className='gap-2'>
         <ThemedText>Bunga</ThemedText>
         <View className='flex flex-row gap-2 items-center'>
-          <ThemedText type='subtitle' className='p-4 border rounded-lg'>{`${bunga} %`}</ThemedText>
-          <ThemedText type='subtitle'>per bulan</ThemedText>
+          <ThemedText type='subtitle' className='p-4 border rounded-lg'>{`${interestType === "FIXED" ? data?.fixedRate : data?.decliningRate} %`}</ThemedText>
+          <ThemedText type='subtitle'>per bulan </ThemedText>
         </View>
       </View>
       {/* <View className='flex flex-row gap-2 pr-2 ' aria-disabled={true}> */}
@@ -275,7 +234,7 @@ const LoanSimulation = () => {
       {/*       title="Bunga Pinjaman" */}
       {/*       value={bunga} */}
       {/*       decimalScale={2} */}
-      {/*       handleChange={setBunga} */}
+      {/*       handleChange={setInterestRate} */}
       {/*       disabled={true} */}
       {/*     /> */}
       {/*     <ThemedText type='title' className='pt-6'>%</ThemedText> */}
@@ -297,8 +256,8 @@ const LoanSimulation = () => {
       <View className='flex flex-row items-center gap-2 '>
         <NumberFormat
           title="Jangka Waktu (bulan)"
-          value={lama}
-          handleChange={setLama}
+          value={installmentPeriod}
+          handleChange={setInstallmentPeriod}
           className='basis-2/3'
         />
         <ThemedText type='subtitle' className='pt-6 basis-1/3'>{"Bulan"}</ThemedText>
