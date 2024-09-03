@@ -1,5 +1,5 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { TouchableOpacity, View, type ViewProps } from "react-native";
+import { Linking, Share, TouchableOpacity, View, type ViewProps } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Card, CardContent, CardHeader } from "./card";
 import { TabBarIcon } from "./navigation/TabBarIcon";
@@ -66,7 +66,13 @@ const HomeCard = ({
           <ThemedText className="px-1 text-slate-900">Belanja</ThemedText>
         </View>
         <View className="flex gap-2 px-2 items-center basis-1/4 ">
-          <TouchableOpacity activeOpacity={0.7} onPress={() => alert('show penarikan')} className="size-14 rounded-full bg-stone-100 items-center justify-center p-2">
+          <TouchableOpacity activeOpacity={0.7} onPress={
+            () => {
+              // alert('show penarikan')
+              Linking.openURL('whatsapp://send?text=test kca mobile&phone=+6289670113010')
+            }
+          }
+            className="size-14 rounded-full bg-stone-100 items-center justify-center p-2">
             <TabBarIcon name="download" color={theme.colors.info} />
           </TouchableOpacity>
           <ThemedText className="px-1 text-slate-900">Penarikan</ThemedText>

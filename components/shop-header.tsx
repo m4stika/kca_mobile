@@ -6,43 +6,49 @@ import { TabBarIcon } from "./navigation/TabBarIcon";
 
 type ShopHeaderProps = {
   searchValue: string | undefined
-  setValue: (value: string) => void
+  setSearchValue: (value: string | undefined) => void
   refetch: () => void
 }
-const ShopHeader = ({ searchValue, setValue, refetch }: ShopHeaderProps) => {
-  // const [searchValue, setValue] = useState<string>()
+const ShopHeader = ({ searchValue, setSearchValue, refetch }: ShopHeaderProps) => {
+  const [value, setValue] = React.useState<string | undefined>(searchValue)
   const { theme } = useGlobalContext();
 
   const onSearchHandle = () => {
+    setSearchValue(value)
+    if (!value || value === "") refetch()
+  }
 
+  const onValueHandle = (strValue: string | undefined) => {
+    if (!value || value === "") setSearchValue(value)
+    setValue(strValue)
   }
 
   return (
-    <View className="flex flex-row justify-between items-center gap-4 p-3 w-full border-b mb-2">
+    <View className="flex flex-row justify-between items-center gap- p-3 w-full border-b mb-2">
       <View
-        className="flex-1 flex-row items-center gap-2 px-2 h-12 border rounded-lg"
+        className="flex-1 flex-row items-center justify-around gap-2 h-12 border rounded-lg"
         nativeID="searchInput"
         aria-label="view for search"
         accessible={true}
       >
-        <TouchableOpacity activeOpacity={0.7} onPress={refetch}>
-          <TabBarIcon
-            name="search-outline"
-            size={22}
-            style={{ fontWeight: "semibold" }}
-            color={theme.colors.textMuted}
-          />
-        </TouchableOpacity>
         <TextInput
-          value={searchValue}
-          onChangeText={setValue}
+          value={value}
+          onChangeText={onValueHandle}
           placeholder="search..."
           placeholderTextColor={theme.colors.textMuted}
           accessibilityLabelledBy="searchInput"
           accessibilityLabel="search"
-          className="w-[70%] text-foreground"
+          className="w-[70%] text-foreground text-lg"
         // accessible={true}
         />
+        <TouchableOpacity activeOpacity={0.7} onPress={onSearchHandle}>
+          <TabBarIcon
+            name="search-outline"
+            size={28}
+            style={{ fontWeight: "semibold", alignSelf: "flex-end" }}
+            color={theme.colors.textMuted}
+          />
+        </TouchableOpacity>
       </View>
       <Basket />
     </View>

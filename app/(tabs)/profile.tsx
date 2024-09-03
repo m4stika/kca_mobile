@@ -22,9 +22,9 @@ const Profile = () => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
+  // const handleSheetChanges = useCallback((index: number) => {
+  //   console.log("handleSheetChanges", index);
+  // }, []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {

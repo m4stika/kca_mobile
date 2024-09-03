@@ -46,5 +46,5 @@
   ```what changed
    change default loan interest rate, request from server
    add product filter, orderBy and searching
-
+   modify user register, add memberId, NIK and phone for validation
   ```

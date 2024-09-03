@@ -43,15 +43,17 @@ const ProfileHeader = () => {
                 <ThemedText className="text-xs">member</ThemedText>
               </View>
             </View>
-            <View className="flex flex-row gap-1">
-              <ThemedText className="text-xs">{user?.email}</ThemedText>
-              <TabBarIcon
-                name="checkmark-circle-outline"
-                size={16}
-                color={theme.colors.primary}
-                style={{ fontWeight: "semibold" }}
-              />
-            </View>
+            {user?.email &&
+              <View className="flex flex-row gap-1">
+                <ThemedText className="text-xs">{user?.email}</ThemedText>
+                <TabBarIcon
+                  name="checkmark-circle-outline"
+                  size={16}
+                  color={theme.colors.primary}
+                  style={{ fontWeight: "semibold" }}
+                />
+              </View>
+            }
           </View>
         </View>
         <View>

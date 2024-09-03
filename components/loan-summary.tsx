@@ -9,7 +9,7 @@ const LoanSummary = ({ onPress }: { onPress: () => void }) => {
   const { user, member } = useGlobalContext();
   if (!user || !member) return null;
 
-  if (member.saldoPinjaman === 0) return null;
+  if (Number(member.saldoPinjaman) === 0) return null;
 
   return (
     <View className="px-4">

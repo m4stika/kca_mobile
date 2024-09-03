@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type UserLogin = Omit<User, "fullName" | "email" | "name">;
+type UserLogin = Omit<User, "fullName" | "email" | "name" | "memberId" | "NIK" | "phone">;
 const SignIn = () => {
   const [formLogin, setFormLogin] = useState<UserLogin>({
     username: "1212",
@@ -28,7 +28,7 @@ const SignIn = () => {
   const validateForm = () => {
     let tempErrors: Partial<UserLogin> = {};
     if (!formLogin.username) {
-      tempErrors = { ...tempErrors, username: "Username/Email is required" };
+      tempErrors = { ...tempErrors, username: "Username/member-id/phone-No is required" };
     }
     if (!formLogin.password) {
       tempErrors = { ...tempErrors, password: "Password is required" };
@@ -76,10 +76,10 @@ const SignIn = () => {
             Login Anggota
           </ThemedText>
           <Input
-            title="Email / No. Anggota"
+            title="Username / No. Anggota / Phone Number"
             // inputMode="email"
             value={formLogin.username}
-            placeholder="email / No. anggota"
+            placeholder="masukkan username"
             className="mt-7"
             // inputClassName="focus-visible:border-none focus:border-none focus:ring-2 focus:ring-error"
             onChangeText={(value) => onInputChange("username", value)}

@@ -1,20 +1,19 @@
 import { ThemedText } from "@/components/ThemedText";
 import CustomBottomSheet from "@/components/custom-bottom-sheet";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import ProductCard from "@/components/product-card";
 import ShopHeader from "@/components/shop-header";
 import ShoppingProductView from "@/components/shopping-product-view";
 import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
 import { Product } from "@/schema/product.schema";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { BottomSheetModal, useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, FlatList, ListRenderItemInfo, RefreshControl, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, ListRenderItemInfo, RefreshControl, View } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import SortBy, { TSortBy } from "@/components/product-sortby";
-import { useEvent } from "react-native-reanimated";
 import { useQueryClient } from "@tanstack/react-query";
+import { RadioButton } from "@/components/atoms";
 
 type OrderBy = {
   id: string;
@@ -26,12 +25,18 @@ type Pagination = {
   size: number
   searchValue?: string
   orderBy?: OrderBy
+  filter?: string
+}
+
+type GroupProduct = {
+  groupProduct: string
 }
 
 const getPaginationParams = (pagination: Pagination) => {
   let params = {}
   params = { ...params, page: pagination.page, size: pagination.size }
   if (pagination.searchValue) params = { ...params, searchValue: pagination.searchValue };
+  if (pagination.filter && pagination.filter !== "TAMPILKAN-SEMUA") params = { ...params, filter: pagination.filter };
   if (pagination.orderBy || (pagination.orderBy && pagination.orderBy["sort"]))
     params = {
       ...params,
@@ -50,11 +55,13 @@ const Shop = () => {
   const [searchValue, setValue] = useState<string>()
   const [pagination, setPagination] = useState<Pagination>({ page: 1, size: 10, orderBy: { id: "namaBarang", sort: 'asc' } })
   const [state, setState] = useState<TSortBy>("PRODUCT-ASC")
+  const [groupProduct, setGroupProduct] = useState<string>("TAMPILKAN-SEMUA")
   const [sheetActive, setSheetActive] = useState<"product" | "sortby" | "filter">("product");
   const [loadMoreState, setLoadMore] = useState<boolean>(false)
-  const [reset, setReset] = useState<boolean>(false)
   const { setProductSelected, theme } = useGlobalContext();
   const queryClient = useQueryClient()
+
+  const { dismiss } = useBottomSheetModal();
 
   const { data, paging, refetch, isLoading } = useDataApi<Product[]>({
     queryKey: ["products"],
@@ -63,6 +70,13 @@ const Shop = () => {
     params: { ...getPaginationParams(pagination) }
 
   });
+
+  const { data: groupProducts } = useDataApi<GroupProduct[]>({
+    queryKey: ["groupProducts"],
+    url: "products/group-product",
+    // params: (searchValue && searchValue !== "") ? { size: 20, page: 1, namaBarang: searchValue } : { size: 20, page: 1 }
+  });
+
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetRef.current?.present();
@@ -94,6 +108,39 @@ const Shop = () => {
     </View>
   )
 
+  const FilterDetail = () => {
+    if (!groupProducts) return null
+
+    const radioGroups = groupProducts.map((item, index) => ({ key: item.groupProduct, value: item.groupProduct }))
+    radioGroups.unshift({ key: "TAMPILKAN-SEMUA", value: "TAMPILKAN-SEMUA" })
+
+    // const RenderGroupProduct = ({ item }: { item: GroupProduct }) => 
+    return (
+      <ScrollView>
+        <View className="py-2 px-4">
+          <RadioButton
+            defaultSelection={groupProduct}
+            options={radioGroups}
+            onSelection={(index, value) => {
+              // setState((oldValue) => ({ ...oldValue, paymentMethod: value.key as PaymentMethod }));
+              setGroupProduct(value.value)
+              dismiss();
+            }}
+          />
+          {/* <ThemedText>{item.groupProduct}</ThemedText> */}
+        </View>
+      </ScrollView>
+    )
+
+    // return (
+    //   <FlatList
+    //     data={groupProducts}
+    //     keyExtractor={(item, index) => `${item.groupProduct}-${index}`}
+    //     renderItem={({ item }) => <RenderGroupProduct item={item} />}
+    //   />
+    // )
+  }
+
   useEffect(() => {
     if (!data) return;
     // console.log('data', { data, paging })
@@ -123,6 +170,11 @@ const Shop = () => {
   }, [searchValue])
 
   useEffect(() => {
+    if (!groupProduct) return
+    setPagination(oldValue => ({ ...oldValue, filter: groupProduct }))
+  }, [groupProduct])
+
+  useEffect(() => {
     if (pagination.orderBy?.id === state) return
     const itemSplit = state.split('-')
     const id = itemSplit[0] === "PRODUCT" ? "namaBarang" : "hargaJual"
@@ -140,7 +192,7 @@ const Shop = () => {
     }
     // reFetchData()
     onRefresh()
-  }, [pagination.searchValue, pagination.orderBy])
+  }, [pagination.searchValue, pagination.orderBy, pagination.filter])
 
   const loadMore = async () => {
     if (!paging || !paging.hasMore) return
@@ -171,7 +223,7 @@ const Shop = () => {
   return (
     <View className="pb-4 flex-1">
       {/* <View className="flex-1 flex-row items-center justify-between p-2"> */}
-      <ShopHeader searchValue={searchValue} setValue={setValue} refetch={refetch} />
+      <ShopHeader searchValue={searchValue} setSearchValue={setValue} refetch={onRefresh} />
       <FlatList
         data={products}
         numColumns={2}
@@ -198,11 +250,11 @@ const Shop = () => {
       <CustomBottomSheet
         title={"Product Detail"}
         ref={bottomSheetRef}
-        snapPointItems={sheetActive === "product" ? ["90%"] : ["50%"]}
+        snapPointItems={sheetActive === "product" ? ["90%"] : sheetActive === "sortby" ? ["45%"] : ["60%"]}
         content={
           sheetActive === "product" ? <ShoppingProductView />
             : sheetActive === "sortby" ? <SortBy state={state} setState={setState} />
-              : <ThemedText>Filter</ThemedText>
+              : <FilterDetail />
         }
       />
       {/* </View> */}

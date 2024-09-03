@@ -7,7 +7,7 @@ import NumberWithCurrency from "./number-with-currency";
 
 const SavingAccountSummary = ({ onPress }: { onPress: () => void }) => {
   const { user, member } = useGlobalContext();
-  if (!user || !member) return null;
+  if (!user || !member || Number(member.saldoSimpanan) === 0) return null;
 
   return (
     <View className="px-4">

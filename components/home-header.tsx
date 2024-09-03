@@ -7,7 +7,7 @@ import { logo } from "@/assets/images";
 import Constants from "expo-constants";
 
 const HomeHeader = ({ user }: { user: User }) => {
-  const { theme } = useGlobalContext();
+  const { theme, member } = useGlobalContext();
   // const theme = useColorScheme() ?? "light";
   return (
     <View className="w-full h-60 flex-row justify-between  px-2 border-b bg-primary">
@@ -19,7 +19,7 @@ const HomeHeader = ({ user }: { user: User }) => {
           </View>
           <View className="items-start flex">
             <ThemedText type="title" className="p-0 font-psemibold text-background">{Constants.expoConfig?.description}</ThemedText>
-            <ThemedText className="text-sm text-background">{user?.name}</ThemedText>
+            <ThemedText className="text-sm text-background">{member?.namaAnggota || user?.name}</ThemedText>
           </View>
           {/* <View className="rounded-full bg-success px-2 h-6 flex flex-row items-center justify-between gap-1"> */}
           {/*   <TabBarIcon name="checkmark" size={12} color={theme.colors.background} /> */}

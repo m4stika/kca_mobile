@@ -35,7 +35,7 @@ const Input = ({
       {title && <ThemedText className="w-full">{title}</ThemedText>}
       <View
         className={cn(
-          numberOfLines === 1 && "h-16 items-center",
+          numberOfLines === 1 && "h-14 items-center",
           "w-full px-4 rounded-xl flex-row justify-between border",
           focus === "close" ? "border" : "border-2 border-primary",
           containerClassName
@@ -50,9 +50,10 @@ const Input = ({
             setFocus("close");
             onBlur && onBlur(e);
           }}
-          className={cn("flex-1 text-foreground text-xl", inputClassName)}
+          className={cn("flex-1 text-foreground text-lg", inputClassName)}
           value={value}
           placeholder={placeholder}
+          placeholderClassName="text-sm"
           placeholderTextColor={theme.colors.textMuted}
           onChangeText={onChangeText}
           secureTextEntry={title === "Password" && !showPassword}
