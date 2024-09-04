@@ -2,23 +2,30 @@ import { logo } from "@/assets/images";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Button, Input } from "@/components/atoms";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { useGlobalContext } from "@/context/global-provider";
 import { User } from "@/schema/user.schema";
 import { api } from "@/utils/fetching";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Image, ScrollView, View } from "react-native";
+import { Alert, Image, ScrollView, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const SignUp = () => {
   const [formRegister, setFormRegister] = useState<User>({} as User);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<User>>();
   const [errorResponse, setErrorResponse] = useState<string>()
+  const [isPhoneValid, setPhoneValid] = useState(false)
   const onInputChange = (fieldName: keyof User, value: string) => {
+    if (fieldName === "phone" && isPhoneValid) setPhoneValid(false)
     setFormRegister((oldValue) => ({ ...oldValue, [fieldName]: value }));
   };
 
+  const { theme } = useGlobalContext()
+
+  let tempErrors: Partial<User> = {};
   const validateForm = () => {
-    let tempErrors: Partial<User> = {};
     if (!formRegister.memberId) {
       tempErrors = { ...tempErrors, memberId: "Nomor anggota harus diisi" };
     }
@@ -28,7 +35,9 @@ const SignUp = () => {
     if (!formRegister.phone) {
       tempErrors = { ...tempErrors, phone: "No Whatsapp harus diisi" };
     }
-
+    if (!isPhoneValid) {
+      tempErrors = { ...tempErrors, phone: "No Whatsapp belum divalidasi" }
+    }
     if (!formRegister.username) {
       tempErrors = { ...tempErrors, username: "username harus diisi" };
     }
@@ -65,6 +74,18 @@ const SignUp = () => {
     }
   };
 
+  const whatsappValidate = async () => {
+    const result = await api.get<boolean>({ url: `isValidPhoneNumber/${formRegister.phone}` })
+    if (result.status === "error") {
+      setPhoneValid(false)
+      Alert.alert("Invalid Phone Number", result.message, [{ text: "OK" }])
+    }
+    else {
+      setPhoneValid(result.data)
+      delete tempErrors['phone']
+    }
+  }
+
   return (
     <ScrollView>
       {/* <View className="items-start px-4"> */}
@@ -99,14 +120,25 @@ const SignUp = () => {
         {errors && errors.memberId ? (
           <ThemedText className="text-error dark:text-error-dark">{errors.memberId}</ThemedText>
         ) : null}
-        <Input
-          title="Nomor Whatsapp"
-          value={formRegister.phone}
-          placeholder="Masukkan Nomor Whatsapp"
-          className="mt-5"
-          keyboardType="numeric"
-          onChangeText={(value) => onInputChange("phone", value)}
-        />
+        <View className="flex flex-row w-full gap-2 items-end ">
+          <Input
+            title="Nomor Whatsapp"
+            value={formRegister.phone}
+            placeholder="Masukkan Nomor Whatsapp"
+            className="mt-5 basis-2/3"
+            keyboardType="numeric"
+            onChangeText={(value) => onInputChange("phone", value)}
+          />
+          {!isPhoneValid ?
+            <Button
+              title="Validate"
+              containerClassName="basis-1/3 h-14 bg-warning"
+              textClassName="text-sm"
+              onPress={whatsappValidate}
+            />
+            : <TabBarIcon name="checkmark" color={theme.colors.primary} className="self-center mt-10" />
+          }
+        </View>
         {errors && errors.phone ? (
           <ThemedText className="text-error dark:text-error-dark">{errors.phone}</ThemedText>
         ) : null}

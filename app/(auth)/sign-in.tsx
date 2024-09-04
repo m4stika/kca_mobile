@@ -13,8 +13,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type UserLogin = Omit<User, "fullName" | "email" | "name" | "memberId" | "NIK" | "phone">;
 const SignIn = () => {
   const [formLogin, setFormLogin] = useState<UserLogin>({
-    username: "1212",
-    password: "1212",
+    username: "",
+    password: "",
   } as UserLogin);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<UserLogin>>();
@@ -28,10 +28,10 @@ const SignIn = () => {
   const validateForm = () => {
     let tempErrors: Partial<UserLogin> = {};
     if (!formLogin.username) {
-      tempErrors = { ...tempErrors, username: "Username/member-id/phone-No is required" };
+      tempErrors = { ...tempErrors, username: "Username harus diisi" };
     }
     if (!formLogin.password) {
-      tempErrors = { ...tempErrors, password: "Password is required" };
+      tempErrors = { ...tempErrors, password: "Password harus diisi" };
     }
     tempErrors && setErrors(tempErrors);
 
@@ -76,7 +76,7 @@ const SignIn = () => {
             Login Anggota
           </ThemedText>
           <Input
-            title="Username / No. Anggota / Phone Number"
+            title="Username / No. Anggota / No whatsapp"
             // inputMode="email"
             value={formLogin.username}
             placeholder="masukkan username"

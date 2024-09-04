@@ -48,3 +48,8 @@
    add product filter, orderBy and searching
    modify user register, add memberId, NIK and phone for validation
   ```
+
+- 1.1.3
+  ```what changed
+   modify user register, add validate phone number
+  ```
