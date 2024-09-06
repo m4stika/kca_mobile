@@ -53,7 +53,7 @@ const Shop = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [products, setProducts] = useState<Product[]>();
   const [searchValue, setValue] = useState<string>()
-  const [pagination, setPagination] = useState<Pagination>({ page: 1, size: 10, orderBy: { id: "namaBarang", sort: 'asc' } })
+  const [pagination, setPagination] = useState<Pagination>({ page: 1, size: 20, orderBy: { id: "namaBarang", sort: 'asc' } })
   const [state, setState] = useState<TSortBy>("PRODUCT-ASC")
   const [groupProduct, setGroupProduct] = useState<string>("TAMPILKAN-SEMUA")
   const [sheetActive, setSheetActive] = useState<"product" | "sortby" | "filter">("product");
@@ -123,8 +123,8 @@ const Shop = () => {
             options={radioGroups}
             onSelection={(index, value) => {
               // setState((oldValue) => ({ ...oldValue, paymentMethod: value.key as PaymentMethod }));
-              setGroupProduct(value.value)
               dismiss();
+              setGroupProduct(value.value)
             }}
           />
           {/* <ThemedText>{item.groupProduct}</ThemedText> */}
@@ -143,7 +143,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (!data) return;
-    // console.log('data', { data, paging })
+    // console.log('data', pagination)
     if (!loadMoreState) {
       const products: Product[] = data.map((item) => ({
         ...item,
@@ -171,7 +171,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (!groupProduct) return
-    setPagination(oldValue => ({ ...oldValue, filter: groupProduct }))
+    setPagination(oldValue => ({ ...oldValue, filter: groupProduct, page: 1 }))
   }, [groupProduct])
 
   useEffect(() => {
@@ -180,35 +180,42 @@ const Shop = () => {
     const id = itemSplit[0] === "PRODUCT" ? "namaBarang" : "hargaJual"
     const isAscending = state.endsWith("ASC")
 
-    queryClient.removeQueries({ queryKey: ["product"] })
     setPagination(oldValue => ({ ...oldValue, page: 1, orderBy: { id, sort: isAscending ? "asc" : "desc" } }))
   }, [state])
 
   useEffect(() => {
     if ((!pagination.searchValue || pagination.searchValue === "") && !pagination.orderBy) return
-    // console.log('load pagination', pagination)
-    const reFetchData = async () => {
-      await refetch(['products'])
-    }
-    // reFetchData()
     onRefresh()
   }, [pagination.searchValue, pagination.orderBy, pagination.filter])
+
+  useEffect(() => {
+    if (pagination.page !== 1) return
+    onRefresh()
+  }, [pagination.page])
+
+  useEffect(() => {
+    if (!loadMoreState) return
+    loadMore()
+
+  }, [loadMoreState])
 
   const loadMore = async () => {
     if (!paging || !paging.hasMore) return
     // console.log('load more', paging)
-    setLoadMore(true)
-    setPagination(oldValue => ({ ...oldValue, page: oldValue.page + 1 }))
+    // setLoadMore(true)
+    // setPagination(oldValue => ({ ...oldValue, page: oldValue.page + 1 }))
     await refetch(['products'])
   }
 
   const onRefresh = async () => {
-    setRefreshing(true);
+    // queryClient.removeQueries({ queryKey: ["product"] })
     setLoadMore(false)
-    setPagination(oldPagination => ({ ...oldPagination, page: 1 }))
+    // setPagination(oldPagination => ({ ...oldPagination, page: 1 }))
+    setRefreshing(true);
     await refetch(['products'])
     setRefreshing(false);
   };
+
 
   const productOnPress = (product: Product) => {
     setSheetActive("product")
@@ -237,10 +244,13 @@ const Shop = () => {
         //   { length: 176, offset: 176 * index, index }
         // )}
         renderItem={renderItem}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => setPagination(oldValue => ({ ...oldValue, page: 1 }))} />}
         // onEndReachedThreshold={1}
         // scrollEventThrottle={500}
-        onEndReached={loadMore}
+        onEndReached={() => {
+          setPagination(oldValue => ({ ...oldValue, page: oldValue.page + 1 }))
+          setLoadMore(true)
+        }}
       // ListFooterComponent={() => isLoading && <ActivityIndicator />}
       // onMomentumScrollBegin={() => setState(true)}
       // onMomentumScrollEnd={() => setState(false)}

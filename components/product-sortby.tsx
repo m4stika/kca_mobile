@@ -47,8 +47,8 @@ const SortBy = ({ state, setState }: SortByProps) => {
         options={radioData}
         onSelection={(index, value) => {
           // setState((oldValue) => ({ ...oldValue, paymentMethod: value.key as PaymentMethod }));
-          setState(value.key as TSortBy)
           dismiss();
+          setState(value.key as TSortBy)
         }}
       />
     </View>

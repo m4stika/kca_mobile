@@ -53,3 +53,8 @@
   ```what changed
    modify user register, add validate phone number
   ```
+
+- 1.1.4
+  ```what changed
+   fix minor bug, pagination on product view
+  ```
