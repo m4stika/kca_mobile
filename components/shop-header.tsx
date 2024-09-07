@@ -15,16 +15,16 @@ const ShopHeader = ({ searchValue, setSearchValue, refetch }: ShopHeaderProps) =
 
   const onSearchHandle = () => {
     setSearchValue(value)
-    if (!value || value === "") refetch()
+    // if (!value || value === "") refetch()
   }
 
   const onValueHandle = (strValue: string | undefined) => {
-    if (!value || value === "") setSearchValue(value)
+    // if (!value || value === "") setSearchValue(value)
     setValue(strValue)
   }
 
   return (
-    <View className="flex flex-row justify-between items-center gap- p-3 w-full border-b mb-2">
+    <View className="flex flex-row justify-between items-center gap-3 p-3 w-full border-b mb-2 ">
       <View
         className="flex-1 flex-row items-center justify-around gap-2 h-12 border rounded-lg"
         nativeID="searchInput"

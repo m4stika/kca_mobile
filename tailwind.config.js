@@ -189,6 +189,20 @@ module.exports = {
       fontSize: {
         big: "7rem",
       },
+      keyframes: {
+        slideDown: {
+          from: { opacity: 1, transform: "translateX(100%)" },
+          to: { opacity: 0, transform: "translateX(0)" },
+        },
+        slideUp: {
+          from: { opacity: 0, transform: "translateX(0)" },
+          to: { opacity: 1, transform: "translateX(100%)" },
+        },
+      },
+      animation: {
+        slideDown: "slideDown 900ms cubic-bezier(0.87, 0, 0.13, 1)",
+        slideUp: "slideUp 900ms cubic-bezier(0.87, 0, 0.13, 1)",
+      }
     },
   },
   plugins: [],

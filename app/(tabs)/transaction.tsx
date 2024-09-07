@@ -56,7 +56,7 @@ const TransactionScreen = () => {
         // columnWrapperClassName="gap-1 justify-center"
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
-          <TransactionCard order={item} />
+          <TransactionCard order={item} reFetch={refetch} />
           // <ProductCard product={item} key={index} onPress={handlePresentModalPress} />
         )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

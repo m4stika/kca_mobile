@@ -15,6 +15,7 @@ import { Image, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import LabelWithValue from "./label-with-value";
 import NumberWithCurrency from "./number-with-currency";
+import { cn } from "@/utils/cn";
 
 const TransactionInfoDetail = () => {
   const { orderSelected } = useGlobalContext();
@@ -23,7 +24,9 @@ const TransactionInfoDetail = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="self-end space-y-0 py-1 px-4 text-sm font-pregular rounded-full bg-green-200 text-slate-800">
+        <CardTitle className={cn("self-end space-y-0 py-1 px-4 text-sm font-pregular rounded-full ",
+          orderSelected.orderStatus === "CANCELED" ? "bg-error text-background" : orderSelected.orderStatus === "ON_VERIFICATION" ? "bg-warning text-background" : "bg-info")
+        }>
           {orderStatus[orderSelected.orderStatus]}
         </CardTitle>
         <CardContent className="py-2 border-b">

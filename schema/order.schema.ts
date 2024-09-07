@@ -10,6 +10,7 @@ export const orderStatus = {
   ON_DELIVERY: "Dalam perjalanan",
   DELIVERED: "Sampai ditujuan",
   FAIL: "Tidak berhasil",
+  CANCELED: "Dibatalkan"
 } as const;
 export type OrderStatus = keyof typeof orderStatus;
 

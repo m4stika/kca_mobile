@@ -44,7 +44,7 @@ const ButtonAdd = ({ product }: { product: Product }) => {
   return (
     <View
       className={cn(
-        "absolute -top-6 right-1 h-8 w-8 rounded-full items-center justify-center ",
+        "absolute -bottom-1 right-0 h-8 w-8 rounded-full items-center justify-center ",
         product.stok === 0 ? "hidden bg-disabled" : "bg-success"
       )}
     >

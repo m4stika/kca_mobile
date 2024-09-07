@@ -1,5 +1,5 @@
 import { useGlobalContext } from "@/context/global-provider";
-import { Order, orderStatus } from "@/schema/order.schema";
+import { Order, OrderStatus, orderStatus } from "@/schema/order.schema";
 import { _formatDatetime } from "@/utils/date-formater";
 import { formatCurrency } from "@/utils/format-currency";
 import { router } from "expo-router";
@@ -9,10 +9,25 @@ import { ThemedText } from "./ThemedText";
 import { Button } from "./atoms";
 import { Card, CardContent, CardFooter, CardHeader } from "./card";
 import NumberWithCurrency from "./number-with-currency";
+import { api } from "@/utils/fetching";
+import { cn } from "@/utils/cn";
 
-const TransactionCard = ({ order }: { order: Order }) => {
+const TransactionCard = ({ order, reFetch }: { order: Order, reFetch: () => void }) => {
   const { setOrderSelected } = useGlobalContext();
   const orderCount = order.OrderDetail.length;
+
+  const onCancelOrder = async () => {
+    const response = await api.patch<unknown, Order>({
+      url: `orders/cancel`,
+      data: { id: order.id }
+    });
+    if (response.status === "error") alert(response.message);
+    else {
+      if (response.data) {
+        reFetch()
+      }
+    }
+  };
   // const imageSource = getRandomImageSource();
   return (
     <Card className="px-4 pt-4 min-w-80 min-h-64">
@@ -24,8 +39,8 @@ const TransactionCard = ({ order }: { order: Order }) => {
             {_formatDatetime(new Date(order.transactionDate), "dd-mm-yyyy")}
           </ThemedText>
         </View>
-        <View className="bg-green-200 rounded-full px-3 py-1">
-          <ThemedText className="text-xs text-slate-800">
+        <View className={cn("rounded-full px-3 py-1", order.orderStatus === "ON_VERIFICATION" ? "bg-warning" : order.orderStatus === "CANCELED" ? "bg-error" : "bg-info")}>
+          <ThemedText className={cn("text-xs text-background", order.orderStatus === "ON_VERIFICATION" ? "bg-warning" : order.orderStatus === "CANCELED" ? "bg-error" : "bg-info text-foreground")}>
             {orderStatus[order.orderStatus]}
           </ThemedText>
         </View>
@@ -55,20 +70,31 @@ const TransactionCard = ({ order }: { order: Order }) => {
       </CardContent>
 
       {/* Footer */}
-      <CardFooter className="flex-row justify-between">
-        <View className="">
-          <ThemedText className="text-sm">Total Belanja</ThemedText>
-          <NumberWithCurrency value={formatCurrency(order.amount)} />
+      <CardFooter className="gap-3">
+        <View className="flex-row justify-between w-full border-b pb-2">
+          <View className="">
+            <ThemedText className="text-sm">Total Belanja</ThemedText>
+            <NumberWithCurrency value={formatCurrency(order.amount)} />
+          </View>
+          <Button
+            title="Detail Pesanan"
+            containerClassName="py-2"
+            textClassName="text-xs font-light"
+            onPress={() => {
+              setOrderSelected(order);
+              router.push("/transaction-info");
+            }}
+          />
         </View>
-        <Button
-          title="Detail Pesanan"
-          containerClassName="py-2"
-          textClassName="text-xs font-light"
-          onPress={() => {
-            setOrderSelected(order);
-            router.push("/transaction-info");
-          }}
-        />
+        {(["PRE_ORDER", "ON_VERIFICATION"] as OrderStatus[]).includes(order.orderStatus) && (
+          <Button
+            title="Batalkan pesanan"
+            containerClassName="py-2 border self-start bg-error"
+            textClassName="text-xs font-light"
+            onPress={onCancelOrder}
+          />
+        )}
+
       </CardFooter>
     </Card>
   );

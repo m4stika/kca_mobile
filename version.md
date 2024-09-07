@@ -57,4 +57,6 @@
 - 1.1.4
   ```what changed
    fix minor bug, pagination on product view
+   modify transactions information
+   add order cancelation
   ```
