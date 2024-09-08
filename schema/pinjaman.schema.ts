@@ -10,7 +10,7 @@ export type Pinjaman = {
   jenisBunga: string;
   persenBunga: number;
   biayaAdmin: number;
-  tanggalLunas: Date;
+  tanggalLunas?: Date;
   lunas: string;
   RincianPinjaman: RincianPinjaman[];
 };
@@ -27,5 +27,5 @@ export type RincianPinjaman = {
   thnLunas: number;
   tglLunas: Date;
   lunas: String;
-  keterangan: String;
+  keterangan?: String;
 };

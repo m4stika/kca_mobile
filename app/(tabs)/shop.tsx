@@ -178,7 +178,7 @@ const Shop = () => {
 
 
   useEffect(() => {
-    console.log('searchValue', searchValue)
+    // console.log('searchValue', searchValue)
     setPagination(oldValue => (!searchValue) ? { page: 1, size: oldValue.size } : { ...oldValue, page: 1, searchValue })
   }, [searchValue])
 
@@ -268,7 +268,7 @@ const Shop = () => {
         scrollEventThrottle={0.5}
         onEndReached={() => {
           if (!paging?.hasMore) return
-          console.log('loadMoreState', loadMoreState)
+          // console.log('loadMoreState', loadMoreState)
           setPagination(oldValue => ({ ...oldValue, page: oldValue.page + 1 }))
           setLoadMore(true)
         }}

@@ -59,4 +59,6 @@
    fix minor bug, pagination on product view
    modify transactions information
    add order cancelation
+   add order filter by order-status
+   modify load simulation, add save process to server
   ```

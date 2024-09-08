@@ -1,30 +1,33 @@
 import CustomBottomSheet from "@/components/custom-bottom-sheet";
 import ShoppingProductView from "@/components/shopping-product-view";
 import TransactionCard from "@/components/transaction-card";
-import TransactionHeader from "@/components/transaction-header";
+import TransactionHeader, { TOrderStatus } from "@/components/transaction-header";
 import { useGlobalContext } from "@/context/global-provider";
 import useDataApi from "@/hooks/useDataApi";
 import { Order } from "@/schema/order.schema";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useQueryClient } from "@tanstack/react-query";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
+
 
 const TransactionScreen = () => {
   const { member } = useGlobalContext();
   const [refreshing, setRefreshing] = useState(false);
+  const [status, setStatus] = useState<TOrderStatus>("ALL")
   const [orders, setOrders] = useState<Order[]>();
   const { data, refetch, isLoading } = useDataApi<Order[]>({
     queryKey: ["transactions"],
     url: `orders/by_member/${member?.noAnggota}`,
+    params: status !== "ALL" && { orderStatus: status }
   });
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (!member) return;
-    queryClient.invalidateQueries({ queryKey: ["transactions"] });
-  }, [member]);
+    if (!member || !status) return;
+    refetch()
+    // queryClient.invalidateQueries({ queryKey: ["transactions"] });
+  }, [member, status]);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
@@ -49,7 +52,7 @@ const TransactionScreen = () => {
   return (
     <View className="p-4 flex-1 gap-2">
       {/* <View className="flex-1 flex-row items-center justify-between p-2"> */}
-      <TransactionHeader />
+      <TransactionHeader status={status} setStatus={setStatus} refetch={refetch} />
       <FlatList
         data={orders}
         contentContainerClassName="gap-4"

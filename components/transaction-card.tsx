@@ -77,9 +77,9 @@ const TransactionCard = ({ order, reFetch }: { order: Order, reFetch: () => void
             <NumberWithCurrency value={formatCurrency(order.amount)} />
           </View>
           <Button
-            title="Detail Pesanan"
-            containerClassName="py-2"
-            textClassName="text-xs font-light"
+            title="Tampilkan Rincian"
+            containerClassName="py-2 bg-backround border"
+            textClassName="text-xs font-light text-primary "
             onPress={() => {
               setOrderSelected(order);
               router.push("/transaction-info");
@@ -89,8 +89,8 @@ const TransactionCard = ({ order, reFetch }: { order: Order, reFetch: () => void
         {(["PRE_ORDER", "ON_VERIFICATION"] as OrderStatus[]).includes(order.orderStatus) && (
           <Button
             title="Batalkan pesanan"
-            containerClassName="py-2 border self-start bg-error"
-            textClassName="text-xs font-light"
+            containerClassName="py-2 border self-start bg-backround"
+            textClassName="text-xs font-light text-error"
             onPress={onCancelOrder}
           />
         )}

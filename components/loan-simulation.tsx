@@ -13,6 +13,9 @@ import { FlatList } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/global-provider';
 import useDataApi from '@/hooks/useDataApi';
+import { api } from '@/utils/fetching';
+import { Pinjaman, RincianPinjaman } from '@/schema/pinjaman.schema';
+import { formatDate } from '@/utils/date-formater';
 
 
 // type InterestType = keyof typeof InterestRate //'FIXED' | 'DECLINING';
@@ -107,9 +110,9 @@ const LoanSimulation = () => {
   const [installmentPeriod, setInstallmentPeriod] = React.useState<string>();
   // const [period, setPeriod] = React.useState<InterestPeriod>('monthly');
   const [interestType, setInterestType] = React.useState<InterestType>('FIXED');
-  const { theme } = useGlobalContext()
+  const { theme, member } = useGlobalContext()
 
-  const { data } = useDataApi<{ fixedRate: number, decliningRate: number }>({
+  const { data } = useDataApi<{ fixedRate: number, decliningRate: number, adminFee: number }>({
     queryKey: ["defaultRate"],
     url: `pinjaman/defaultInterestRate`,
   });
@@ -122,10 +125,45 @@ const LoanSimulation = () => {
     bottomSheetRef.current?.present();
   }, []);
 
-  const onLoanSubmit = async () => {
-    Alert.alert('Pengajuan Pinjaman', "Process completed..", [{ text: "OK" }])
-    dismiss()
-    router.navigate('/home')
+  const onLoanSubmit = async (dataApi: ResponseProps) => {
+    type RincianPinjamanApi = { angKe: number, rpPinjaman: number, rpBunga: number }
+    type PinjamanApi = Omit<Pinjaman, "refCode" | "tglPinjam" | "RincianPinjaman"> & { tglPinjam: string, RincianPinjaman: RincianPinjamanApi[] }
+
+    const pinjamanDetail = dataApi.installments.map((item, index): RincianPinjamanApi => {
+      return {
+        angKe: item.month,
+        rpPinjaman: item.principalInstallment,
+        rpBunga: item.interest,
+      }
+    })
+    const pinjamanApi: PinjamanApi = {
+      noAnggota: member?.noAnggota!,
+      nilaiPinjaman: principal,
+      tglPinjam: formatDate(new (Date), false, true),
+      isPinjamanUang: true,
+      tahun: new Date().getFullYear(),
+      bulan: new Date().getMonth() + 1,
+      jangkaWaktu: parseInt(installmentPeriod!),
+      jenisBunga: interestType === "FIXED" ? "Menetap" : "Menurun",
+      persenBunga: interestType === "FIXED" ? data?.fixedRate! : data?.decliningRate!,
+      biayaAdmin: (Number(data?.adminFee) / 100) * principal,
+      lunas: "N",
+      RincianPinjaman: pinjamanDetail
+    }
+    // console.log('pinjamanApi', pinjamanApi)
+    const response = await api.post<PinjamanApi, unknown>({
+      url: `pinjaman`,
+      data: pinjamanApi
+    });
+
+    if (response.status === "error") alert(response.message);
+    else {
+      if (response.data) {
+        Alert.alert('Pengajuan Pinjaman', "Process completed..", [{ text: "OK" }])
+        dismiss()
+        router.navigate('/home')
+      }
+    }
   };
 
   // render
@@ -144,6 +182,7 @@ const LoanSimulation = () => {
   const SimulationInfo = () => {
     const calculateResult = calculateInstallment(principal, interestType === "FIXED" ? Number(data?.fixedRate) || 0 : Number(data?.decliningRate) || 0, parseInt(installmentPeriod || '0'), 500, interestType);
     const { installments, totalPrincipal, totalInterest, grandTotal } = calculateResult
+    const adminFee = (Number(data?.adminFee) / 100) * principal
 
     const Header = () => (
       <View>
@@ -155,13 +194,14 @@ const LoanSimulation = () => {
             <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].principalInstallment, { precision: 0 })}`} title='Pokok' valueClassName='text-xl' titleClassName='text-xl' />
             <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].interest, { precision: 0 })}`} title='Bunga' valueClassName='text-xl' titleClassName='text-xl' className='pb-2' />
             <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].totalInstallment, { precision: 0 })}`} title='Total' valueClassName='text-xl' titleClassName='text-xl' className='pt-2 border-t' />
+            <LabelWithValue value={`Rp. ${formatCurrency2(adminFee, { precision: 0 })}`} title='Biaya Admin' valueClassName='text-sm text-primary' titleClassName='text-sm text-primary' className='pt-2' />
           </CardContent>
           <CardFooter className='pr-0 '>
             <Button
               title="Ajukan Pinjaman"
               containerClassName="w-full bg-info"
               textClassName="text-xl"
-              onPress={onLoanSubmit}
+              onPress={() => onLoanSubmit(calculateResult)}
             />
           </CardFooter>
         </Card>
@@ -228,31 +268,6 @@ const LoanSimulation = () => {
           <ThemedText type='subtitle'>per bulan </ThemedText>
         </View>
       </View>
-      {/* <View className='flex flex-row gap-2 pr-2 ' aria-disabled={true}> */}
-      {/*   <View className='flex flex-row items-center gap-2 basis-1/3'> */}
-      {/*     <NumberFormat */}
-      {/*       title="Bunga Pinjaman" */}
-      {/*       value={bunga} */}
-      {/*       decimalScale={2} */}
-      {/*       handleChange={setInterestRate} */}
-      {/*       disabled={true} */}
-      {/*     /> */}
-      {/*     <ThemedText type='title' className='pt-6'>%</ThemedText> */}
-      {/*   </View> */}
-      {/*   <View className='flex-1 pt-8 ml-8 '> */}
-      {/*     <View className='border rounded-xl'> */}
-      {/*       <Picker */}
-      {/*         mode='dropdown' */}
-      {/*         selectedValue={period} */}
-      {/*         onValueChange={setPeriod} */}
-      {/*         style={{ color: theme.colors.text }} */}
-      {/*       > */}
-      {/*         <Picker.Item label="per Bulan" value="monthly" /> */}
-      {/*         <Picker.Item label="per Tahun" value="annual" /> */}
-      {/*       </Picker> */}
-      {/*     </View> */}
-      {/*   </View> */}
-      {/* </View> */}
       <View className='flex flex-row items-center gap-2 '>
         <NumberFormat
           title="Jangka Waktu (bulan)"

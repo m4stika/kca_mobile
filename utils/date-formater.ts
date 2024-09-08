@@ -13,7 +13,7 @@ function isValidDate(d: Date): boolean {
   return !isNaN(d.getTime());
 }
 
-export function formatDate(date: any, showTime: boolean = true): string {
+export function formatDate(date: any, showTime: boolean = true, apiFormater: boolean = false): string {
   var datetime = new Date(date);
   let result = "";
   if (isValidDate(datetime) && showTime) {
@@ -21,6 +21,9 @@ export function formatDate(date: any, showTime: boolean = true): string {
   }
   if (isValidDate(datetime) && !showTime) {
     result = _formatDatetime(datetime, "dd-mm-yyyy");
+  }
+  if (isValidDate(datetime) && apiFormater) {
+    result = _formatDatetime(datetime, "yyyy-mm-dd");
   }
   return result;
 
