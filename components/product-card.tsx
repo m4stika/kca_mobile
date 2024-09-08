@@ -15,7 +15,7 @@ type DataProps = {
 const ProductCard = ({ product, onPress, theme }: DataProps) => {
   // const { setProductSelected, theme } = useGlobalContext();
   return (
-    <View className="flex flex-col gap-2 w-[49%] rounded-lg p-2  items-center justify-between border">
+    <View className="flex flex-col gap-2 w-[49%] rounded-lg py-2  items-center justify-between border">
       <View className="flex relative">
         <TouchableOpacity
           onPress={() => {
@@ -26,9 +26,7 @@ const ProductCard = ({ product, onPress, theme }: DataProps) => {
           {/* <View className={cn("rounded-xl p-2", theme.dark ? "bg-disabled" : "bg-background", "overflow-hidden border")}> */}
           <View className={cn("border-b")}>
             <Image
-              // source={{ uri: "https://picsum.photos/200/300?random=5" }}
               source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${product.fileName}` }}
-              // source={product.imageSource}
               className="h-44 w-44"
               resizeMode="contain"
             // width={170}
@@ -38,14 +36,14 @@ const ProductCard = ({ product, onPress, theme }: DataProps) => {
         </TouchableOpacity>
         <ButtonAdd product={product} />
       </View>
-      <View className=" flex-1">
+      <View className="w-full px-2">
         <TouchableOpacity
           onPress={() => {
             // setProductSelected(product);
             onPress(product);
           }}
         >
-          <View className="flex flex-col gap-2 w-full justify-between">
+          <View className="flex flex-col gap-2 w-full">
             <View className="flex flex-row gap-1">
               <ThemedText className="text-xs font-plight">Rp</ThemedText>
               <View

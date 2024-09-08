@@ -62,3 +62,9 @@
    add order filter by order-status
    modify load simulation, add save process to server
   ```
+
+- 1.1.5
+  ```what changed
+   bug fix : scrolling product view, price and caption cannot showing
+   refactoring code : shopping view
+  ```
