@@ -47,7 +47,7 @@ const TransactionCard = ({ order, reFetch }: { order: Order, reFetch: () => void
       </CardHeader>
 
       {/* Content */}
-      <CardContent className="flex-1 py-2 border-b">
+      <CardContent className="flex py-2 border-b">
         <View className="flex flex-row gap-2">
           <Image
             source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/products/${order.OrderDetail[0].Barang.fileName}` }}

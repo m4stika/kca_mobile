@@ -110,6 +110,7 @@ const LoanSimulation = () => {
   const [installmentPeriod, setInstallmentPeriod] = React.useState<string>();
   // const [period, setPeriod] = React.useState<InterestPeriod>('monthly');
   const [interestType, setInterestType] = React.useState<InterestType>('FIXED');
+  const [errorSubmit, setErrorSubmit] = React.useState<string>()
   const { theme, member } = useGlobalContext()
 
   const { data } = useDataApi<{ fixedRate: number, decliningRate: number, adminFee: number }>({
@@ -148,6 +149,7 @@ const LoanSimulation = () => {
       persenBunga: interestType === "FIXED" ? data?.fixedRate! : data?.decliningRate!,
       biayaAdmin: (Number(data?.adminFee) / 100) * principal,
       lunas: "N",
+      verificationStatus: "ON_VERIFICATION",
       RincianPinjaman: pinjamanDetail
     }
     // console.log('pinjamanApi', pinjamanApi)
@@ -156,7 +158,10 @@ const LoanSimulation = () => {
       data: pinjamanApi
     });
 
-    if (response.status === "error") alert(response.message);
+    if (response.status === "error") {
+      setErrorSubmit(response.message)
+      // alert(response.message);
+    }
     else {
       if (response.data) {
         Alert.alert('Pengajuan Pinjaman', "Process completed..", [{ text: "OK" }])
@@ -196,13 +201,14 @@ const LoanSimulation = () => {
             <LabelWithValue value={`Rp. ${formatCurrency2(installments[0].totalInstallment, { precision: 0 })}`} title='Total' valueClassName='text-xl' titleClassName='text-xl' className='pt-2 border-t' />
             <LabelWithValue value={`Rp. ${formatCurrency2(adminFee, { precision: 0 })}`} title='Biaya Admin' valueClassName='text-sm text-primary' titleClassName='text-sm text-primary' className='pt-2' />
           </CardContent>
-          <CardFooter className='pr-0 '>
+          <CardFooter className='pr-0 items-center'>
             <Button
               title="Ajukan Pinjaman"
               containerClassName="w-full bg-info"
               textClassName="text-xl"
               onPress={() => onLoanSubmit(calculateResult)}
             />
+            {errorSubmit && <ThemedText type='subtitle' className='text-error text-center'>{errorSubmit}</ThemedText>}
           </CardFooter>
         </Card>
 

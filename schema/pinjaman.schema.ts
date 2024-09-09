@@ -1,3 +1,5 @@
+import { OrderStatus } from "./order.schema";
+
 export type Pinjaman = {
   refCode: string;
   noAnggota: string;
@@ -13,6 +15,7 @@ export type Pinjaman = {
   tanggalLunas?: Date;
   lunas: string;
   RincianPinjaman: RincianPinjaman[];
+  verificationStatus: OrderStatus
 };
 
 export type RincianPinjaman = {

@@ -15,7 +15,8 @@ const LoanDetail = () => {
   const { member } = useGlobalContext();
   const { data, refetch, isLoading } = useDataApi<Pinjaman[]>({
     queryKey: ["loans"],
-    url: `pinjaman/byAnggota/${member?.noAnggota}`,
+    url: `pinjaman/byAnggota`,
+    params: { noAnggota: member?.noAnggota, status: "APPROVED" }
   });
   if (!data) return null;
 
@@ -109,14 +110,14 @@ const LoanDetail = () => {
         // contentOffset={{ x: 10, y: 0 }}
         renderSectionHeader={({ section }) => <Headers pinjaman={section} />}
         renderSectionFooter={() => <View className="pb-4" />}
-        // ItemSeparatorComponent={() => <View className="border-b" />}
-        // ListHeaderComponent={() => (
-        //   <View className="flex justify-center p-1">
-        //     <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
-        //   </View>
-        // )}
-        // ListFooterComponent={() => <View className="border-b" />}
-        // SectionSeparatorComponent={() => <View className="pb-2" />}
+      // ItemSeparatorComponent={() => <View className="border-b" />}
+      // ListHeaderComponent={() => (
+      //   <View className="flex justify-center p-1">
+      //     <ThemedText className="font-pbold text-lg text-foreground">Detail Pinjaman</ThemedText>
+      //   </View>
+      // )}
+      // ListFooterComponent={() => <View className="border-b" />}
+      // SectionSeparatorComponent={() => <View className="pb-2" />}
       />
     </View>
   );

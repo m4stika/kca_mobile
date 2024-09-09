@@ -6,6 +6,7 @@ const ModalLayout = () => {
       <Stack.Screen name="welcome" />
       <Stack.Screen name="profile-detail" />
       <Stack.Screen name="transaction-info" />
+      <Stack.Screen name="transaction-loan-info" />
       <Stack.Screen name="shopping-cart" options={{ gestureEnabled: false }} />
       <Stack.Screen name="loan" options={{ gestureEnabled: false }} />
     </Stack>

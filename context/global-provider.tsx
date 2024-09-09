@@ -1,6 +1,7 @@
 import { DarkTheme, DefaultTheme, ThemeProps } from "@/constants/Colors";
 import { Member } from "@/schema/member.schema";
 import { Order, orderInitialValue } from "@/schema/order.schema";
+import { Pinjaman } from "@/schema/pinjaman.schema";
 import { Product } from "@/schema/product.schema";
 import { User } from "@/schema/user.schema";
 import { StatusBarTheme } from "@/themes/theme-config";
@@ -46,6 +47,8 @@ type ContextProps = {
   setProductSelected: Dispatch<SetStateAction<Product | undefined>>;
   orderSelected?: Order | undefined;
   setOrderSelected: Dispatch<SetStateAction<Order | undefined>>;
+  loanSelected?: Pinjaman | undefined;
+  setLoanSelected: Dispatch<SetStateAction<Pinjaman | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   reset: () => void;
 };
@@ -65,6 +68,7 @@ const GlobalContext = createContext<ContextProps>({
   order: orderInitialValue,
   setProductSelected: () => undefined,
   setOrderSelected: () => undefined,
+  setLoanSelected: () => undefined,
   reset: () => undefined,
   setIsLoading: () => false,
 });
@@ -84,6 +88,7 @@ export function GlobalProvider({ children }: ViewProps) {
   const [order, setOrder] = useState<Order>(orderInitialValue);
   const [productSelected, setProductSelected] = useState<Product | undefined>();
   const [orderSelected, setOrderSelected] = useState<Order | undefined>();
+  const [loanSelected, setLoanSelected] = useState<Pinjaman | undefined>();
   const [theme, setTheme] = useState<ThemeProps>(DefaultTheme);
   const [error, setError] = useState<string>();
   const colorScheme = useColorScheme();
@@ -121,7 +126,8 @@ export function GlobalProvider({ children }: ViewProps) {
     setIsLogged(false);
     setOrder(orderInitialValue);
     setProductSelected(undefined);
-    setProductSelected(undefined);
+    setOrderSelected(undefined);
+    setLoanSelected(undefined)
     setMember(null);
     setUser(null);
   };
@@ -148,6 +154,8 @@ export function GlobalProvider({ children }: ViewProps) {
           setProductSelected,
           orderSelected,
           setOrderSelected,
+          loanSelected,
+          setLoanSelected,
           reset,
           setIsLoading,
         }}

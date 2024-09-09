@@ -67,4 +67,5 @@
   ```what changed
    bug fix : scrolling product view, price and caption cannot showing
    refactoring code : shopping view
+   modify transaction screen : add loan application information
   ```

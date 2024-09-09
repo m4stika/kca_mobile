@@ -51,12 +51,10 @@ const useShop = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [products, setProducts] = useState<Product[]>();
   const [searchValue, setSearchValue] = useState<string>()
-  const [pagination, setPagination] = useState<Pagination>({ page: 1, size: 14, orderBy: { id: "namaBarang", sort: 'asc' } })
+  const [pagination, setPagination] = useState<Pagination>({ page: 1, size: 20, orderBy: { id: "namaBarang", sort: 'asc' } })
   const [sortBy, setSortBy] = useState<TSortBy>("PRODUCT-ASC")
   const [groupProduct, setGroupProduct] = useState<string>("TAMPILKAN-SEMUA")
-  // const [sheetActive, setSheetActive] = useState<"product" | "sortby" | "filter">("product");
   const [loadMoreState, setLoadMore] = useState<boolean>(false)
-  // const [onDrag, setOnDrag] = useState<boolean>(false)
   const { data, paging, refetch } = useDataApi<Product[]>({
     queryKey: ["products"],
     url: "products/search",
