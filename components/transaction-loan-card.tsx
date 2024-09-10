@@ -54,20 +54,16 @@ const TransactionLoanCard = ({ pinjaman, reFetch }: { pinjaman: Pinjaman, reFetc
         <LabelWithValue
           title="Pinjaman"
           value={formatCurrency(Number(pinjaman.nilaiPinjaman) || 0)}
-        // valueClassName="text-lg font-psemibold"
-        // titleClassName="text-lg"
         />
         <LabelWithValue
           title="Angsuran"
           value={formatCurrency(Number(pinjaman.RincianPinjaman[0].rpPinjaman) || 0)}
-        // valueClassName="text-lg font-psemibold"
-        // titleClassName="text-lg"
         />
         <LabelWithValue
-          title="Bunga"
+          title={`Bunga (${pinjaman.persenBunga} %) ${pinjaman.jenisBunga}`}
           value={formatCurrency(Number(pinjaman.RincianPinjaman[0].rpBunga) || 0)}
-        // valueClassName="text-lg font-psemibold"
-        // titleClassName="text-lg"
+          valueClassName="basis-1/2"
+          titleClassName="basis-1/2"
         />
       </CardContent>
 

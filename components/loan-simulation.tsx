@@ -14,94 +14,9 @@ import { router } from 'expo-router';
 import { useGlobalContext } from '@/context/global-provider';
 import useDataApi from '@/hooks/useDataApi';
 import { api } from '@/utils/fetching';
-import { Pinjaman, RincianPinjaman } from '@/schema/pinjaman.schema';
+import { Pinjaman } from '@/schema/pinjaman.schema';
 import { formatDate } from '@/utils/date-formater';
-
-
-// type InterestType = keyof typeof InterestRate //'FIXED' | 'DECLINING';
-type InterestType = 'FIXED' | 'DECLINING';
-// type InterestPeriod = 'monthly' | 'annual';
-type Installment = { month: number, principalInstallment: number, interest: number, totalInstallment: number }
-type ResponseProps =
-  {
-    installments: Installment[],
-    totalPrincipal: number,
-    totalInterest: number,
-    grandTotal: number
-  }
-
-function calculateInstallment(
-  principal: number,
-  interestRate: number,
-  months: number,
-  rounding: number,
-  interestType: InterestType,
-  // interestPeriod: InterestPeriod
-): ResponseProps {
-  // const monthlyInterestRate = interestPeriod === 'annual'
-  //   ? (interestRate / 12) / 100
-  //   : interestRate / 100;
-  const monthlyInterestRate = interestRate / 100
-
-  let balance = principal;
-  const installmentPlan = [];
-  let totalPrincipalInstallment = 0;
-  let totalPrincipal = 0;
-  let totalInterest = 0;
-  let interest: number = 0;
-
-  const basePrincipalInstallment = Math.ceil((principal / months) / rounding) * rounding;
-
-  for (let i = 1; i < months; i++) {
-    totalPrincipalInstallment += basePrincipalInstallment;
-
-    if (interestType === 'FIXED') {
-      interest = Math.ceil((principal * monthlyInterestRate) / rounding) * rounding;
-    } else {
-      interest = Math.ceil((balance * monthlyInterestRate) / rounding) * rounding;
-    }
-
-    installmentPlan.push({
-      month: i,
-      principalInstallment: basePrincipalInstallment,
-      interest,
-      totalInstallment: basePrincipalInstallment + interest,
-    });
-
-    totalPrincipal += basePrincipalInstallment;
-    totalInterest += interest;
-
-    if (interestType === 'DECLINING') {
-      balance -= basePrincipalInstallment;
-    }
-  }
-
-  const lastPrincipalInstallment = principal - totalPrincipalInstallment;
-  if (interestType === 'FIXED') {
-    interest = Math.ceil((principal * monthlyInterestRate) / rounding) * rounding;
-  } else {
-    interest = Math.ceil((balance * monthlyInterestRate) / rounding) * rounding;
-  }
-
-  installmentPlan.push({
-    month: months,
-    principalInstallment: lastPrincipalInstallment,
-    interest,
-    totalInstallment: lastPrincipalInstallment + interest,
-  });
-
-  totalPrincipal += lastPrincipalInstallment;
-  totalInterest += interest;
-
-  const grandTotal = totalPrincipal + totalInterest;
-
-  return {
-    installments: installmentPlan,
-    totalPrincipal,
-    totalInterest,
-    grandTotal
-  };
-}
+import { CalculateInstallmentProps, Installment, InterestType, calculateInstallment } from '@/utils/calculate-installment';
 
 const LoanSimulation = () => {
   const [value, setValue] = React.useState<string>();
@@ -126,11 +41,11 @@ const LoanSimulation = () => {
     bottomSheetRef.current?.present();
   }, []);
 
-  const onLoanSubmit = async (dataApi: ResponseProps) => {
+  const onLoanSubmit = async (dataApi: CalculateInstallmentProps) => {
     type RincianPinjamanApi = { angKe: number, rpPinjaman: number, rpBunga: number }
     type PinjamanApi = Omit<Pinjaman, "refCode" | "tglPinjam" | "RincianPinjaman"> & { tglPinjam: string, RincianPinjaman: RincianPinjamanApi[] }
 
-    const pinjamanDetail = dataApi.installments.map((item, index): RincianPinjamanApi => {
+    const pinjamanDetail = dataApi.installments.map((item): RincianPinjamanApi => {
       return {
         angKe: item.month,
         rpPinjaman: item.principalInstallment,

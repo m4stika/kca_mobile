@@ -69,3 +69,9 @@
    refactoring code : shopping view
    modify transaction screen : add loan application information
   ```
+
+- 1.1.6
+  ```what changed
+   refactoring code : calculateInstallment function to single file
+   modify transaction screen : add information for interest-rate and interest-type
+  ```

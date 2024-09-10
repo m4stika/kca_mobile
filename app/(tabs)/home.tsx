@@ -15,7 +15,7 @@ import { FlatList, RefreshControl, View } from "react-native";
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { user, member, setMember, setOrder } = useGlobalContext();
-  const { data, refetch, isLoading } = useDataApi<Member>({
+  const { data, refetch } = useDataApi<Member>({
     queryKey: ["members"],
     url: "anggota/find",
   });
@@ -28,10 +28,6 @@ const Home = () => {
     }
   }, [data]);
 
-  // const { data: orders } = useDataApi<Order[]>({
-  //   queryKey: ["transactions"],
-  //   url: `orders/by_member/${member?.noAnggota || user?.username}`,
-  // });
 
   const { data: preOrder } = useDataApi<Order>({
     queryKey: ["pre-orders"],
@@ -51,7 +47,6 @@ const Home = () => {
   useEffect(() => {
     if (!user) return;
     queryClient.invalidateQueries({ queryKey: ["members"] });
-    // queryClient.invalidateQueries({ queryKey: ["transactions"] });
     queryClient.invalidateQueries({ queryKey: ["pre-orders"] });
     queryClient.removeQueries({ queryKey: ["loans"] });
     queryClient.removeQueries({ queryKey: ["saving_accounts"] });
@@ -80,28 +75,10 @@ const Home = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
           <View className="flex-1 pl-2" key={item.id}>
-            {/* <TransactionCard order={item} /> */}
-            {/* <ThemedText>{item.source}</ThemedText> */}
             <PromoCard data={item} />
           </View>
         )}
         contentContainerClassName="flex flex-row gap-4 justify-stretch items-stretch"
-        // getItemLayout={(_, index) => ({ length: innerWidth, offset: innerWidth * index, index })}
-        // ListHeaderComponent={() => (
-        //   <View>
-        //     <HomeHeader user={user!} />
-        //     <HomeCard
-        //       color="primary"
-        //       title="Saldo Voucher"
-        //       captionPrefix="Rp"
-        //       caption={formatCurrency2(data?.saldoVoucher || 0, { precision: 0 })}
-        //       showDetail={false}
-        //     />
-
-        //     {/* <MemberInfo /> */}
-        //     {/* <ThemedText type="subtitle">Transaksi Terakhir</ThemedText> */}
-        //   </View>
-        // )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </View>

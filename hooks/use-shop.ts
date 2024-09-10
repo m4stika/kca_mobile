@@ -25,7 +25,6 @@ const getPaginationParams = (pagination: Pagination) => {
   params = { ...params, page: pagination.page, size: pagination.size }
   if (pagination.searchValue) params = { ...params, searchValue: pagination.searchValue };
   if (pagination.filter && pagination.filter !== "TAMPILKAN-SEMUA") params = { ...params, filter: pagination.filter };
-  // if (pagination.orderBy || (pagination.orderBy && pagination.orderBy["sort"]))
   if (!pagination.orderBy) {
     params = {
       ...params,
