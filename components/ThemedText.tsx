@@ -26,18 +26,18 @@ export function ThemedText({
         type === "error"
           ? "text-error font-psemibold p-3"
           : inverseColor
-          ? "text-paper"
-          : "text-foreground",
+            ? "text-paper"
+            : "text-foreground",
         className,
         type === "default"
-          ? "text-base"
+          ? "text-sm"
           : type === "defaultSemiBold"
-          ? "text-base font-psemibold"
-          : type === "title"
-          ? "text-2xl font-pbold"
-          : type === "subtitle"
-          ? "text-md font-psemibold"
-          : "text-base leading-7",
+            ? "text-base font-psemibold"
+            : type === "title"
+              ? "text-2xl font-pbold"
+              : type === "subtitle"
+                ? "text-md font-psemibold"
+                : "text-base leading-7",
         className
       )}
       {...otherProps}

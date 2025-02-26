@@ -74,4 +74,10 @@
   ```what changed
    refactoring code : calculateInstallment function to single file
    modify transaction screen : add information for interest-rate and interest-type
+   mod: change server api to api.roondev.my.id
+  ```
+
+- 1.1.7
+  ```what changed
+   feat: add feature member-card
   ```

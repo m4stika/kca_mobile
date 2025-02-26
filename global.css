@@ -135,3 +135,8 @@
     --delay: 0.3s;
   }
 }
+/*@layer utilities {*/
+/*  .bank-card {*/
+/*    @apply relative flex h-[190px] w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-bank-gradient shadow-creditCard backdrop-blur-[6px];*/
+/*  }*/
+/*}*/

@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
+  presets: [require("nativewind/preset")], // Tambahkan ini
   darkMode: "class",
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
@@ -10,118 +11,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /*
-        light: {
-          background: "#fafafa",
-          foreground: "#0F172A",
-          icon: "#0284C7",
-          text: "#0284C7",
-          tabIconDefault: "#0284C7",
-          tabIconSelected: "#0284C7",
-          paper: {
-            DEFAULT: "#f3f4f6",
-            foreground: "#0F172A",
-          },
-
-          muted: {
-            DEFAULT: "#f1f5f9",
-            foreground: "#65758b",
-          },
-
-          card: {
-            DEFAULT: "#fafafa",
-            foreground: "#0F172A",
-          },
-
-          border: "#e4e4e7",
-          input: "#E2E8F0",
-          primary: {
-            DEFAULT: "#0284C7",
-            hover: "#0369A1",
-            foreground: "#F8FAFC",
-          },
-
-          secondary: {
-            DEFAULT: "#C026D3",
-            hover: "#a21caf",
-          },
-          success: {
-            DEFAULT: "#059669",
-            hover: "#047857",
-          },
-          warning: {
-            DEFAULT: "#ca8a04",
-            hover: "#a16207",
-          },
-          error: {
-            DEFAULT: "#e11d48",
-            hover: "#be123c",
-          },
-          disabled: {
-            DEFAULT: "#D1D5DB",
-            foreground: "#9CA3AF",
-          },
-          accent: {
-            DEFAULT: "#D4D4D8",
-            foreground: "#0EA5E9",
-          },
-        },
-
-        dark: {
-          background: "#18181b",
-          foreground: "#f3f4f6",
-          icon: "#f3f4f6",
-          paper: {
-            DEFAULT: "#09090b",
-            foreground: "#94a3b8",
-          },
-
-          muted: {
-            DEFAULT: "#0F172A",
-            foreground: "#94a3b8",
-          },
-          card: {
-            DEFAULT: "#0F172A",
-            foreground: "#E1E7EF",
-          },
-
-          border: "#3f3f46",
-          input: "#1D283A",
-          primary: {
-            DEFAULT: "#38bdf8",
-            hover: "#0ea5e9",
-            foreground: "#020205",
-          },
-          secondary: {
-            DEFAULT: "#e879f9",
-            hover: "#d946ef",
-          },
-          success: {
-            DEFAULT: "#34d399",
-            hover: "#10b981",
-          },
-          warning: {
-            DEFAULT: "#facc15",
-            hover: "#eab308",
-          },
-          error: {
-            DEFAULT: "#fb7185",
-            hover: "#f43f5e",
-          },
-          disabled: {
-            DEFAULT: "#52525B",
-            foreground: "#4b5563",
-          },
-          accent: {
-            DEFAULT: "#09090B",
-            foreground: "#3abff8",
-          },
-        },
- */
         border: "var(--border)",
         print: "hsl(var(--default))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        bankGradient: "#0179FE",
         background: "var(--background)",
         foreground: "hsl(var(--foreground))",
         paper: {
@@ -202,7 +96,29 @@ module.exports = {
       animation: {
         slideDown: "slideDown 900ms cubic-bezier(0.87, 0, 0.13, 1)",
         slideUp: "slideUp 900ms cubic-bezier(0.87, 0, 0.13, 1)",
-      }
+      },
+      backgroundImage: {
+        "bank-gradient": "linear-gradient(90deg, #0179FE 0%, #4893FF 100%)",
+        "gradient-mesh": "url('/icons/gradient-mesh.svg')",
+        "bank-green-gradient":
+          "linear-gradient(90deg, #01797A 0%, #489399 100%)",
+      },
+      boxShadow: {
+        form: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
+        chart:
+          "0px 1px 3px 0px rgba(16, 24, 40, 0.10), 0px 1px 2px 0px rgba(16, 24, 40, 0.06)",
+        profile:
+          "0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
+        creditCard: "8px 10px 16px 0px rgba(0, 0, 0, 0.05)",
+      },
+      // textShadow: {
+      //   'default': '0 2px 0 #000',
+      //   'md': '0 2px 2px #000',
+      //   'h2': '0 0 3px #FF0000, 0 0 5px #0000FF',
+      //   'h1': '0 0 3px rgba(0, 0, 0, .8), 0 0 5px rgba(0, 0, 0, .9)',
+      //   '2xl': '1px 1px 5px rgb(33 34 43 / 20%)',
+      //   '3xl': '0 0 3px rgba(0, 0, 0, .8), 0 0 5px rgba(0, 0, 0, .9)',
+      // }
     },
   },
   plugins: [],
