@@ -81,3 +81,8 @@
   ```what changed
    feat: add feature member-card
   ```
+- 1.1.8
+  ```what changed
+   mod: modify saving-info, add saldoShu
+   mod: modify member-card, add user-image and e-signature
+  ```

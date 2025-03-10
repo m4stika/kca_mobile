@@ -16,6 +16,7 @@ export default function MemberCard() {
   //   { data: member?.namaAnggota!, mode: 'alphanumeric' },
   //   { data: member?.saldoVoucher.toString()!, mode: 'numeric' }
   // ]
+  // const ttdImage = require(`image!${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/ttdanggota/0851.png`)
 
   return (
     <View className='p-4 gap-4 border'>
@@ -45,18 +46,29 @@ export default function MemberCard() {
             </View>
           </View>
           <CardImage width={316} height={190} className='absolute' opacity={0.7} />
-          <View className='absolute top-[30%]  right-[10%]  mt-6'>
+          <View className='absolute top-[25%]  right-[20%]  mt-6'>
             <ThemedText type='subtitle' className='text-background border-b'>{member?.namaAnggota}</ThemedText>
-            <ThemedText type='default' className='text-shadow text-background'>{member?.nip}</ThemedText>
+            <ThemedText type='default' className='text-shadow text-background'>{member?.idDigital}</ThemedText>
             {/* <View className='border-b-2 text-white w-full'></View> */}
           </View>
-          <View className='absolute bottom-4 left-4'>
-            <QRCode
-              // color='white'
-              backgroundColor='#06b6d4'
-              value={member?.noAnggota}
-              size={60}
+          <View className='absolute bottom-4 left-4 rounded-xl overflow-hidden w-full pr-8 flex flex-row justify-between items-baseline'>
+            {/* <ThemedText type='default' className='text-shadow text-background'>{`${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/fotoanggota/${member?.noAnggota}.jpg`}</ThemedText> */}
+            <Image
+              source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/fotoanggota/${member?.noAnggota}.jpg` }}
+              className="h-16 w-16 rounded-md overflow-hidden"
+            // resizeMode="contain"
             />
+            <Image
+              source={{ uri: `${process.env.EXPO_PUBLIC_ASSETS_URL}/assets/ttdanggota/${member?.noAnggota}.png` }}
+              className="h-16 w-20 rounded-md overflow-hidden"
+            // resizeMode="contain"
+            />
+            {/* <QRCode */}
+            {/*   // color='white' */}
+            {/*   backgroundColor='#06b6d4' */}
+            {/*   value={member?.noAnggota} */}
+            {/*   size={60} */}
+            {/* /> */}
           </View>
         </LinearGradient>
       </Card>

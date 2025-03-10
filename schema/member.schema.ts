@@ -1,6 +1,7 @@
 export type Member = {
   noAnggota: string;
   nip: string;
+  idDigital: string;
   namaunit: string;
   namasub: string;
   keterangan: string;

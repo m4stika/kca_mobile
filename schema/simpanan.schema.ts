@@ -4,5 +4,6 @@ export type Simpanan = {
   totalPokok: number;
   totalWajib: number;
   sisaSukarela: number;
+  totalShu: number;
   totalSaldo: number;
 };

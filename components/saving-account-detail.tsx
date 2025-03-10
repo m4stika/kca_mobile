@@ -19,7 +19,7 @@ const SavingAccountDetail = () => {
   return (
     <View
       className="flex flex-col gap-2 pb-4 bg-background"
-      // style={vars({ "--container-disabled": "red" })}
+    // style={vars({ "--container-disabled": "red" })}
     >
       <View className="shadow-md justify-center px-4 bg-paper pb-3">
         <ThemedText type="subtitle">Detail Simpanan</ThemedText>
@@ -33,6 +33,7 @@ const SavingAccountDetail = () => {
           <LabelWithValue title="Pokok" value={formatCurrency(data.totalPokok ?? 0)} />
           <LabelWithValue title="Wajib" value={formatCurrency(data.totalWajib ?? 0)} />
           <LabelWithValue title="Sukarela" value={formatCurrency(data.sisaSukarela ?? 0)} />
+          <LabelWithValue title="Total SHU" value={formatCurrency(data.totalShu ?? 0)} />
         </CardContent>
       </Card>
     </View>
