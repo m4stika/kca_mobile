@@ -86,3 +86,8 @@
    mod: modify saving-info, add saldoShu
    mod: modify member-card, add user-image and e-signature
   ```
+  
+- 1.1.9
+  ```what changed
+   mod: modify loan-summary => add pokok terbayar and sisa Pokok
+  ```

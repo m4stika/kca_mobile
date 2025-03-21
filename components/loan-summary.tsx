@@ -27,8 +27,22 @@ const LoanSummary = ({ onPress }: { onPress: () => void }) => {
           <LabelWithValue
             title="Angsuran"
             value={formatCurrency(Number(member.nilaiAngsuran) || 0)}
-            valueClassName="text-xl font-psemibold"
+            valueClassName="text-base font-psemibold"
             titleClassName="text-lg"
+          />
+        </CardContent>
+        <CardContent className="p-4 gap-2 border-t">
+          <LabelWithValue
+            title="Pokok terbayar"
+            value={formatCurrency(Number(member.pokokTerbayar) || 0)}
+            valueClassName="text-base font-psemibold"
+            titleClassName="text-sm"
+          />
+          <LabelWithValue
+            title="Sisa Pokok"
+            value={formatCurrency(Number(member.sisaPokok) || 0)}
+            valueClassName="text-xl font-psemibold text-error"
+            titleClassName="text-lg text-error"
           />
         </CardContent>
         <CardFooter className="flex-1 border-t pr-4">

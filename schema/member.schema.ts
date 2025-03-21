@@ -18,6 +18,8 @@ export type Member = {
   saldoSimpananSukarela: number;
   saldoPinjaman: number;
   nilaiAngsuran: number;
+  pokokTerbayar: number;
+  sisaPokok: number;
   // noAnggota: string;
   // firstName: string;
   // lastName: string;
