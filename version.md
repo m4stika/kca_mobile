@@ -91,3 +91,7 @@
   ```what changed
    mod: modify loan-summary => add pokok terbayar and sisa Pokok
   ```
+- 1.1.10
+  ```what changed
+   mod: rebuild production
+  ```
