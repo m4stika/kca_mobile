@@ -6,7 +6,7 @@ import { Product } from "@/schema/product.schema";
 import { User } from "@/schema/user.schema";
 import { StatusBarTheme } from "@/themes/theme-config";
 import { api } from "@/utils/fetching";
-import { ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider, DarkTheme as DardkThemeNavigation, DefaultTheme as LightThemeNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 // import { useColorScheme as useColorSchemeWind } from "nativewind";
 import { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from "react";
@@ -122,6 +122,8 @@ export function GlobalProvider({ children }: ViewProps) {
     }
   }, [order]);
 
+  const newTheme = { ...theme, fonts: colorScheme === "light" ? LightThemeNavigation.fonts : DardkThemeNavigation.fonts }
+
   const reset = () => {
     setIsLogged(false);
     setOrder(orderInitialValue);
@@ -133,7 +135,7 @@ export function GlobalProvider({ children }: ViewProps) {
   };
 
   return (
-    <ThemeProvider value={theme}>
+    <ThemeProvider value={newTheme}>
       <GlobalContext.Provider
         value={{
           // theme: colorScheme === "dark" ? DarkTheme : DefaultTheme,
@@ -161,11 +163,10 @@ export function GlobalProvider({ children }: ViewProps) {
         }}
       >
         {children}
-        <StatusBar
-          style="light"
-          // style={StatusBarTheme[colorScheme ?? "light"].style}
-          backgroundColor={StatusBarTheme[colorScheme ?? "light"].background}
-        />
+        {/* <StatusBar */}
+        {/*   style={colorScheme ?? "dark"} */}
+        {/*   backgroundColor={StatusBarTheme[colorScheme ?? "light"].background} */}
+        {/* /> */}
       </GlobalContext.Provider>
     </ThemeProvider>
   );

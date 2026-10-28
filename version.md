@@ -95,3 +95,7 @@
   ```what changed
    mod: rebuild production
   ```
+- 2.0.0
+  ```what changed
+   mod: migrate to SDK 53
+  ```

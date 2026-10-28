@@ -1,5 +1,5 @@
 import { ThemeColors } from "@/constants/Colors";
-import { ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider, DefaultTheme } from "@react-navigation/native";
 import { useColorScheme } from "nativewind";
 import { createContext, useCallback, useContext, useState } from "react";
 import { ViewProps } from "react-native";
@@ -68,12 +68,16 @@ export function Provider(props: ThemeProps) {
     setTheme(newTheme);
   }, []);
 
+  const schema = resolveTheme(colorScheme || "light")
+  const fonts = DefaultTheme.fonts
+
   // console.log(colorScheme);
 
   return (
     <ThemeProviderValues.Provider value={{ theme: colorScheme as ThemesVariant }}>
       <ThemeProviderActions.Provider value={{ handleThemeSwitch }}>
-        <ThemeProvider value={resolveTheme((colorScheme as ThemesVariant) ?? "light")}>
+        {/* <ThemeProvider value={ resolveTheme((colorScheme as ThemesVariant) ?? "light")}> */}
+        <ThemeProvider value={{ ...schema, fonts }}>
           {props.children}
         </ThemeProvider>
         {/* <StatusBar
